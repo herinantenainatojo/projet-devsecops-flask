@@ -1,0 +1,1575 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion Documentaire - Région Haute Matsiatra</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2563eb;
+            --primary-dark: #1d4ed8;
+            --primary-light: #dbeafe;
+            --secondary-color: #059669;
+            --danger-color: #dc2626;
+            --warning-color: #d97706;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-600: #4b5563;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--gray-50);
+            color: var(--gray-900);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 1.5rem 0;
+            box-shadow: var(--shadow-md);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .header-title {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .header-title h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .header-title .subtitle {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            font-weight: normal;
+        }
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .breadcrumb a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.2s;
+        }
+
+        .breadcrumb a:hover {
+            opacity: 0.8;
+            text-decoration: underline;
+        }
+
+        /* Navigation */
+        .nav-tabs {
+            background: white;
+            border-bottom: 1px solid var(--gray-200);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .nav-tabs-container {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-tab {
+            padding: 1rem 0;
+            color: var(--gray-600);
+            text-decoration: none;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+
+        .nav-tab.active {
+            color: var(--primary-color);
+            border-bottom-color: var(--primary-color);
+        }
+
+        .nav-tab:hover {
+            color: var(--primary-color);
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 2rem 0;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        /* Search and Filters */
+        .search-filters {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--gray-200);
+            margin-bottom: 2rem;
+        }
+
+        .search-filters h3 {
+            color: var(--gray-800);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .search-row {
+            display: grid;
+            grid-template-columns: 1fr auto auto;
+            gap: 1rem;
+            align-items: end;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--gray-700);
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--gray-300);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            background: white;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px var(--primary-light);
+        }
+
+        .select-control {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+            background-position: right 0.75rem center;
+            background-repeat: no-repeat;
+            background-size: 1rem;
+            padding-right: 3rem;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-secondary {
+            background: var(--gray-100);
+            color: var(--gray-700);
+            border: 1px solid var(--gray-300);
+        }
+
+        .btn-secondary:hover {
+            background: var(--gray-200);
+        }
+
+        .btn-success {
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #047857;
+        }
+
+        .btn-danger {
+            background: var(--danger-color);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #b91c1c;
+        }
+
+        .btn-sm {
+            padding: 0.5rem 1rem;
+            font-size: 0.8rem;
+        }
+
+        /* Document Table */
+        .documents-section {
+            background: white;
+            border-radius: 12px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--gray-200);
+            overflow: hidden;
+        }
+
+        .section-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--gray-200);
+            display: flex;
+            justify-content: between;
+            align-items: center;
+        }
+
+        .section-header h2 {
+            color: var(--gray-800);
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .documents-stats {
+            display: flex;
+            gap: 2rem;
+            font-size: 0.9rem;
+            color: var(--gray-600);
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .documents-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .documents-table th,
+        .documents-table td {
+            padding: 1rem 1.5rem;
+            text-align: left;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .documents-table th {
+            background: var(--gray-50);
+            color: var(--gray-700);
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .documents-table td {
+            color: var(--gray-800);
+        }
+
+        .documents-table tbody tr:hover {
+            background: var(--gray-50);
+        }
+
+        .document-info {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .document-icon {
+            width: 2.5rem;
+            height: 2.5rem;
+            background: var(--primary-light);
+            color: var(--primary-color);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+        }
+
+        .document-details h4 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .document-meta {
+            font-size: 0.8rem;
+            color: var(--gray-600);
+        }
+
+        .document-type {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: var(--gray-100);
+            color: var(--gray-700);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .document-type.rapport {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .document-type.contrat {
+            background: #d1fae5;
+            color: #059669;
+        }
+
+        .document-type.technique {
+            background: #fef3c7;
+            color: #d97706;
+        }
+
+        .document-version {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .version-badge {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .document-actions {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .action-btn {
+            width: 2rem;
+            height: 2rem;
+            border: none;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.9rem;
+        }
+
+        .action-btn.view {
+            background: var(--primary-light);
+            color: var(--primary-color);
+        }
+
+        .action-btn.edit {
+            background: #fef3c7;
+            color: var(--warning-color);
+        }
+
+        .action-btn.delete {
+            background: #fecaca;
+            color: var(--danger-color);
+        }
+
+        .action-btn:hover {
+            transform: scale(1.1);
+        }
+
+        /* Upload Section */
+        .upload-section {
+            background: white;
+            border-radius: 12px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--gray-200);
+            padding: 1.5rem;
+        }
+
+        .upload-section h3 {
+            color: var(--gray-800);
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .file-upload-area {
+            border: 2px dashed var(--gray-300);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .file-upload-area:hover {
+            border-color: var(--primary-color);
+            background: var(--primary-light);
+        }
+
+        .file-upload-area.dragover {
+            border-color: var(--primary-color);
+            background: var(--primary-light);
+        }
+
+        .upload-icon {
+            font-size: 3rem;
+            color: var(--gray-400);
+            margin-bottom: 1rem;
+        }
+
+        .upload-text {
+            color: var(--gray-600);
+            margin-bottom: 0.5rem;
+        }
+
+        .upload-hint {
+            font-size: 0.8rem;
+            color: var(--gray-500);
+        }
+
+        .file-input-hidden {
+            display: none;
+        }
+
+        /* Quick Stats */
+        .quick-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--gray-200);
+            text-align: center;
+        }
+
+        .stat-icon {
+            width: 3rem;
+            height: 3rem;
+            margin: 0 auto 1rem;
+            background: var(--primary-light);
+            color: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--gray-800);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--gray-600);
+            font-size: 0.9rem;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--gray-600);
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            color: var(--gray-400);
+            margin-bottom: 1rem;
+        }
+
+        .empty-state h3 {
+            margin-bottom: 0.5rem;
+            color: var(--gray-700);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            animation: fadeIn 0.2s ease-out;
+        }
+
+        .modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            max-width: 90%;
+            max-height: 90%;
+            overflow: auto;
+            box-shadow: var(--shadow-lg);
+            animation: slideIn 0.2s ease-out;
+        }
+
+        .modal-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--gray-200);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h4 {
+            color: var(--gray-800);
+            font-size: 1.2rem;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--gray-500);
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+
+        .modal-close:hover {
+            background: var(--gray-100);
+            color: var(--gray-700);
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+        }
+
+        .modal-footer {
+            padding: 1.5rem;
+            border-top: 1px solid var(--gray-200);
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 0.5rem;
+            }
+
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .nav-tabs-container {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 1rem;
+            }
+
+            .search-row {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .documents-table {
+                font-size: 0.9rem;
+            }
+
+            .documents-table th,
+            .documents-table td {
+                padding: 0.75rem 1rem;
+            }
+
+            .document-actions {
+                flex-direction: column;
+                gap: 0.25rem;
+            }
+
+            .quick-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.3s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="header-title">
+                    <i class="fas fa-folder-open"></i>
+                    <div>
+                        <h1>Gestion Documentaire</h1>
+                        <div class="subtitle">Région Haute Matsiatra</div>
+                    </div>
+                </div>
+                <nav class="breadcrumb">
+                    <a href="{{ url_for('routes.index') }}"><i class="fas fa-home"></i> Tableau de bord</a>
+                    <i class="fas fa-chevron-right"></i>
+                    <span>Documents</span>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <nav class="nav-tabs">
+        <div class="container">
+            <div class="nav-tabs-container">
+                <a href="#" class="nav-tab active">
+                    <i class="fas fa-file-alt"></i> Documents
+                </a>
+                <a href="#" class="nav-tab">
+                    <i class="fas fa-archive"></i> Archives
+                </a>
+                <a href="#" class="nav-tab">
+                    <i class="fas fa-history"></i> Versions
+                </a>
+                <a href="#" class="nav-tab">
+                    <i class="fas fa-chart-bar"></i> Statistiques
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Quick Stats -->
+            <div class="quick-stats">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <div class="stat-number">127</div>
+                    <div class="stat-label">Documents totaux</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-file-contract"></i>
+                    </div>
+                    <div class="stat-number">48</div>
+                    <div class="stat-label">Contrats actifs</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-number">15</div>
+                    <div class="stat-label">En attente</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-code-branch"></i>
+                    </div>
+                    <div class="stat-number">3.2</div>
+                    <div class="stat-label">Version moyenne</div>
+                </div>
+            </div>
+
+            <!-- Search and Filters -->
+            <section class="search-filters">
+                <h3><i class="fas fa-search"></i> Recherche et Filtres</h3>
+                <div class="search-row">
+                    <div class="form-group">
+                        <label for="search">Rechercher un document</label>
+                        <input type="text" id="search" class="form-control" placeholder="Nom, projet, référence...">
+                    </div>
+                    <div class="form-group">
+                        <label for="type-filter">Type de document</label>
+                        <select id="type-filter" class="form-control select-control">
+                            <option value="">Tous les types</option>
+                            <option value="rapport">Rapports d'avancement</option>
+                            <option value="contrat">Documents contractuels</option>
+                            <option value="technique">Documents techniques</option>
+                        </select>
+                    </div>
+                    <button type="button" class="btn btn-primary" onclick="filterDocuments()">
+                        <i class="fas fa-filter"></i> Filtrer
+                    </button>
+                </div>
+            </section>
+
+            <!-- Content Grid -->
+            <div class="content-grid">
+                <!-- Documents Table -->
+                <section class="documents-section">
+                    <div class="section-header">
+                        <div>
+                            <h2>Liste des Documents</h2>
+                            <div class="documents-stats">
+                                <div class="stat-item">
+                                    <i class="fas fa-file-alt"></i>
+                                    <span>24 documents affichés</span>
+                                </div>
+                                <div class="stat-item">
+                                    <i class="fas fa-filter"></i>
+                                    <span>Filtré par: Tous</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <table class="documents-table">
+                        <thead>
+                            <tr>
+                                <th>Document</th>
+                                <th>Type</th>
+                                <th>Version</th>
+                                <th>Date de modification</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="documents-tbody">
+                            <tr class="fade-in">
+                                <td>
+                                    <div class="document-info">
+                                        <div class="document-icon">
+                                            <i class="fas fa-file-pdf"></i>
+                                        </div>
+                                        <div class="document-details">
+                                            <h4>Rapport d'avancement Q1 2025</h4>
+                                            <div class="document-meta">Projet Infrastructure Routière • 2.4 MB</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="document-type rapport">Rapport d'avancement</span>
+                                </td>
+                                <td>
+                                    <div class="document-version">
+                                        <span class="version-badge">v2.1</span>
+                                        <small>3 versions</small>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>15 mars 2025</div>
+                                    <small>par M. Rakoto</small>
+                                </td>
+                                <td>
+                                    <div class="document-actions">
+                                        <button class="action-btn view" title="Visualiser" onclick="viewDocument(1)">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="action-btn edit" title="Modifier" onclick="editDocument(1)">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="action-btn delete" title="Supprimer" onclick="deleteDocument(1)">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="fade-in">
+                                <td>
+                                    <div class="document-info">
+                                        <div class="document-icon">
+                                            <i class="fas fa-file-contract"></i>
+                                        </div>
+                                        <div class="document-details">
+                                            <h4>Convention Partenariat ONG</h4>
+                                            <div class="document-meta">Éducation Rurale • 1.8 MB</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="document-type contrat">Document contractuel</span>
+                                </td>
+                                <td>
+                                    <div class="document-version">
+                                        <span class="version-badge">v1.5</span>
+                                        <small>2 versions</small>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>12 mars 2025</div>
+                                    <small>par Mme Razafy</small>
+                                </td>
+                                <td>
+                                    <div class="document-actions">
+                                        <button class="action-btn view" title="Visualiser" onclick="viewDocument(2)">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="action-btn edit" title="Modifier" onclick="editDocument(2)">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="action-btn delete" title="Supprimer" onclick="deleteDocument(2)">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="fade-in">
+                                <td>
+                                    <div class="document-info">
+                                        <div class="document-icon">
+                                            <i class="fas fa-file-code"></i>
+                                        </div>
+                                        <div class="document-details">
+                                            <h4>Spécifications Techniques Aménagement</h4>
+                                            <div class="document-meta">Développement Urbain • 3.2 MB</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="document-type technique">Document technique</span>
+                                </td>
+                                <td>
+                                    <div class="document-version">
+                                        <span class="version-badge">v4.0</span>
+                                        <small>7 versions</small>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div>08 mars 2025</div>
+                                    <small>par M. Rabe</small>
+                                </td>
+                                <td>
+                                    <div class="document-actions">
+                                        <button class="action-btn view" title="Visualiser" onclick="viewDocument(3)">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="action-btn edit" title="Modifier" onclick="editDocument(3)">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="action-btn delete" title="Supprimer" onclick="deleteDocument(3)">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <!-- Upload Section -->
+                <aside>
+                    <section class="upload-section">
+                        <h3><i class="fas fa-cloud-upload-alt"></i> Ajouter un Document</h3>
+
+                        <form id="upload-form" enctype="multipart/form-data">
+                            <div class="file-upload-area" onclick="document.getElementById('file-input').click()">
+                                <div class="upload-icon">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                </div>
+                                <div class="upload-text">
+                                    <strong>Cliquez pour sélectionner</strong> ou glissez-déposez vos fichiers
+                                </div>
+                                <div class="upload-hint">
+                                    PDF, DOC, DOCX, XLS, XLSX (Max 10 MB)
+                                </div>
+                                <input type="file" id="file-input" class="file-input-hidden" multiple accept=".pdf,.doc,.docx,.xls,.xlsx">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="document-title">Titre du document</label>
+                                <input type="text" id="document-title" class="form-control" placeholder="Saisir le titre..." required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="document-type">Type de document</label>
+                                <select id="document-type" class="form-control select-control" required>
+                                    <option value="">Sélectionner le type</option>
+                                    <option value="rapport">Rapport d'avancement</option>
+                                    <option value="contrat">Document contractuel</option>
+                                    <option value="technique">Document technique</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="project-ref">Référence du projet</label>
+                                <input type="text" id="project-ref" class="form-control" placeholder="REF-2025-001">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="description">Description</label>
+                                <textarea id="description" class="form-control" rows="3" placeholder="Description optionnelle du document..."></textarea>
+                            </div>
+
+                            <button type="submit" class="btn btn-success" style="width: 100%;">
+                                <i class="fas fa-plus"></i> Ajouter le Document
+                            </button>
+                        </form>
+
+                        <div id="upload-progress" class="upload-progress" style="display: none;">
+                            <div class="progress-bar">
+                                <div class="progress-fill"></div>
+                            </div>
+                            <div class="progress-text">Téléchargement en cours...</div>
+                        </div>
+                    </section>
+
+                    <!-- Recent Activity -->
+                    <section class="upload-section" style="margin-top: 1.5rem;">
+                        <h3><i class="fas fa-history"></i> Activité Récente</h3>
+
+                        <div class="activity-list">
+                            <div class="activity-item">
+                                <div class="activity-icon">
+                                    <i class="fas fa-file-plus"></i>
+                                </div>
+                                <div class="activity-details">
+                                    <div class="activity-text">Document "Rapport Q1" ajouté</div>
+                                    <div class="activity-time">Il y a 2h</div>
+                                </div>
+                            </div>
+
+                            <div class="activity-item">
+                                <div class="activity-icon">
+                                    <i class="fas fa-edit"></i>
+                                </div>
+                                <div class="activity-details">
+                                    <div class="activity-text">Convention mise à jour (v1.5)</div>
+                                    <div class="activity-time">Il y a 4h</div>
+                                </div>
+                            </div>
+
+                            <div class="activity-item">
+                                <div class="activity-icon">
+                                    <i class="fas fa-archive"></i>
+                                </div>
+                                <div class="activity-details">
+                                    <div class="activity-text">3 documents archivés</div>
+                                    <div class="activity-time">Hier</div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </aside>
+            </div>
+        </div>
+    </main>
+
+    <!-- Document Preview Modal -->
+    <div id="preview-modal" class="modal">
+        <div class="modal-content" style="width: 90%; max-width: 1000px;">
+            <div class="modal-header">
+                <h4><i class="fas fa-eye"></i> Aperçu du Document</h4>
+                <button class="modal-close" onclick="closeModal('preview-modal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="document-preview">
+                    <!-- Document preview content will be loaded here -->
+                    <div style="text-align: center; padding: 3rem; color: #6b7280;">
+                        <i class="fas fa-file-alt" style="font-size: 4rem; margin-bottom: 1rem;"></i>
+                        <p>Aperçu du document en cours de chargement...</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('preview-modal')">Fermer</button>
+                <button class="btn btn-primary">
+                    <i class="fas fa-download"></i> Télécharger
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Document Modal -->
+    <div id="edit-modal" class="modal">
+        <div class="modal-content" style="width: 90%; max-width: 600px;">
+            <div class="modal-header">
+                <h4><i class="fas fa-edit"></i> Modifier le Document</h4>
+                <button class="modal-close" onclick="closeModal('edit-modal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="edit-form">
+                    <div class="form-group">
+                        <label for="edit-title">Titre du document</label>
+                        <input type="text" id="edit-title" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="edit-type">Type de document</label>
+                        <select id="edit-type" class="form-control select-control" required>
+                            <option value="rapport">Rapport d'avancement</option>
+                            <option value="contrat">Document contractuel</option>
+                            <option value="technique">Document technique</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="edit-project">Référence du projet</label>
+                        <input type="text" id="edit-project" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="edit-description">Description</label>
+                        <textarea id="edit-description" class="form-control" rows="3"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Version actuelle</label>
+                        <div class="version-info" style="padding: 1rem; background: #f3f4f6; border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
+                            <span>v2.1 - Dernière modification: 15 mars 2025</span>
+                            <button type="button" class="btn btn-sm btn-secondary">
+                                <i class="fas fa-code-branch"></i> Nouvelle version
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('edit-modal')">Annuler</button>
+                <button class="btn btn-primary" onclick="saveDocument()">
+                    <i class="fas fa-save"></i> Enregistrer
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        /* Additional styles for new components */
+        .upload-progress {
+            margin-top: 1rem;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--gray-200);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 0.5rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--primary-color);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            font-size: 0.9rem;
+            color: var(--gray-600);
+            text-align: center;
+        }
+
+        .activity-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--gray-100);
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-icon {
+            width: 2rem;
+            height: 2rem;
+            background: var(--primary-light);
+            color: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+
+        .activity-details {
+            flex: 1;
+        }
+
+        .activity-text {
+            font-size: 0.9rem;
+            color: var(--gray-800);
+            margin-bottom: 0.25rem;
+        }
+
+        .activity-time {
+            font-size: 0.8rem;
+            color: var(--gray-600);
+        }
+
+        .version-info {
+            font-size: 0.9rem;
+        }
+
+        /* Toast notifications */
+        .toast {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--gray-200);
+            padding: 1rem 1.5rem;
+            z-index: 1100;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+            max-width: 400px;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        .toast.success {
+            border-left: 4px solid var(--secondary-color);
+        }
+
+        .toast.error {
+            border-left: 4px solid var(--danger-color);
+        }
+
+        .toast-content {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .toast-icon {
+            font-size: 1.2rem;
+        }
+
+        .toast.success .toast-icon {
+            color: var(--secondary-color);
+        }
+
+        .toast.error .toast-icon {
+            color: var(--danger-color);
+        }
+
+        .toast-text {
+            flex: 1;
+        }
+
+        .toast-title {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            color: var(--gray-800);
+        }
+
+        .toast-message {
+            font-size: 0.9rem;
+            color: var(--gray-600);
+        }
+    </style>
+
+    <script>
+        // Global variables
+        let documents = [
+            {
+                id: 1,
+                title: "Rapport d'avancement Q1 2025",
+                type: "rapport",
+                project: "Infrastructure Routière",
+                version: "2.1",
+                versions: 3,
+                size: "2.4 MB",
+                date: "15 mars 2025",
+                author: "M. Rakoto",
+                description: "Rapport trimestriel sur l'avancement des travaux d'infrastructure routière"
+            },
+            {
+                id: 2,
+                title: "Convention Partenariat ONG",
+                type: "contrat",
+                project: "Éducation Rurale",
+                version: "1.5",
+                versions: 2,
+                size: "1.8 MB",
+                date: "12 mars 2025",
+                author: "Mme Razafy",
+                description: "Convention de partenariat avec les ONG locales pour l'éducation"
+            },
+            {
+                id: 3,
+                title: "Spécifications Techniques Aménagement",
+                type: "technique",
+                project: "Développement Urbain",
+                version: "4.0",
+                versions: 7,
+                size: "3.2 MB",
+                date: "08 mars 2025",
+                author: "M. Rabe",
+                description: "Spécifications techniques pour l'aménagement urbain"
+            }
+        ];
+
+        // Document management functions
+        function filterDocuments() {
+            const searchTerm = document.getElementById('search').value.toLowerCase();
+            const typeFilter = document.getElementById('type-filter').value;
+
+            const filteredDocs = documents.filter(doc => {
+                const matchesSearch = doc.title.toLowerCase().includes(searchTerm) ||
+                                    doc.project.toLowerCase().includes(searchTerm);
+                const matchesType = !typeFilter || doc.type === typeFilter;
+                return matchesSearch && matchesType;
+            });
+
+            renderDocuments(filteredDocs);
+            showToast('success', 'Filtres appliqués', `${filteredDocs.length} document(s) trouvé(s)`);
+        }
+
+        function renderDocuments(docsToRender) {
+            const tbody = document.getElementById('documents-tbody');
+
+            if (docsToRender.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="5">
+                            <div class="empty-state">
+                                <i class="fas fa-search"></i>
+                                <h3>Aucun document trouvé</h3>
+                                <p>Essayez de modifier vos critères de recherche</p>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tbody.innerHTML = docsToRender.map(doc => `
+                <tr class="fade-in">
+                    <td>
+                        <div class="document-info">
+                            <div class="document-icon">
+                                <i class="fas fa-file-${doc.type === 'rapport' ? 'alt' : doc.type === 'contrat' ? 'contract' : 'code'}"></i>
+                            </div>
+                            <div class="document-details">
+                                <h4>${doc.title}</h4>
+                                <div class="document-meta">${doc.project} • ${doc.size}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <span class="document-type ${doc.type}">${getTypeLabel(doc.type)}</span>
+                    </td>
+                    <td>
+                        <div class="document-version">
+                            <span class="version-badge">v${doc.version}</span>
+                            <small>${doc.versions} version${doc.versions > 1 ? 's' : ''}</small>
+                        </div>
+                    </td>
+                    <td>
+                        <div>${doc.date}</div>
+                        <small>par ${doc.author}</small>
+                    </td>
+                    <td>
+                        <div class="document-actions">
+                            <button class="action-btn view" title="Visualiser" onclick="viewDocument(${doc.id})">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button class="action-btn edit" title="Modifier" onclick="editDocument(${doc.id})">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="action-btn delete" title="Supprimer" onclick="deleteDocument(${doc.id})">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function getTypeLabel(type) {
+            const labels = {
+                'rapport': 'Rapport d\'avancement',
+                'contrat': 'Document contractuel',
+                'technique': 'Document technique'
+            };
+            return labels[type] || type;
+        }
+
+        function viewDocument(id) {
+            const doc = documents.find(d => d.id === id);
+            if (doc) {
+                showModal('preview-modal');
+                // Here you would load the actual document content
+                document.getElementById('document-preview').innerHTML = `
+                    <div style="text-align: center; padding: 3rem;">
+                        <i class="fas fa-file-alt" style="font-size: 4rem; color: #3b82f6; margin-bottom: 1rem;"></i>
+                        <h3>${doc.title}</h3>
+                        <p style="color: #6b7280; margin: 1rem 0;">Version ${doc.version} • ${doc.size}</p>
+                        <p style="background: #f3f4f6; padding: 1rem; border-radius: 8px; margin-top: 2rem;">
+                            ${doc.description}
+                        </p>
+                    </div>
+                `;
+            }
+        }
+
+        function editDocument(id) {
+            const doc = documents.find(d => d.id === id);
+            if (doc) {
+                document.getElementById('edit-title').value = doc.title;
+                document.getElementById('edit-type').value = doc.type;
+                document.getElementById('edit-project').value = doc.project;
+                document.getElementById('edit-description').value = doc.description;
+                showModal('edit-modal');
+            }
+        }
+
+        function deleteDocument(id) {
+            if (confirm('Êtes-vous sûr de vouloir supprimer ce document ? Cette action est irréversible.')) {
+                documents = documents.filter(d => d.id !== id);
+                renderDocuments(documents);
+                showToast('success', 'Document supprimé', 'Le document a été supprimé avec succès');
+            }
+        }
+
+        function saveDocument() {
+            // Simulate saving
+            setTimeout(() => {
+                closeModal('edit-modal');
+                showToast('success', 'Document modifié', 'Les modifications ont été enregistrées');
+            }, 500);
+        }
+
+        // File upload handling
+        function setupFileUpload() {
+            const fileInput = document.getElementById('file-input');
+            const uploadArea = document.querySelector('.file-upload-area');
+            const form = document.getElementById('upload-form');
+
+            // Drag and drop
+            uploadArea.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                uploadArea.classList.add('dragover');
+            });
+
+            uploadArea.addEventListener('dragleave', () => {
+                uploadArea.classList.remove('dragover');
+            });
+
+            uploadArea.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadArea.classList.remove('dragover');
+                const files = e.dataTransfer.files;
+                handleFiles(files);
+            });
+
+            fileInput.addEventListener('change', (e) => {
+                handleFiles(e.target.files);
+            });
+
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                uploadDocument();
+            });
+        }
+
+        function handleFiles(files) {
+            if (files.length > 0) {
+                document.querySelector('.upload-text').innerHTML =
+                    `<strong>${files.length} fichier(s) sélectionné(s)</strong>`;
+            }
+        }
+
+        function uploadDocument() {
+            const title = document.getElementById('document-title').value;
+            const type = document.getElementById('document-type').value;
+            const project = document.getElementById('project-ref').value;
+            const description = document.getElementById('description').value;
+
+            if (!title || !type) {
+                showToast('error', 'Erreur', 'Veuillez remplir tous les champs obligatoires');
+                return;
+            }
+
+            // Show progress
+            document.getElementById('upload-progress').style.display = 'block';
+            const progressFill = document.querySelector('.progress-fill');
+
+            // Simulate upload progress
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += Math.random() * 30;
+                if (progress >= 100) {
+                    progress = 100;
+                    clearInterval(interval);
+
+                    // Add to documents array
+                    const newDoc = {
+                        id: Date.now(),
+                        title: title,
+                        type: type,
+                        project: project || 'Non spécifié',
+                        version: '1.0',
+                        versions: 1,
+                        size: '1.2 MB',
+                        date: new Date().toLocaleDateString('fr-FR'),
+                        author: 'Utilisateur actuel',
+                        description: description
+                    };
+
+                    documents.unshift(newDoc);
+                    renderDocuments(documents);
+
+                    // Reset form
+                    document.getElementById('upload-form').reset();
+                    document.querySelector('.upload-text').innerHTML =
+                        '<strong>Cliquez pour sélectionner</strong> ou glissez-déposez vos fichiers';
+                    document.getElementById('upload-progress').style.display = 'none';
+
+                    showToast('success', 'Document ajouté', 'Le document a été téléchargé avec succès');
+                }
+                progressFill.style.width = progress + '%';
+            }, 200);
+        }
+
+        // Modal functions
+        function showModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.classList.remove('show');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Toast notifications
+        function showToast(type, title, message) {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `
+                <div class="toast-content">
+                    <div class="toast-icon">
+                        <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i>
+                    </div>
+                    <div class="toast-text">
+                        <div class="toast-title">${title}</div>
+                        <div class="toast-message">${message}</div>
+                    </div>
+                </div>
+            `;
+
+            document.body.appendChild(toast);
+
+            setTimeout(() => toast.classList.add('show'), 100);
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => document.body.removeChild(toast), 300);
+            }, 4000);
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            setupFileUpload();
+            renderDocuments(documents);
+
+            // Close modals when clicking outside
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('modal')) {
+                    e.target.classList.remove('show');
+                    document.body.style.overflow = 'auto';
+                }
+            });
+
+            // Real-time search
+            document.getElementById('search').addEventListener('input', function() {
+                setTimeout(filterDocuments, 300);
+            });
+        });
+    </script>
+</body>
+</html>

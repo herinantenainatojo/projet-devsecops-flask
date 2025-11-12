@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Système de Suivi des Projets - Région Haute Matsiatra</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header class="header">
+        <div class="header-container">
+            <div class="logo-section">
+                <img src="{{ url_for('static', filename='img/logo_region.png') }}" alt="Logo Région Haute Matsiatra" class="logo">
+                <div class="titles">
+                    <h1 class="main-title">Système de Suivi des Projets et Budgets</h1>
+                    <h2 class="subtitle">Région Haute Matsiatra - Madagascar</h2>
+                </div>
+            </div>
+
+            <div class="user-section">
+                <div class="user-info">
+                    <span class="user-name">{{ user.nom if user else 'Utilisateur' }}</span>
+                    <span class="user-role">Administrateur</span>
+                </div>
+                <div class="user-avatar">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+                <button class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </div>
+        </div>
+
+        <nav class="nav">
+            <ul class="nav-list">
+                <li class="nav-item">
+                    <a href="{{ url_for('routes.index') }}" class="nav-link">
+                        <i class="fas fa-tachometer-alt"></i> Tableau de bord
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ url_for('routes.budgets') }}" class="nav-link active">
+                        <i class="fas fa-wallet"></i> Budgets
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ url_for('routes.projets') }}" class="nav-link">
+                        <i class="fas fa-project-diagram"></i> Projets
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-chart-bar"></i> Rapports
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ url_for('routes.gestion_utilisateurs') }}" class="nav-link">
+                        <i class="fas fa-cog"></i> Administration
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <div class="page-header">
+                <h2 class="page-title">
+                    <i class="fas fa-wallet"></i> Gestion des Budgets
+                </h2>
+                <div class="header-actions">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Rechercher un budget...">
+                    </div>
+                    <button class="btn btn-primary" id="add-budget-btn">
+                        <i class="fas fa-plus"></i> Nouveau budget
+                    </button>
+                    <button class="btn btn-secondary">
+                        <i class="fas fa-download"></i> Exporter
+                    </button>
+                </div>
+            </div>
+
+            <div class="stats-cards">
+                <div class="stat-card">
+                    <div class="stat-icon total-budget">
+                        <i class="fas fa-money-bill-wave"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>2 450 000 Ariary</h3>
+                        <p>Budget total</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon approved">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>500 000 Ariary</h3>
+                        <p>Budget approuvé</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon in-progress">
+                        <i class="fas fa-spinner"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>750 000 Ariary</h3>
+                        <p>En cours</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon planned">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>1 200 000 Ariary</h3>
+                        <p>Planifié</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3>Liste des Budgets</h3>
+                    <div class="filters">
+                        <select class="filter-select">
+                            <option value="">Tous les statuts</option>
+                            <option value="Approuvé">Approuvé</option>
+                            <option value="En cours">En cours</option>
+                            <option value="Planifié">Planifié</option>
+                        </select>
+                        <select class="filter-select">
+                            <option value="">Trier par</option>
+                            <option value="date">Date</option>
+                            <option value="montant">Montant</option>
+                            <option value="nom">Nom</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Nom du Budget</th>
+                                    <th>Montant</th>
+                                    <th>Date d'allocation</th>
+                                    <th>Statut</th>
+                                    <th>Projet associé</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% if budgets %}
+                                    {% for budget in budgets %}
+                                    <tr>
+                                        <td class="budget-title">
+                                            <i class="fas fa-wallet"></i>
+                                            {{ budget.nom }}
+                                        </td>
+                                        <td class="budget-amount">{{ budget.montant }}</td>
+                                        <td class="budget-date">{{ budget.date }}</td>
+                                        <td class="budget-status">
+                                            <span class="status-badge status-{{ budget.statut|lower|replace(' ', '-') }}">
+                                                {{ budget.statut }}
+                                            </span>
+                                        </td>
+                                        <td class="budget-project">Projet {{ budget.id }}</td>
+                                        <td class="budget-actions">
+                                            <button class="btn-icon" title="Modifier">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button class="btn-icon" title="Supprimer">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                            <button class="btn-icon" title="Voir détails">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                {% else %}
+                                    <tr>
+                                        <td colspan="6" class="no-data">
+                                            <i class="fas fa-inbox"></i>
+                                            <p>Aucun budget disponible</p>
+                                            <button class="btn btn-primary">Créer un budget</button>
+                                        </td>
+                                    </tr>
+                                {% endif %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="pagination">
+                        <button class="pagination-btn" disabled>
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <span class="pagination-info">Page 1 sur 1</span>
+                        <button class="pagination-btn" disabled>
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal pour ajouter un budget -->
+        <div class="modal" id="add-budget-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>
+                        <i class="fas fa-plus-circle"></i> Nouveau Budget
+                    </h3>
+                    <button class="modal-close" id="close-modal">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="budget-form">
+                        <div class="form-group">
+                            <label for="budget-name">Nom du budget</label>
+                            <input type="text" id="budget-name" placeholder="Ex: Budget Développement Rural" required>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="budget-amount">Montant (Ariary)</label>
+                                <input type="number" id="budget-amount" step="0.01" placeholder="0.00" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="budget-date">Date d'allocation</label>
+                                <input type="date" id="budget-date" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="budget-status">Statut</label>
+                            <select id="budget-status" required>
+                                <option value="">Sélectionner un statut</option>
+                                <option value="Approuvé">Approuvé</option>
+                                <option value="En cours">En cours</option>
+                                <option value="Planifié">Planifié</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="budget-project">Projet associé</label>
+                            <select id="budget-project">
+                                <option value="">Sélectionner un projet</option>
+                                <option value="1">Développement des infrastructures routières</option>
+                                <option value="2">Programme d'éducation rural</option>
+                                <option value="3">Projet santé communautaire</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="budget-description">Description</label>
+                            <textarea id="budget-description" rows="3" placeholder="Description du budget..."></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" id="cancel-budget">Annuler</button>
+                    <button class="btn btn-primary" id="save-budget">
+                        <i class="fas fa-save"></i> Enregistrer
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Système de Suivi des Projets et Budgets</h4>
+                    <p>Région Haute Matsiatra - Madagascar</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p>Direction Générale du Développement Régional</p>
+                    <p>contact@hautematsiatra.mg</p>
+                    <p>+261 34 22 796 36</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Liens utiles</h4>
+                    <ul>
+                        <li><a href="#">Portail national</a></li>
+                        <li><a href="#">Documents officiels</a></li>
+                        <li><a href="#">Appels d'offres</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Région Haute Matsiatra - Tous droits réservés</p>
+                <p>Version 1.0.0</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/budgets.js') }}"></script>
+</body>
+</html>

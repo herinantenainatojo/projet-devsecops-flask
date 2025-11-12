@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion | Région Haute Matsiatra</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <div class="logo-container">
+                <!-- Remplacez le src par le chemin de votre image -->
+                <img src="{{ url_for('static', filename='images/logo-region-hm.jpeg') }}" alt="Région Haute Matsiatra" class="region-logo">
+                <div class="logo-text">Région Haute Matsiatra</div>
+            </div>
+            <h1>Connexion</h1>
+            <p class="subtitle">Accédez à votre espace personnel en toute sécurité</p>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="message {{ category }}" role="alert" aria-live="polite">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <form method="POST" action="{{ url_for('routes.login') }}" novalidate id="loginForm">
+                {{ form.hidden_tag() }}
+
+                <div class="form-group">
+                    {{ form.username.label(for="username") }}
+                    <div class="input-wrapper">
+                        {{ form.username(class="form-control", placeholder="Entrez votre nom d'utilisateur", id="username", autocomplete="username", required=true) }}
+                        <span class="input-icon" aria-hidden="true">👤</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    {{ form.password.label(for="password") }}
+                    <div class="input-wrapper">
+                        {{ form.password(class="form-control", placeholder="Entrez votre mot de passe", id="password", autocomplete="current-password", required=true) }}
+                        <button type="button" class="password-toggle" aria-label="Afficher/masquer le mot de passe" id="passwordToggle">
+                            <span id="password-icon">👁️</span>
+                        </button>
+                    </div>
+                </div>
+
+                {{ form.submit(class="btn", id="submitBtn") }}
+            </form>
+
+            <div class="footer-links">
+                <a href="{{ url_for('routes.mot_de_passe_oublie') }}">Mot de passe oublié ?</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/login.js') }}"></script>
+</body>
+</html>

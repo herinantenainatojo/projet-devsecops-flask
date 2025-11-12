@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion des Utilisateurs - Région Haute Matsiatra</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/gestion_utilisateurs.css') }}">
+</head>
+<body>
+    <div class="container">
+        <!-- En-tête avec image de fond -->
+        <div class="page-header">
+            <div class="header-content">
+                <div class="header">
+                    <div class="logo">
+                        <i class="fas fa-mountain logo-icon"></i>
+                        <span>Région Haute Matsiatra</span>
+                    </div>
+                    <a href="{{ url_for('routes.index') }}" class="back-btn">
+                        <i class="fas fa-arrow-left"></i>
+                        Retour au Tableau de Bord
+                    </a>
+                </div>
+
+                <h1 class="page-title">Gestion des Utilisateurs</h1>
+                <p class="page-subtitle">Administration complète des accès et permissions du système de suivi des projets régionaux</p>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <!-- Instructions pour l'image -->
+            <div class="image-instructions">
+                <strong>Note :</strong> Pour utiliser votre image, remplacez 'votre-image.jpg' dans le code CSS par le chemin de votre image.
+            </div>
+
+            <!-- Messages flash -->
+            <div class="flash-message flash-success" id="flashMessage" style="display: none;">
+                <span id="flashText"></span>
+                <button class="flash-close" onclick="document.getElementById('flashMessage').style.display = 'none'">
+                    &times;
+                </button>
+            </div>
+
+            <button class="btn btn-add" id="addUserBtn">
+                <i class="fas fa-plus"></i>
+                Ajouter un Utilisateur
+            </button>
+
+            <!-- Tableau des utilisateurs -->
+            <h2>Liste des Utilisateurs</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nom</th>
+                            <th>Email</th>
+                            <th>Rôle</th>
+                            <th>Statut</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Jean Dupont</td>
+                            <td>jean@example.com</td>
+                            <td><span class="role-badge role-admin">Administrateur</span></td>
+                            <td>
+                                <div class="status-indicator">
+                                    <span class="status-dot status-active"></span>
+                                    Actif
+                                </div>
+                            </td>
+                            <td class="action-cell">
+                                <button class="btn btn-edit" data-id="1">
+                                    <i class="fas fa-edit"></i>
+                                    Modifier
+                                </button>
+                                <button class="btn btn-delete" data-id="1">
+                                    <i class="fas fa-trash"></i>
+                                    Supprimer
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Marie Lambert</td>
+                            <td>marie@example.com</td>
+                            <td><span class="role-badge role-manager">Gestionnaire</span></td>
+                            <td>
+                                <div class="status-indicator">
+                                    <span class="status-dot status-active"></span>
+                                    Actif
+                                </div>
+                            </td>
+                            <td class="action-cell">
+                                <button class="btn btn-edit" data-id="2">
+                                    <i class="fas fa-edit"></i>
+                                    Modifier
+                                </button>
+                                <button class="btn btn-delete" data-id="2">
+                                    <i class="fas fa-trash"></i>
+                                    Supprimer
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Paul Martin</td>
+                            <td>paul@example.com</td>
+                            <td><span class="role-badge role-user">Utilisateur</span></td>
+                            <td>
+                                <div class="status-indicator">
+                                    <span class="status-dot status-inactive"></span>
+                                    Inactif
+                                </div>
+                            </td>
+                            <td class="action-cell">
+                                <button class="btn btn-edit" data-id="3">
+                                    <i class="fas fa-edit"></i>
+                                    Modifier
+                                </button>
+                                <button class="btn btn-delete" data-id="3">
+                                    <i class="fas fa-trash"></i>
+                                    Supprimer
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Formulaire d'ajout/modification (caché par défaut) -->
+            <div class="form-container" id="userForm" style="display: none;">
+                <h2 id="formTitle">Ajouter un Utilisateur</h2>
+                <form id="userFormElement">
+                    <input type="hidden" id="userId" name="userId" value="">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="nom">Nom complet</label>
+                            <input type="text" id="nom" name="nom" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="role">Rôle</label>
+                            <select id="role" name="role" required>
+                                <option value="">Sélectionner un rôle</option>
+                                <option value="admin">Administrateur</option>
+                                <option value="manager">Gestionnaire</option>
+                                <option value="user">Utilisateur</option>
+                                <option value="viewer">Observateur</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="statut">Statut</label>
+                            <select id="statut" name="statut" required>
+                                <option value="active">Actif</option>
+                                <option value="inactive">Inactif</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-cancel" id="cancelBtn">Annuler</button>
+                        <button type="submit" class="btn btn-submit">Enregistrer</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de confirmation de suppression -->
+    <div class="modal" id="deleteModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Confirmer la suppression</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p class="modal-text">Êtes-vous sûr de vouloir supprimer cet utilisateur ? Cette action est irréversible et supprimera toutes les données associées à cet utilisateur.</p>
+            </div>
+            <div class="modal-actions">
+                <button class="btn btn-cancel" id="modalCancelBtn">Annuler</button>
+                <button class="btn btn-delete" id="modalConfirmBtn">Supprimer</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/gestion_utilisateurs.js') }}"></script>
+</body>
+</html>

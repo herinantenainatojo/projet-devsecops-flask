@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rapports - Région Haute Matsiatra</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --primary-light: #3b82f6;
+            --primary-dark: #1e40af;
+            --secondary-color: #10b981;
+            --secondary-light: #34d399;
+            --secondary-dark: #059669;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --info-color: #06b6d4;
+            --dark-color: #1f2937;
+            --light-color: #f8fafc;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-400: #9ca3af;
+            --gray-500: #6b7280;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+            --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-secondary: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            --border-radius: 12px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+            min-height: 100vh;
+            color: var(--text-primary);
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            min-height: 100vh;
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* Header */
+        header {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 1.25rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%23ffffff' fill-opacity='0.1' d='M0,128L48,117.3C96,107,192,85,288,112C384,139,480,213,576,224C672,235,768,181,864,160C960,139,1056,149,1152,165.3C1248,181,1344,203,1392,213.3L1440,224L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E");
+            background-size: cover;
+            background-position: bottom;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .logo-icon {
+            font-size: 2.2rem;
+        }
+
+        .region-name {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-top: 4px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            transition: background-color 0.3s;
+        }
+
+        nav a:hover, nav a.active {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        /* Main content */
+        main {
+            padding: 2rem;
+        }
+
+        /* Dashboard cards */
+        .dashboard-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow-md);
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .card-title {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            background: var(--gradient-primary);
+            color: white;
+        }
+
+        .card-value {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-change {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .positive { color: var(--secondary-color); }
+        .negative { color: var(--danger-color); }
+
+        /* Section headers */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 2rem 0 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid var(--gray-200);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .section-icon {
+            color: var(--primary-color);
+        }
+
+        /* Filter section */
+        .filter-section {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow-md);
+            margin-bottom: 2rem;
+        }
+
+        .filter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        label {
+            font-weight: 500;
+            color: var(--text-primary);
+            font-size: 0.875rem;
+        }
+
+        select, input {
+            padding: 0.75rem;
+            border: 1px solid var(--gray-300);
+            border-radius: var(--border-radius);
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+        }
+
+        /* Reports table */
+        .table-container {
+            overflow-x: auto;
+            border-radius: var(--border-radius);
+            border: 1px solid var(--gray-200);
+            margin-bottom: 2rem;
+            background: white;
+            box-shadow: var(--shadow-md);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        th {
+            background: var(--gray-100);
+            color: var(--text-secondary);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.875rem;
+            letter-spacing: 0.05em;
+            position: sticky;
+            top: 0;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover {
+            background-color: var(--gray-100);
+        }
+
+        /* Report type badges */
+        .report-badge {
+            display: inline-block;
+            padding: 0.35rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .report-budget { background-color: rgba(37, 99, 235, 0.1); color: var(--primary-color); }
+        .report-finance { background-color: rgba(16, 185, 129, 0.1); color: var(--secondary-color); }
+        .report-audit { background-color: rgba(245, 158, 11, 0.1); color: var(--warning-color); }
+        .report-progress { background-color: rgba(6, 182, 212, 0.1); color: var(--info-color); }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+            text-decoration: none;
+            font-size: 0.875rem;
+        }
+
+        .btn-sm {
+            padding: 0.35rem 0.75rem;
+            font-size: 0.75rem;
+        }
+
+        .btn-primary { background-color: var(--primary-color); color: white; }
+        .btn-primary:hover { background-color: var(--primary-dark); }
+
+        .btn-secondary { background-color: var(--gray-500); color: white; }
+        .btn-secondary:hover { background-color: var(--gray-600); }
+
+        .btn-success { background-color: var(--secondary-color); color: white; }
+        .btn-success:hover { background-color: var(--secondary-dark); }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--gray-300);
+            color: var(--text-secondary);
+        }
+
+        .btn-outline:hover {
+            background: var(--gray-100);
+            border-color: var(--gray-400);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--gray-100);
+            padding: 1.5rem 2rem;
+            text-align: center;
+            color: var(--text-secondary);
+            border-top: 1px solid var(--gray-200);
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem;
+            }
+
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            main {
+                padding: 1rem;
+            }
+
+            .dashboard-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .filter-grid {
+                grid-template-columns: 1fr;
+            }
+
+            th, td {
+                padding: 0.75rem 0.5rem;
+            }
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card {
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        /* Empty state */
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-secondary);
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        /* Action buttons */
+        .action-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        /* Report preview */
+        .report-preview {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .report-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background: var(--gray-100);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+            flex-shrink: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-file-pdf logo-icon"></i>
+                    <div>
+                        <h1>Gestion des Rapports</h1>
+                        <div class="region-name">Région Haute Matsiatra</div>
+                    </div>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="{{ url_for('routes.index') }}">Tableau de bord</a></li>
+                        <li><a href="{{ url_for('routes.projets') }}">Projets</a></li>
+                        <li><a href="{{ url_for('routes.budgets') }}">Budgets</a></li>
+                        <li><a href="{{ url_for('routes.cartographie') }}">Cartographie</a></li>
+                        <li><a href="{{ url_for('routes.analytics_ia') }}">IA & Prédiction</a></li>
+                        <li><a href="{{ url_for('routes.analytics') }}">Analytics</a></li>
+                        <li><a href="{{ url_for('routes.rapports') }}" class="active">Rapports</a></li>
+                    </ul>
+                </nav>
+                <div class="user-menu">
+                    <div class="user-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div>
+                        <div style="font-weight: 500;">{{ current_user.nom if current_user else "Administrateur" }}</div>
+                        <div style="font-size: 0.8rem; opacity: 0.8;">{{ current_user.role if current_user else "Admin" }}</div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <!-- Dashboard Cards -->
+            <div class="dashboard-cards">
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-title">Rapports Disponibles</span>
+                        <div class="card-icon">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                    </div>
+                    <div class="card-value">{{ reports|length }}</div>
+                    <div class="card-change positive">
+                        <i class="fas fa-arrow-up"></i>
+                        <span>+3 ce mois</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-title">Téléchargements</span>
+                        <div class="card-icon">
+                            <i class="fas fa-download"></i>
+                        </div>
+                    </div>
+                    <div class="card-value">147</div>
+                    <div class="card-change positive">
+                        <i class="fas fa-arrow-up"></i>
+                        <span>+12% ce mois</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-title">Rapports Budgétaires</span>
+                        <div class="card-icon">
+                            <i class="fas fa-coins"></i>
+                        </div>
+                    </div>
+                    <div class="card-value">8</div>
+                    <div class="card-change positive">
+                        <i class="fas fa-arrow-up"></i>
+                        <span>Nouveaux rapports</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-title">Dernière Mise à Jour</span>
+                        <div class="card-icon">
+                            <i class="fas fa-history"></i>
+                        </div>
+                    </div>
+                    <div class="card-value">2j</div>
+                    <div class="card-change negative">
+                        <i class="fas fa-clock"></i>
+                        <span>Mise à jour nécessaire</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section Header -->
+            <div class="section-header">
+                <h2 class="section-title">
+                    <i class="fas fa-chart-line section-icon"></i>
+                    Rapports et Documents
+                </h2>
+                <div class="action-buttons">
+                    <button class="btn btn-outline">
+                        <i class="fas fa-file-export"></i> Exporter la liste
+                    </button>
+                    <button class="btn btn-primary">
+                        <i class="fas fa-plus"></i> Nouveau rapport
+                    </button>
+                </div>
+            </div>
+
+            <!-- Filter Section -->
+            <div class="filter-section">
+                <h3 style="margin-bottom: 1rem;">Filtres</h3>
+                <div class="filter-grid">
+                    <div class="form-group">
+                        <label for="type-filter">Type de rapport</label>
+                        <select id="type-filter">
+                            <option value="">Tous les types</option>
+                            <option value="budget">Budgétaire</option>
+                            <option value="finance">Financier</option>
+                            <option value="audit">Audit</option>
+                            <option value="progress">Avancement</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="date-filter">Date de publication</label>
+                        <select id="date-filter">
+                            <option value="">Toutes les dates</option>
+                            <option value="7">7 derniers jours</option>
+                            <option value="30">30 derniers jours</option>
+                            <option value="90">3 derniers mois</option>
+                            <option value="365">12 derniers mois</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="search-filter">Recherche</label>
+                        <input type="text" id="search-filter" placeholder="Nom du rapport...">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reports Table -->
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 50px;">ID</th>
+                            <th>Nom du rapport</th>
+                            <th>Type</th>
+                            <th>Date de publication</th>
+                            <th>Taille</th>
+                            <th style="width: 150px;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if reports %}
+                            {% for r in reports %}
+                            <tr>
+                                <td>{{ r.id }}</td>
+                                <td>
+                                    <div class="report-preview">
+                                        <div class="report-icon">
+                                            <i class="fas fa-file-pdf"></i>
+                                        </div>
+                                        <div>
+                                            <div style="font-weight: 600;">{{ r.nom }}</div>
+                                            <div style="font-size: 0.75rem; color: var(--text-secondary);">Rapport {{ r.id }}</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    {% if 'budget' in r.nom|lower %}
+                                        <span class="report-badge report-budget">Budgétaire</span>
+                                    {% elif 'santé' in r.nom|lower %}
+                                        <span class="report-badge report-finance">Santé</span>
+                                    {% elif 'infrastructure' in r.nom|lower %}
+                                        <span class="report-badge report-progress">Infrastructure</span>
+                                    {% else %}
+                                        <span class="report-badge report-audit">Général</span>
+                                    {% endif %}
+                                </td>
+                                <td>01/04/2025</td>
+                                <td>2.4 MB</td>
+                                <td>
+                                    <div style="display: flex; gap: 0.5rem;">
+                                        <a href="{{ url_for('static', filename='reports/' ~ r.fichier) }}" class="btn btn-primary btn-sm" target="_blank" title="Télécharger">
+                                            <i class="fas fa-download"></i>
+                                        </a>
+                                        <button class="btn btn-outline btn-sm" title="Aperçu">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="btn btn-outline btn-sm" title="Partager">
+                                            <i class="fas fa-share-alt"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="6">
+                                    <div class="empty-state">
+                                        <i class="fas fa-file-alt"></i>
+                                        <p>Aucun rapport disponible</p>
+                                        <p>Créez votre premier rapport pour commencer</p>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Additional Information -->
+            <div style="background: var(--gray-100); border-radius: var(--border-radius); padding: 1.5rem; margin-bottom: 2rem;">
+                <h3 style="margin-bottom: 1rem; color: var(--text-primary);">
+                    <i class="fas fa-info-circle" style="color: var(--info-color);"></i> Informations importantes
+                </h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem;">
+                    <div>
+                        <h4 style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 0.5rem;">Fréquence des rapports</h4>
+                        <p style="font-size: 0.875rem;">Les rapports budgétaires sont mis à jour mensuellement, les rapports d'avancement hebdomadairement.</p>
+                    </div>
+                    <div>
+                        <h4 style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 0.5rem;">Accès et partage</h4>
+                        <p style="font-size: 0.875rem;">Certains rapports peuvent être restreints. Contactez l'administrateur pour plus d'accès.</p>
+                    </div>
+                    <div>
+                        <h4 style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 0.5rem;">Format des rapports</h4>
+                        <p style="font-size: 0.875rem;">Tous les rapports sont disponibles en PDF. Certains sont également disponibles en format Excel.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div style="display: flex; justify-content: center; gap: 1rem; margin-top: 2rem;">
+                <a href="{{ url_for('routes.index') }}" class="btn btn-outline">
+                    <i class="fas fa-arrow-left"></i> Retour au tableau de bord
+                </a>
+                <button class="btn btn-success">
+                    <i class="fas fa-file-export"></i> Exporter tous les rapports
+                </button>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2025 Région Haute Matsiatra - Gestion des Rapports - Tous droits réservés</p>
+            <p style="font-size: 0.8rem; margin-top: 0.5rem;">Dernière mise à jour: 15/04/2025 | Version 2.1.0</p>
+        </footer>
+    </div>
+
+    <script>
+        // Filter functionality
+        document.getElementById('type-filter')?.addEventListener('change', filterReports);
+        document.getElementById('date-filter')?.addEventListener('change', filterReports);
+        document.getElementById('search-filter')?.addEventListener('input', filterReports);
+
+        function filterReports() {
+            const typeFilter = document.getElementById('type-filter').value;
+            const dateFilter = document.getElementById('date-filter').value;
+            const searchFilter = document.getElementById('search-filter').value.toLowerCase();
+
+            const rows = document.querySelectorAll('tbody tr');
+
+            rows.forEach(row => {
+                if (row.querySelector('.empty-state')) return;
+
+                const type = row.cells[2].textContent.toLowerCase();
+                const date = row.cells[3].textContent;
+                const name = row.cells[1].textContent.toLowerCase();
+
+                const typeMatch = !typeFilter || type.includes(typeFilter);
+                const dateMatch = !dateFilter || date === dateFilter;
+                const searchMatch = !searchFilter || name.includes(searchFilter);
+
+                row.style.display = typeMatch && dateMatch && searchMatch ? '' : 'none';
+            });
+        }
+
+        // Animation for cards
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.card');
+            cards.forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.1}s`;
+            });
+        });
+    </script>
+</body>
+</html>

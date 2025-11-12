@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Outils pour le Terrain - Région Haute Matsiatra</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --primary-light: #3b82f6;
+            --primary-dark: #1e40af;
+            --secondary-color: #10b981;
+            --secondary-light: #34d399;
+            --secondary-dark: #059669;
+            --tertiary-color: #f59e0b;
+            --tertiary-light: #fbbf24;
+            --tertiary-dark: #d97706;
+            --danger-color: #ef4444;
+            --info-color: #06b6d4;
+            --dark-color: #1f2937;
+            --light-color: #f8fafc;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-400: #9ca3af;
+            --gray-500: #6b7280;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+            --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-secondary: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            --gradient-tertiary: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            --border-radius: 12px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+            min-height: 100vh;
+            color: var(--text-primary);
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            min-height: 100vh;
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* Header */
+        header {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 1.25rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%23ffffff' fill-opacity='0.1' d='M0,128L48,117.3C96,107,192,85,288,112C384,139,480,213,576,224C672,235,768,181,864,160C960,139,1056,149,1152,165.3C1248,181,1344,203,1392,213.3L1440,224L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E");
+            background-size: cover;
+            background-position: bottom;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .logo-icon {
+            font-size: 2.2rem;
+        }
+
+        .region-name {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-top: 4px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            transition: background-color 0.3s;
+        }
+
+        nav a:hover, nav a.active {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        /* Main content */
+        main {
+            padding: 2rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: var(--gradient-tertiary);
+            color: white;
+            border-radius: var(--border-radius);
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 50%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%23ffffff' fill-opacity='0.1' d='M0,128L48,117.3C96,107,192,85,288,112C384,139,480,213,576,224C672,235,768,181,864,160C960,139,1056,149,1152,165.3C1248,181,1344,203,1392,213.3L1440,224L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E");
+            background-size: cover;
+            background-position: center;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 600px;
+        }
+
+        .hero-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .hero-description {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            opacity: 0.9;
+        }
+
+        /* Tools Grid */
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .tool-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow-md);
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-top: 4px solid var(--tertiary-color);
+        }
+
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .tool-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .tool-card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .tool-card-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            background: var(--gradient-tertiary);
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .tool-card-description {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+
+        .tool-card-features {
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-list {
+            list-style: none;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .feature-item i {
+            color: var(--secondary-color);
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+            text-decoration: none;
+            font-size: 0.875rem;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .btn-tertiary {
+            background-color: var(--tertiary-color);
+            color: white;
+        }
+
+        .btn-tertiary:hover {
+            background-color: var(--tertiary-dark);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--gray-300);
+            color: var(--text-secondary);
+        }
+
+        .btn-outline:hover {
+            background: var(--gray-100);
+            border-color: var(--gray-400);
+        }
+
+        /* Stats Section */
+        .stats-section {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow-md);
+            margin-bottom: 2rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 1rem;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--tertiary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        /* Download Section */
+        .download-section {
+            background: var(--gray-100);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .download-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .download-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--gray-100);
+            padding: 1.5rem 2rem;
+            text-align: center;
+            color: var(--text-secondary);
+            border-top: 1px solid var(--gray-200);
+        }
+
+        /* Responsive design */
+        @media (max-width: 1024px) {
+            .tools-grid {
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem;
+            }
+
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            main {
+                padding: 1rem;
+            }
+
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero {
+                padding: 1.5rem;
+            }
+
+            .hero-title {
+                font-size: 1.8rem;
+            }
+
+            .download-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .tool-card {
+            animation: fadeIn 0.5s ease forwards;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-tools logo-icon"></i>
+                    <div>
+                        <h1>Outils pour le Terrain</h1>
+                        <div class="region-name">Région Haute Matsiatra</div>
+                    </div>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="{{ url_for('routes.index') }}">Tableau de bord</a></li>
+                        <li><a href="{{ url_for('routes.projets') }}">Projets</a></li>
+                        <li><a href="{{ url_for('routes.budgets') }}">Budgets</a></li>
+                        <li><a href="{{ url_for('routes.cartographie') }}">Cartographie</a></li>
+                        <li><a href="{{ url_for('routes.analytics_ia') }}">IA & Prédiction</a></li>
+                        <li><a href="{{ url_for('routes.analytics') }}">Analytics</a></li>
+                        <li><a href="{{ url_for('routes.outils_terrain') }}" class="active">Outils Terrain</a></li>
+                    </ul>
+                </nav>
+                <div class="user-menu">
+                    <div class="user-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div>
+                        <div style="font-weight: 500;">{{ current_user.nom if current_user else "Administrateur" }}</div>
+                        <div style="font-size: 0.8rem; opacity: 0.8;">{{ current_user.role if current_user else "Admin" }}</div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <!-- Hero Section -->
+            <section class="hero">
+                <div class="hero-content">
+                    <h2 class="hero-title">Optimisez vos interventions sur le terrain</h2>
+                    <p class="hero-description">
+                        Une suite d'outils spécialement conçue pour les équipes terrain de la Région Haute Matsiatra.
+                        Collectez des données, gérez les projets et restez connectés même sans réseau.
+                    </p>
+                    <a href="#download" class="btn btn-tertiary">
+                        <i class="fas fa-download"></i> Télécharger l'application mobile
+                    </a>
+                </div>
+            </section>
+
+            <!-- Tools Grid -->
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <div class="tool-card-header">
+                        <h3 class="tool-card-title">Application Mobile</h3>
+                        <div class="tool-card-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                    </div>
+                    <p class="tool-card-description">
+                        Application dédiée pour la collecte de données terrain avec support hors-ligne.
+                    </p>
+                    <div class="tool-card-features">
+                        <ul class="feature-list">
+                            <li class="feature-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Capture de photos et géolocalisation</span>
+                            </li>
+                            <li class="feature-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Formulaires personnalisables</span>
+                            </li>
+                            <li class="feature-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Fonctionne sans connexion Internet</span>
+                            </li>
+                            <li class="feature-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Synchronisation automatique</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <a href="#" class="btn btn-primary">
+                        <i class="fas fa-info-circle"></i> Voir le guide d'utilisation
+                    </a>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-card-header">
+                        <h3 class="tool-card-title">Reconnaissance d'Images</h3>
+                        <div class="tool-card-icon">
+                            <i class="fas fa-camera"></i>
+                        </div>
+                    </div>
+                    <p class="tool-card-description">
+                        Système intelligent d'analyse et de reconnaissance d'images pour le suivi des chantiers.
+                    </p>
+                    <div class="tool-card-features">
+                        <ul class="feature-list">
+                            <li class="feature-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Détection automatique de l'avancement des travaux</span>
+                            </li>
+                            <li class="feature-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Identification des matériaux et équipements</span>
+                            </li>
+                            <li class="feature-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Comparaison avant/après</span>
+                            </li>
+                            <li class="feature-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Génération de rapports automatiques</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <a href="#" class="btn btn-primary">
+                        <i class="fas fa-play-circle"></i> Voir une démonstration
+                    </a>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-card-header">
+                        <h3 class="tool-card-title">Synchronisation Hors-Ligne</h3>
+                        <div class="tool-card-icon">
+                            <i class="fas fa-wifi"></i>
+                        </div>
+                    </div>
+                    <p class="tool-card-description">
+                        Fonctionnalité avancée de synchronisation pour les zones à connectivité limitée.
+                    </p>
+                    <div class="tool-card-features">
+                        <ul class="feature-list">
+                            <li class="feature-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Enregistrement des données sans connexion</span>
+                            </li>
+                            <li class="feature-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Synchronisation différée dès que possible</span>
+                            </li>
+                            <li class="feature-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Gestion des conflits de données</span>
+                            </li>
+                            <li class="feature-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Chiffrement des données locales</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <a href="#" class="btn btn-primary">
+                        <i class="fas fa-cog"></i> Configurer la synchronisation
+                    </a>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-card-header">
+                        <h3 class="tool-card-title">Validation Électronique</h3>
+                        <div class="tool-card-icon">
+                            <i class="fas fa-check-double"></i>
+                        </div>
+                    </div>
+                    <p class="tool-card-description">
+                        Système de validation et signature électronique pour les rapports de terrain.
+                    </p>
+                    <div class="tool-card-features">
+                        <ul class="feature-list">
+                            <li class="feature-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Signature électronique sécurisée</span>
+                            </li>
+                            <li class="feature-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Horodatage des validations</span>
+                            </li>
+                            <li class="feature-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Formulaires de validation personnalisables</span>
+                            </li>
+                            <li class="feature-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Génération de PV de réception</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <a href="#" class="btn btn-primary">
+                        <i class="fas fa-file-signature"></i> Créer un formulaire
+                    </a>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-card-header">
+                        <h3 class="tool-card-title">Géolocalisation Avancée</h3>
+                        <div class="tool-card-icon">
+                            <i class="fas fa-map-marked-alt"></i>
+                        </div>
+                    </div>
+                    <p class="tool-card-description">
+                        Outils de cartographie et de géolocalisation précise pour le suivi des interventions.
+                    </p>
+                    <div class="tool-card-features">
+                        <ul class="feature-list">
+                            <li class="feature-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Cartographie hors-ligne</span>
+                            </li>
+                            <li class="feature-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Zonage des territoires d'intervention</span>
+                            </li>
+                            <li class="feature-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Enregistrement des parcours</span>
+                            </li>
+                            <li class="feature-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Géofencing et alertes</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <a href="#" class="btn btn-primary">
+                        <i class="fas fa-map"></i> Accéder à la cartographie
+                    </a>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-card-header">
+                        <h3 class="tool-card-title">Rapports Automatiques</h3>
+                        <div class="tool-card-icon">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                    </div>
+                    <p class="tool-card-description">
+                        Génération automatique de rapports à partir des données collectées sur le terrain.
+                    </p>
+                    <div class="tool-card-features">
+                        <ul class="feature-list">
+                            <li class="feature-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Modèles de rapports personnalisables</span>
+                            </li>
+                            <li class="feature-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Export multiple formats (PDF, Excel, Word)</span>
+                            </li>
+                            <li class="feature-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Intégration de photos et cartes</span>
+                            </li>
+                            <li class="feature-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Partage et collaboration</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <a href="#" class="btn btn-primary">
+                        <i class="fas fa-download"></i> Télécharger un modèle
+                    </a>
+                </div>
+            </div>
+
+            <!-- Stats Section -->
+            <section class="stats-section">
+                <h3 style="margin-bottom: 1.5rem; text-align: center; color: var(--text-primary);">
+                    Impact des outils terrain sur nos opérations
+                </h3>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-value">73%</div>
+                        <div class="stat-label">Réduction du temps de collecte</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">64%</div>
+                        <div class="stat-label">Diminution des erreurs</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">89%</div>
+                        <div class="stat-label">Données synchronisées</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">42%</div>
+                        <div class="stat-label">Gain de productivité</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Download Section -->
+            <section id="download" class="download-section">
+                <h3 class="download-title">Téléchargez notre application mobile</h3>
+                <p style="margin-bottom: 1.5rem; color: var(--text-secondary);">
+                    Disponible sur toutes les plateformes pour vos équipes terrain
+                </p>
+                <div class="download-buttons">
+                    <a href="#" class="btn btn-tertiary">
+                        <i class="fab fa-google-play"></i> Google Play
+                    </a>
+                    <a href="#" class="btn btn-tertiary">
+                        <i class="fab fa-apple"></i> App Store
+                    </a>
+                    <a href="#" class="btn btn-outline">
+                        <i class="fas fa-desktop"></i> Version Web
+                    </a>
+                </div>
+            </section>
+
+            <!-- Support Section -->
+            <section style="text-align: center; margin-bottom: 2rem;">
+                <h3 style="margin-bottom: 1rem; color: var(--text-primary);">Besoin d'aide ?</h3>
+                <p style="margin-bottom: 1.5rem; color: var(--text-secondary);">
+                    Notre équipe support est disponible pour former vos équipes et répondre à vos questions
+                </p>
+                <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+                    <a href="#" class="btn btn-outline">
+                        <i class="fas fa-book"></i> Documentation
+                    </a>
+                    <a href="#" class="btn btn-outline">
+                        <i class="fas fa-video"></i> Tutoriels vidéo
+                    </a>
+                    <a href="#" class="btn btn-outline">
+                        <i class="fas fa-headset"></i> Contacter le support
+                    </a>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy; 2025 Région Haute Matsiatra - Outils Terrain - Tous droits réservés</p>
+        </footer>
+    </div>
+
+    <script>
+        // Animation for tool cards
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.tool-card');
+            cards.forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.1}s`;
+            });
+        });
+    </script>
+</body>
+</html>

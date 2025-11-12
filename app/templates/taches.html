@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion des Tâches - Région Haute Matsiatra</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/taches.css') }}">
+</head>
+<body>
+    <header class="header">
+        <div class="header-container">
+            <div class="logo-section">
+                <img src="{{ url_for('static', filename='img/logo_region.png') }}" alt="Logo Région Haute Matsiatra" class="logo">
+                <div class="titles">
+                    <h1 class="main-title">Système de Suivi des Projets et Budgets</h1>
+                    <h2 class="subtitle">Région Haute Matsiatra - Madagascar</h2>
+                </div>
+            </div>
+
+            <div class="user-section">
+                <div class="user-info">
+                    <span class="user-name">{{ user.nom if user else 'Utilisateur' }}</span>
+                    <span class="user-role">Administrateur</span>
+                </div>
+                <div class="user-avatar">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+                <button class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </div>
+        </div>
+
+        <nav class="nav">
+            <ul class="nav-list">
+                <li class="nav-item">
+                    <a href="{{ url_for('routes.index') }}" class="nav-link">
+                        <i class="fas fa-tachometer-alt"></i> Tableau de bord
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ url_for('routes.budgets') }}" class="nav-link">
+                        <i class="fas fa-wallet"></i> Budgets
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ url_for('routes.projets') }}" class="nav-link">
+                        <i class="fas fa-project-diagram"></i> Projets
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ url_for('routes.documents') }}" class="nav-link">
+                        <i class="fas fa-file-alt"></i> Documents
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ url_for('routes.taches') }}" class="nav-link active">
+                        <i class="fas fa-tasks"></i> Tâches
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-chart-bar"></i> Rapports
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <div class="page-header">
+                <h2 class="page-title">
+                    <i class="fas fa-tasks"></i> Gestion des Tâches
+                </h2>
+                <div class="header-actions">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Rechercher une tâche..." id="searchInput">
+                    </div>
+                    <button class="btn btn-primary" id="add-task-btn">
+                        <i class="fas fa-plus"></i> Nouvelle tâche
+                    </button>
+                    <button class="btn btn-secondary" id="export-btn">
+                        <i class="fas fa-download"></i> Exporter
+                    </button>
+                </div>
+            </div>
+
+            <!-- Cartes de statistiques -->
+            <div class="stats-cards">
+                <div class="stat-card">
+                    <div class="stat-icon total-tasks">
+                        <i class="fas fa-tasks"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>{{ tasks|length }}</h3>
+                        <p>Total des tâches</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon in-progress">
+                        <i class="fas fa-spinner"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>{{ tasks|selectattr('statut', 'equalto', 'En cours')|list|length }}</h3>
+                        <p>Tâches en cours</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon completed">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>{{ tasks|selectattr('statut', 'equalto', 'Terminé')|list|length }}</h3>
+                        <p>Tâches terminées</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon overdue">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="overdue-count">0</h3>
+                        <p>Tâches en retard</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Carte principale -->
+            <div class="card">
+                <div class="card-header">
+                    <h3>Liste des Tâches</h3>
+                    <div class="filters">
+                        <select class="filter-select" id="status-filter">
+                            <option value="">Tous les statuts</option>
+                            <option value="En cours">En cours</option>
+                            <option value="Planifié">Planifié</option>
+                            <option value="Terminé">Terminé</option>
+                            <option value="En retard">En retard</option>
+                        </select>
+                        <select class="filter-select" id="sort-filter">
+                            <option value="">Trier par</option>
+                            <option value="date">Date limite</option>
+                            <option value="priorite">Priorité</option>
+                            <option value="statut">Statut</option>
+                            <option value="titre">Nom</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="data-table" id="tasks-table">
+                            <thead>
+                                <tr>
+                                    <th>Nom de la tâche</th>
+                                    <th>Date limite</th>
+                                    <th>Priorité</th>
+                                    <th>Statut</th>
+                                    <th>Projet</th>
+                                    <th>Assigné à</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% if tasks %}
+                                    {% for task in tasks %}
+                                    <tr class="task-row" data-status="{{ task.statut|lower|replace(' ', '-') }}" data-priority="{{ task.priorite|lower if task.priorite else 'medium' }}">
+                                        <td class="task-title">
+                                            <i class="fas fa-task"></i>
+                                            {{ task.titre }}
+                                            {% if task.description %}
+                                            <div class="task-description">{{ task.description }}</div>
+                                            {% endif %}
+                                        </td>
+                                        <td class="task-date {{ 'overdue' if task.statut != 'Terminé' and task.date and task.date < today else '' }}">
+                                            {{ task.date }}
+                                            {% if task.statut != 'Terminé' and task.date and task.date < today %}
+                                            <span class="overdue-badge">En retard</span>
+                                            {% endif %}
+                                        </td>
+                                        <td class="task-priority">
+                                            <span class="priority-badge priority-{{ task.priorite|lower if task.priorite else 'medium' }}">
+                                                {{ task.priorite if task.priorite else 'Moyenne' }}
+                                            </span>
+                                        </td>
+                                        <td class="task-status">
+                                            <span class="status-badge status-{{ task.statut|lower|replace(' ', '-') }}">
+                                                {{ task.statut if task.statut else 'En cours' }}
+                                            </span>
+                                        </td>
+                                        <td class="task-project">{{ task.projet if task.projet else 'Non assigné' }}</td>
+                                        <td class="task-assignee">{{ task.assignee if task.assignee else 'Non assigné' }}</td>
+                                        <td class="task-actions">
+                                            <button class="btn-icon edit-task-btn" title="Modifier" data-task-id="{{ task.id }}">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button class="btn-icon delete-task-btn" title="Supprimer" data-task-id="{{ task.id }}">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                            <button class="btn-icon view-task-btn" title="Voir détails" data-task-id="{{ task.id }}">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                            {% if task.statut != 'Terminé' %}
+                                            <button class="btn-icon complete-task-btn" title="Marquer comme terminé" data-task-id="{{ task.id }}">
+                                                <i class="fas fa-check"></i>
+                                            </button>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                {% else %}
+                                    <tr>
+                                        <td colspan="7" class="no-data">
+                                            <i class="fas fa-inbox"></i>
+                                            <p>Aucune tâche disponible</p>
+                                            <button class="btn btn-primary" id="empty-add-task">Créer une tâche</button>
+                                        </td>
+                                    </tr>
+                                {% endif %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="pagination">
+                        <button class="pagination-btn" id="prev-page" disabled>
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <span class="pagination-info">Page <span id="current-page">1</span> sur <span id="total-pages">1</span></span>
+                        <button class="pagination-btn" id="next-page" disabled>
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal pour ajouter/modifier une tâche -->
+        <div class="modal" id="task-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="modal-title">
+                        <i class="fas fa-plus-circle"></i> Nouvelle Tâche
+                    </h3>
+                    <button class="modal-close" id="close-modal">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <form id="task-form" method="POST">
+                    <input type="hidden" id="task-id" name="task_id">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="task-title">Titre de la tâche *</label>
+                            <input type="text" id="task-title" name="titre" placeholder="Ex: Préparer le rapport trimestriel" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="task-description">Description</label>
+                            <textarea id="task-description" name="description" rows="3" placeholder="Description détaillée de la tâche..."></textarea>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="task-date">Date limite *</label>
+                                <input type="date" id="task-date" name="date" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="task-priority">Priorité</label>
+                                <select id="task-priority" name="priorite">
+                                    <option value="Haute">Haute</option>
+                                    <option value="Moyenne" selected>Moyenne</option>
+                                    <option value="Basse">Basse</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="task-status">Statut</label>
+                                <select id="task-status" name="statut">
+                                    <option value="Planifié">Planifié</option>
+                                    <option value="En cours" selected>En cours</option>
+                                    <option value="Terminé">Terminé</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="task-project">Projet associé</label>
+                                <select id="task-project" name="projet">
+                                    <option value="">Sélectionner un projet</option>
+                                    <option value="Construction école primaire">Construction école primaire</option>
+                                    <option value="Réhabilitation route RN7">Réhabilitation route RN7</option>
+                                    <option value="Installation eau potable">Installation eau potable</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="task-assignee">Assigné à</label>
+                            <select id="task-assignee" name="assignee">
+                                <option value="">Sélectionner une personne</option>
+                                <option value="Jean Dupont">Jean Dupont</option>
+                                <option value="Marie Lambert">Marie Lambert</option>
+                                <option value="Paul Martin">Paul Martin</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" id="cancel-task">Annuler</button>
+                        <button type="submit" class="btn btn-primary" id="save-task">
+                            <i class="fas fa-save"></i> Enregistrer
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Modal de confirmation de suppression -->
+        <div class="modal" id="delete-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>
+                        <i class="fas fa-exclamation-triangle"></i> Confirmer la suppression
+                    </h3>
+                    <button class="modal-close" id="close-delete-modal">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p class="modal-text">Êtes-vous sûr de vouloir supprimer cette tâche ? Cette action est irréversible.</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" id="cancel-delete">Annuler</button>
+                    <button class="btn btn-danger" id="confirm-delete">Supprimer</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Système de Suivi des Projets et Budgets</h4>
+                    <p>Région Haute Matsiatra - Madagascar</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p>Direction Générale du Développement Régional</p>
+                    <p>contact@hautematsiatra.mg</p>
+                    <p>+261 34 00 000 00</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Liens utiles</h4>
+                    <ul>
+                        <li><a href="#">Portail national</a></li>
+                        <li><a href="#">Documents officiels</a></li>
+                        <li><a href="#">Appels d'offres</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Région Haute Matsiatra - Tous droits réservés</p>
+                <p>Version 1.0.0</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/taches.js') }}"></script>
+</body>
+</html>

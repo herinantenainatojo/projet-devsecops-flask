@@ -1,0 +1,403 @@
+{% extends "base.html" %}
+
+{% block title %}Gestion des Utilisateurs - Région Haute Matsiatra{% endblock %}
+
+{% block breadcrumb %}
+{{ super() }}
+<span class="breadcrumb-separator">/</span>
+<div class="breadcrumb-item">
+    <span>Utilisateurs</span>
+</div>
+{% endblock %}
+
+{% block page_title %}Gestion des Utilisateurs{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h2>Liste des Utilisateurs</h2>
+        <button class="btn btn-primary" onclick="openModal()">
+            <i class="fas fa-plus"></i> Nouvel Utilisateur
+        </button>
+    </div>
+
+    <div class="card-body">
+        <!-- Barre de recherche et filtres -->
+        <div class="table-controls">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Rechercher un utilisateur..." class="search-input">
+                <i class="fas fa-search"></i>
+            </div>
+
+            <div class="filters">
+                <select id="roleFilter" class="filter-select">
+                    <option value="">Tous les rôles</option>
+                    <option value="admin">Administrateur</option>
+                    <option value="project_manager">Gestionnaire de Projets</option>
+                    <option value="financial_controller">Contrôleur Financier</option>
+                    <option value="document_manager">Gestionnaire de Documents</option>
+                    <option value="viewer">Observateur</option>
+                </select>
+
+                <select id="statusFilter" class="filter-select">
+                    <option value="">Tous les statuts</option>
+                    <option value="active">Actif</option>
+                    <option value="inactive">Inactif</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Tableau des utilisateurs -->
+        <div class="table-responsive">
+            <table class="table" id="usersTable">
+                <thead>
+                    <tr>
+                        <th>Nom Complet</th>
+                        <th>Nom d'utilisateur</th>
+                        <th>Email</th>
+                        <th>Rôle</th>
+                        <th>Département</th>
+                        <th>Statut</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                    <tr data-role="{{ user.role }}" data-status="{{ 'active' if user.is_active else 'inactive' }}">
+                        <td>
+                            <div class="user-info">
+                                <div class="user-avatar-small">
+                                    {{ user.first_name[0]|upper if user.first_name else user.username[0]|upper }}
+                                </div>
+                                <div class="user-details">
+                                    <div class="user-name">{{ user.first_name }} {{ user.last_name }}</div>
+                                    <div class="user-email-mobile">{{ user.email }}</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>
+                            <span class="badge badge-{{ user.role }}">
+                                {% if user.role == 'admin' %}Administrateur
+                                {% elif user.role == 'project_manager' %}Gestionnaire Projets
+                                {% elif user.role == 'financial_controller' %}Contrôleur Financier
+                                {% elif user.role == 'document_manager' %}Gestionnaire Documents
+                                {% else %}Observateur{% endif %}
+                            </span>
+                        </td>
+                        <td>{{ user.department or '-' }}</td>
+                        <td>
+                            <span class="status status-{{ 'active' if user.is_active else 'inactive' }}">
+                                {{ 'Actif' if user.is_active else 'Inactif' }}
+                            </span>
+                        </td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn btn-sm btn-primary" onclick="editUser({{ user.id }})" title="Modifier">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                {% if user.id != current_user.id %}
+                                <button class="btn btn-sm btn-{{ 'success' if not user.is_active else 'warning' }}"
+                                        onclick="toggleUserStatus({{ user.id }}, {{ user.is_active|lower }})"
+                                        title="{{ 'Activer' if not user.is_active else 'Désactiver' }}">
+                                    <i class="fas fa-{{ 'check' if not user.is_active else 'times' }}"></i>
+                                </button>
+                                <button class="btn btn-sm btn-danger" onclick="deleteUser({{ user.id }})" title="Supprimer">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                                {% else %}
+                                <span class="text-muted">Vous</span>
+                                {% endif %}
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination">
+            <span class="pagination-info">Total: {{ users|length }} utilisateur(s)</span>
+        </div>
+    </div>
+</div>
+
+<!-- Modal pour ajouter/modifier les utilisateurs -->
+<div class="modal-overlay" id="userModal">
+    <div class="modal">
+        <div class="modal-header">
+            <h3 id="modalTitle">Ajouter un Utilisateur</h3>
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="userForm" method="POST" action="{{ url_for('routes.create_user') }}">
+                {{ form.csrf_token }}
+                <input type="hidden" id="userId" name="user_id">
+
+                <div class="form-row">
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="first_name">Prénom *</label>
+                            <input type="text" id="first_name" name="first_name" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="last_name">Nom *</label>
+                            <input type="text" id="last_name" name="last_name" class="form-control" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="username">Nom d'utilisateur *</label>
+                            <input type="text" id="username" name="username" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="email">Email *</label>
+                            <input type="email" id="email" name="email" class="form-control" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="password">Mot de passe {% if not user %}*{% endif %}</label>
+                            <input type="password" id="password" name="password" class="form-control" {% if not user %}required{% endif %}>
+                            <small class="form-text">{% if user %}Laissez vide pour ne pas modifier{% else %}Minimum 6 caractères{% endif %}</small>
+                        </div>
+                    </div>
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="confirm_password">Confirmer le mot de passe</label>
+                            <input type="password" id="confirm_password" name="confirm_password" class="form-control">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="role">Rôle *</label>
+                            <select id="role" name="role" class="form-control" required>
+                                <option value="">Sélectionner un rôle</option>
+                                <option value="admin">Administrateur</option>
+                                <option value="project_manager">Gestionnaire de Projets</option>
+                                <option value="financial_controller">Contrôleur Financier</option>
+                                <option value="document_manager">Gestionnaire de Documents</option>
+                                <option value="viewer">Observateur</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="department">Département</label>
+                            <input type="text" id="department" name="department" class="form-control">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="phone_number">Téléphone</label>
+                            <input type="tel" id="phone_number" name="phone_number" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label class="checkbox-container">
+                                <input type="checkbox" id="is_active" name="is_active" checked>
+                                <span class="checkmark"></span>
+                                Utilisateur actif
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="notes">Notes</label>
+                    <textarea id="notes" name="notes" class="form-control" rows="3"></textarea>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" onclick="closeModal()">Annuler</button>
+            <button type="button" class="btn btn-primary" onclick="submitUserForm()">Enregistrer</button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Fonctions pour la gestion des utilisateurs
+function openModal(userId = null) {
+    const modal = document.getElementById('userModal');
+    const modalTitle = document.getElementById('modalTitle');
+
+    if (userId) {
+        modalTitle.textContent = 'Modifier l\'Utilisateur';
+        fetchUserData(userId);
+    } else {
+        modalTitle.textContent = 'Ajouter un Utilisateur';
+        document.getElementById('userForm').reset();
+        document.getElementById('userId').value = '';
+        document.getElementById('password').required = true;
+    }
+
+    modal.style.display = 'flex';
+}
+
+function closeModal() {
+    document.getElementById('userModal').style.display = 'none';
+}
+
+function fetchUserData(userId) {
+    fetch(`/api/utilisateurs/${userId}`)
+        .then(response => response.json())
+        .then(user => {
+            document.getElementById('userId').value = user.id;
+            document.getElementById('first_name').value = user.first_name || '';
+            document.getElementById('last_name').value = user.last_name || '';
+            document.getElementById('username').value = user.username;
+            document.getElementById('email').value = user.email;
+            document.getElementById('role').value = user.role;
+            document.getElementById('department').value = user.department || '';
+            document.getElementById('phone_number').value = user.phone_number || '';
+            document.getElementById('is_active').checked = user.is_active;
+            document.getElementById('notes').value = user.notes || '';
+
+            // Cacher les champs mot de passe pour l'édition
+            document.getElementById('password').required = false;
+        })
+        .catch(error => {
+            console.error('Erreur:', error);
+            alert('Erreur lors du chargement des données utilisateur');
+        });
+}
+
+function submitUserForm() {
+    const form = document.getElementById('userForm');
+    const formData = new FormData(form);
+
+    fetch(form.action, {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert(data.message);
+            closeModal();
+            location.reload();
+        } else {
+            alert('Erreur: ' + (data.error || 'Veuillez vérifier les données'));
+        }
+    })
+    .catch(error => {
+        console.error('Erreur:', error);
+        alert('Erreur lors de l\'enregistrement');
+    });
+}
+
+function toggleUserStatus(userId, isCurrentlyActive) {
+    if (confirm(`Êtes-vous sûr de vouloir ${isCurrentlyActive ? 'désactiver' : 'activer'} cet utilisateur ?`)) {
+        fetch(`/api/utilisateurs/${userId}/toggle_status`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': document.querySelector('[name=csrf_token]').value
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert(data.message);
+                location.reload();
+            } else {
+                alert('Erreur: ' + data.error);
+            }
+        })
+        .catch(error => {
+            console.error('Erreur:', error);
+            alert('Erreur lors de la modification du statut');
+        });
+    }
+}
+
+function deleteUser(userId) {
+    if (confirm('Êtes-vous sûr de vouloir supprimer définitivement cet utilisateur ?')) {
+        fetch(`/api/utilisateurs/${userId}`, {
+            method: 'DELETE',
+            headers: {
+                'X-CSRFToken': document.querySelector('[name=csrf_token]').value
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert(data.message);
+                location.reload();
+            } else {
+                alert('Erreur: ' + data.error);
+            }
+        })
+        .catch(error => {
+            console.error('Erreur:', error);
+            alert('Erreur lors de la suppression');
+        });
+    }
+}
+
+// Recherche et filtrage
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('searchInput');
+    const roleFilter = document.getElementById('roleFilter');
+    const statusFilter = document.getElementById('statusFilter');
+
+    function filterUsers() {
+        const searchTerm = searchInput.value.toLowerCase();
+        const roleValue = roleFilter.value;
+        const statusValue = statusFilter.value;
+
+        const rows = document.querySelectorAll('#usersTable tbody tr');
+
+        rows.forEach(row => {
+            const name = row.querySelector('td:first-child').textContent.toLowerCase();
+            const username = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
+            const email = row.querySelector('td:nth-child(3)').textContent.toLowerCase();
+            const role = row.getAttribute('data-role');
+            const status = row.getAttribute('data-status');
+
+            const matchesSearch = name.includes(searchTerm) || username.includes(searchTerm) || email.includes(searchTerm);
+            const matchesRole = !roleValue || role === roleValue;
+            const matchesStatus = !statusValue || status === statusValue;
+
+            row.style.display = matchesSearch && matchesRole && matchesStatus ? '' : 'none';
+        });
+    }
+
+    searchInput.addEventListener('input', filterUsers);
+    roleFilter.addEventListener('change', filterUsers);
+    statusFilter.addEventListener('change', filterUsers);
+});
+
+// Fermer le modal en cliquant à l'extérieur
+window.addEventListener('click', function(event) {
+    const modal = document.getElementById('userModal');
+    if (event.target === modal) {
+        closeModal();
+    }
+});
+</script>
+{% endblock %}

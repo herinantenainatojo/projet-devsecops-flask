@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Budgets - Région Haute Matsiatra{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <nav>
+        <!-- Ici ton menu -->
+        <a href="{{ url_for('routes.index') }}">Tableau de bord</a>
+        <a href="{{ url_for('routes.gestion_utilisateurs') }}">Utilisateurs</a>
+        <a href="{{ url_for('routes.documents') }}">Documents</a>
+        <a href="{{ url_for('routes.profile') }}">Profil</a>
+        <a href="{{ url_for('routes.logout') }}">Déconnexion</a>
+    </nav>
+
+    <div class="content">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

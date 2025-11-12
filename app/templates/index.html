@@ -1,0 +1,1997 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Région Haute Matsiatra</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4f46e5;
+            --primary-dark: #4338ca;
+            --primary-light: #6366f1;
+            --secondary-color: #7c3aed;
+            --accent-color: #a855f7;
+            --error-color: #ef4444;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --info-color: #3b82f6;
+            --text-primary: #111827;
+            --text-secondary: #4b5563;
+            --text-light: #9ca3af;
+            --bg-primary: #ffffff;
+            --bg-secondary: #f9fafb;
+            --bg-tertiary: #f3f4f6;
+            --border-color: #e5e7eb;
+            --border-focus: #93c5fd;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --border-radius: 0.75rem;
+            --border-radius-sm: 0.5rem;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        @font-face {
+            font-family: 'Inter';
+            font-style: normal;
+            font-weight: 400;
+            font-display: swap;
+            src: url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+        }
+
+        /* Sidebar Navigation - Amélioré avec icônes FontAwesome */
+        .sidebar {
+            width: 280px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            transition: var(--transition);
+            z-index: 1000;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .sidebar.collapsed {
+            width: 80px;
+        }
+
+        .sidebar-header {
+            padding: 1.5rem 1.25rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo {
+            width: 2.5rem;
+            height: 2.5rem;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: var(--border-radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+
+        .sidebar-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            opacity: 1;
+            transition: var(--transition);
+        }
+
+        .sidebar.collapsed .sidebar-title {
+            opacity: 0;
+            width: 0;
+            overflow: hidden;
+        }
+
+        .nav-menu {
+            padding: 1.25rem 0;
+        }
+
+        .nav-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .nav-group-title {
+            padding: 0 1.25rem 0.5rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: rgba(255, 255, 255, 0.7);
+            opacity: 1;
+            transition: var(--transition);
+        }
+
+        .sidebar.collapsed .nav-group-title {
+            opacity: 0;
+            height: 0;
+            padding: 0;
+        }
+
+        .nav-item {
+            margin: 0.125rem 0.75rem;
+            border-radius: var(--border-radius-sm);
+            overflow: hidden;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            transform: translateX(4px);
+        }
+
+        .nav-link.active {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            box-shadow: inset 4px 0 0 white;
+        }
+
+        .nav-icon {
+            width: 1.25rem;
+            height: 1.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .nav-text {
+            opacity: 1;
+            transition: var(--transition);
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .sidebar.collapsed .nav-text {
+            opacity: 0;
+            width: 0;
+            overflow: hidden;
+        }
+
+        .nav-badge {
+            background: var(--warning-color);
+            color: white;
+            padding: 0.125rem 0.5rem;
+            border-radius: 9999px;
+            font-size: 0.6875rem;
+            font-weight: 600;
+            margin-left: auto;
+            min-width: 1.25rem;
+            text-align: center;
+        }
+
+        .sidebar-toggle {
+            position: absolute;
+            top: 1.5rem;
+            right: -0.75rem;
+            width: 1.5rem;
+            height: 1.5rem;
+            background: white;
+            border: none;
+            border-radius: 50%;
+            box-shadow: var(--shadow-md);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+            font-size: 0.75rem;
+            transition: var(--transition);
+            z-index: 10;
+        }
+
+        .sidebar-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            transition: var(--transition);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .main-content.expanded {
+            margin-left: 80px;
+        }
+
+        /* Header - Amélioré avec menu utilisateur */
+        .header {
+            background: var(--bg-primary);
+            padding: 1.25rem 2rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.25rem;
+            box-shadow: var(--shadow-sm);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-left {
+            flex: 1;
+        }
+
+        .page-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .page-subtitle {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .search-box {
+            position: relative;
+            width: 18.75rem;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 2.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-sm);
+            font-size: 0.875rem;
+            background: var(--bg-secondary);
+            transition: var(--transition);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--border-focus);
+            box-shadow: 0 0 0 3px rgba(147, 197, 253, 0.3);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+            font-size: 1rem;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .action-btn {
+            position: relative;
+            width: 2.75rem;
+            height: 2.75rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .action-btn:hover {
+            background: var(--bg-tertiary);
+            transform: translateY(-1px);
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -0.25rem;
+            right: -0.25rem;
+            width: 1.125rem;
+            height: 1.125rem;
+            background: var(--error-color);
+            color: white;
+            border-radius: 50%;
+            font-size: 0.625rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        .user-menu {
+            position: relative;
+        }
+
+        .user-avatar {
+            width: 2.75rem;
+            height: 2.75rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .user-avatar:hover {
+            transform: scale(1.05);
+        }
+
+        .user-dropdown {
+            position: absolute;
+            top: 120%;
+            right: 0;
+            width: 16rem;
+            background: var(--bg-primary);
+            border-radius: var(--border-radius-sm);
+            box-shadow: var(--shadow-xl);
+            z-index: 50;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: var(--transition);
+        }
+
+        .user-dropdown.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .user-dropdown-header {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .user-dropdown-avatar {
+            width: 2.5rem;
+            height: 2.5rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        .user-dropdown-info {
+            flex: 1;
+        }
+
+        .user-dropdown-name {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .user-dropdown-email {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .user-dropdown-menu {
+            padding: 0.5rem 0;
+        }
+
+        .user-dropdown-item {
+            padding: 0.5rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: var(--transition);
+        }
+
+        .user-dropdown-item:hover {
+            background: var(--bg-secondary);
+        }
+
+        .user-dropdown-icon {
+            width: 1rem;
+            height: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .user-dropdown-footer {
+            padding: 0.75rem 1rem;
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .logout-btn {
+            color: var(--error-color);
+            font-size: 0.875rem;
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logout-btn:hover {
+            text-decoration: underline;
+        }
+
+        /* Notification dropdown */
+        .notification-dropdown {
+            position: absolute;
+            top: 120%;
+            right: 0;
+            width: 22rem;
+            max-height: 28rem;
+            background: var(--bg-primary);
+            border-radius: var(--border-radius-sm);
+            box-shadow: var(--shadow-xl);
+            z-index: 50;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: var(--transition);
+            overflow: hidden;
+        }
+
+        .notification-dropdown.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .notification-header {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .notification-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .mark-all-read {
+            color: var(--primary-color);
+            font-size: 0.75rem;
+            font-weight: 500;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .mark-all-read:hover {
+            text-decoration: underline;
+        }
+
+        .notification-list {
+            max-height: 20rem;
+            overflow-y: auto;
+        }
+
+        .notification-item {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .notification-item.unread {
+            background: rgba(79, 70, 229, 0.05);
+        }
+
+        .notification-item:hover {
+            background: var(--bg-secondary);
+        }
+
+        .notification-icon {
+            width: 2rem;
+            height: 2rem;
+            background: var(--bg-tertiary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .notification-icon.success {
+            color: var(--success-color);
+            background: rgba(16, 185, 129, 0.1);
+        }
+
+        .notification-icon.warning {
+            color: var(--warning-color);
+            background: rgba(245, 158, 11, 0.1);
+        }
+
+        .notification-icon.error {
+            color: var(--error-color);
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        .notification-content {
+            flex: 1;
+        }
+
+        .notification-text {
+            font-size: 0.875rem;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .notification-time {
+            font-size: 0.75rem;
+            color: var(--text-light);
+        }
+
+        .notification-footer {
+            padding: 0.75rem;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .view-all-notifications {
+            color: var(--primary-color);
+            font-size: 0.875rem;
+            font-weight: 500;
+            text-decoration: none;
+        }
+
+        .view-all-notifications:hover {
+            text-decoration: underline;
+        }
+
+        /* Dashboard Content */
+        .dashboard-content {
+            flex: 1;
+            padding: 2rem;
+        }
+
+        /* Welcome Section - Amélioré avec bouton d'action */
+        .welcome-section {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .welcome-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 12.5rem;
+            height: 12.5rem;
+            background: url("data:image/svg+xml,%3Csvg width='200' height='200' viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M100 0L150 50L100 100L50 50Z'/%3E%3Cpath d='M100 100L150 150L100 200L50 150Z'/%3E%3C/g%3E%3C/svg%3E") no-repeat;
+            opacity: 0.3;
+            background-size: contain;
+        }
+
+        .welcome-content {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .welcome-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 0;
+        }
+
+        .welcome-subtitle {
+            font-size: 1rem;
+            opacity: 0.9;
+            max-width: 60ch;
+        }
+
+        .welcome-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        .welcome-btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--border-radius-sm);
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+        }
+
+        .welcome-btn.primary {
+            background: white;
+            color: var(--primary-color);
+        }
+
+        .welcome-btn.primary:hover {
+            background: rgba(255, 255, 255, 0.9);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .welcome-btn.secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .welcome-btn.secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .welcome-stats {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .welcome-stat {
+            text-align: center;
+        }
+
+        .welcome-stat-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            display: block;
+            line-height: 1;
+            margin-bottom: 0.25rem;
+        }
+
+        .welcome-stat-label {
+            font-size: 0.875rem;
+            opacity: 0.8;
+        }
+
+        /* Stats Grid - Amélioré avec tooltips */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(17.5rem, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--bg-primary);
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0.25rem;
+            height: 100%;
+            background: var(--primary-color);
+        }
+
+        .stat-card.success::before { background: var(--success-color); }
+        .stat-card.warning::before { background: var(--warning-color); }
+        .stat-card.error::before { background: var(--error-color); }
+        .stat-card.info::before { background: var(--info-color); }
+
+        .stat-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .stat-title {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .stat-icon {
+            width: 3rem;
+            height: 3rem;
+            background: var(--bg-secondary);
+            border-radius: var(--border-radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            color: var(--primary-color);
+        }
+
+        .stat-card.success .stat-icon { color: var(--success-color); }
+        .stat-card.warning .stat-icon { color: var(--warning-color); }
+        .stat-card.error .stat-icon { color: var(--error-color); }
+        .stat-card.info .stat-icon { color: var(--info-color); }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-trend {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            font-size: 0.875rem;
+        }
+
+        .trend-up {
+            color: var(--success-color);
+        }
+
+        .trend-down {
+            color: var(--error-color);
+        }
+
+        /* Tooltip pour les cartes de statistiques */
+        .stat-tooltip {
+            position: absolute;
+            bottom: 1rem;
+            right: 1rem;
+            width: 1.25rem;
+            height: 1.25rem;
+            background: var(--bg-tertiary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            cursor: help;
+        }
+
+        .stat-tooltip-text {
+            position: absolute;
+            bottom: 100%;
+            right: 0;
+            width: 16rem;
+            background: var(--bg-primary);
+            padding: 0.75rem;
+            border-radius: var(--border-radius-sm);
+            box-shadow: var(--shadow-lg);
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: var(--transition);
+            z-index: 10;
+        }
+
+        .stat-tooltip:hover .stat-tooltip-text {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        /* Charts Section - Amélioré avec onglets */
+        .charts-section {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width: 1024px) {
+            .charts-section {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .chart-card {
+            background: var(--bg-primary);
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-md);
+        }
+
+        .chart-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .chart-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .chart-tabs {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .tab-btn {
+            padding: 0.5rem 0.75rem;
+            border: 1px solid var(--border-color);
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
+            border-radius: var(--border-radius-sm);
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .tab-btn.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .chart-container {
+            height: 18.75rem;
+            position: relative;
+        }
+
+        .chart-placeholder {
+            height: 100%;
+            background: var(--bg-secondary);
+            border-radius: var(--border-radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+            font-size: 0.875rem;
+            border: 2px dashed var(--border-color);
+        }
+
+        /* Recent Activity - Amélioré avec filtres */
+        .activity-section {
+            background: var(--bg-primary);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+        }
+
+        .activity-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .activity-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .activity-filters {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .activity-filter {
+            padding: 0.375rem 0.75rem;
+            border: 1px solid var(--border-color);
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .activity-filter.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .view-all-btn {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .view-all-btn:hover {
+            text-decoration: underline;
+        }
+
+        .activity-list {
+            max-height: 25rem;
+            overflow-y: auto;
+        }
+
+        .activity-item {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: var(--transition);
+        }
+
+        .activity-item:hover {
+            background: var(--bg-secondary);
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-avatar {
+            width: 2.5rem;
+            height: 2.5rem;
+            background: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.875rem;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .activity-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .activity-text {
+            font-size: 0.875rem;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .activity-time {
+            font-size: 0.75rem;
+            color: var(--text-light);
+        }
+
+        .activity-status {
+            padding: 0.25rem 0.5rem;
+            border-radius: 9999px;
+            font-size: 0.6875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            flex-shrink: 0;
+        }
+
+        .status-success {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success-color);
+        }
+
+        .status-warning {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--warning-color);
+        }
+
+        .status-error {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--error-color);
+        }
+
+        /* Quick Actions - Nouvelle section ajoutée */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .action-card {
+            background: var(--bg-primary);
+            padding: 1.5rem;
+            border-radius: var(--border-radius-sm);
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            gap: 0.75rem;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .action-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .action-icon {
+            width: 3rem;
+            height: 3rem;
+            background: var(--bg-secondary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            color: var(--primary-color);
+        }
+
+        .action-title {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        /* Breadcrumb - Ajouté pour améliorer la navigation */
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .breadcrumb-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .breadcrumb-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .breadcrumb-link:hover {
+            color: var(--primary-color);
+        }
+
+        .breadcrumb-separator {
+            color: var(--text-light);
+        }
+
+        /* Dark mode toggle - Ajouté pour l'accessibilité */
+        .theme-toggle {
+            position: relative;
+            width: 2.75rem;
+            height: 2.75rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .theme-toggle:hover {
+            background: var(--bg-tertiary);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .header {
+                padding: 1rem;
+            }
+
+            .search-box {
+                width: 12.5rem;
+            }
+
+            .dashboard-content {
+                padding: 1.25rem;
+            }
+
+            .welcome-stats {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .welcome-title {
+                font-size: 1.5rem;
+            }
+
+            .welcome-actions {
+                flex-direction: column;
+            }
+
+            .welcome-btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .search-box {
+                display: none;
+            }
+
+            .welcome-section {
+                padding: 1.25rem;
+            }
+
+            .welcome-title {
+                font-size: 1.25rem;
+            }
+
+            .activity-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .activity-filters {
+                width: 100%;
+                overflow-x: auto;
+                padding-bottom: 0.5rem;
+            }
+        }
+
+        /* Loading animations */
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .loading {
+            animation: pulse 2s infinite;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 0.5rem;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-tertiary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 0.25rem;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--text-light);
+        }
+
+        /* Accessibilité : focus styles */
+        *:focus-visible {
+            outline: 2px solid var(--primary-color);
+            outline-offset: 2px;
+        }
+
+        /* Dark mode - Préparation */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --text-primary: #f3f4f6;
+                --text-secondary: #d1d5db;
+                --text-light: #9ca3af;
+                --bg-primary: #1f2937;
+                --bg-secondary: #111827;
+                --bg-tertiary: #374151;
+                --border-color: #4b5563;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar" id="sidebar">
+        <button class="sidebar-toggle" onclick="toggleSidebar()" aria-label="Toggle sidebar">
+            <span id="toggleIcon">‹</span>
+        </button>
+
+        <div class="sidebar-header">
+            <div class="logo">HM</div>
+            <div class="sidebar-title">Haute Matsiatra</div>
+        </div>
+
+        <div class="nav-menu">
+            <div class="nav-group">
+                <div class="nav-group-title">Principal</div>
+                <div class="nav-item">
+                    <a href="{{ url_for('routes.index') }}" class="nav-link active" aria-current="page">
+                        <span class="nav-icon"><i class="fas fa-home"></i></span>
+                        <span class="nav-text">Dashboard</span>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="{{ url_for('routes.projets') }}" class="nav-link">
+                        <span class="nav-icon"><i class="fas fa-project-diagram"></i></span>
+                        <span class="nav-text">Projets</span>
+                        <span class="nav-badge">{{ stats.total_projects or 0 }}</span>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="{{ url_for('routes.budgets') }}" class="nav-link">
+                        <span class="nav-icon"><i class="fas fa-money-bill-wave"></i></span>
+                        <span class="nav-text">Budgets</span>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="{{ url_for('routes.cartographie') }}" class="nav-link">
+                        <span class="nav-icon"><i class="fas fa-map-marked-alt"></i></span>
+                        <span class="nav-text">Cartographie</span>
+                    </a>
+                </div>
+            </div>
+
+           <!-- Menu ou nav-group dans index.html -->
+<div class="nav-group">
+    <div class="nav-group-title">Gestion</div>
+
+    <!-- Lien Utilisateurs -->
+    <div class="nav-item">
+        <a href="{{ url_for('routes.gestion_utilisateurs') }}" class="nav-link">
+            <span class="nav-icon"><i class="fas fa-users"></i></span>
+            <span class="nav-text">Utilisateurs</span>
+        </a>
+    </div>
+
+    <!-- Lien Documents -->
+    <div class="nav-item">
+        <a href="{{ url_for('routes.documents') }}" class="nav-link">
+            <span class="nav-icon"><i class="fas fa-file-alt"></i></span>
+            <span class="nav-text">Documents</span>
+        </a>
+    </div>
+
+    <!-- Lien Tâches -->
+    <div class="nav-item">
+        <a href="{{ url_for('routes.taches') }}" class="nav-link">
+            <span class="nav-icon"><i class="fas fa-tasks"></i></span>
+            <span class="nav-text">Tâches</span>
+            <span class="nav-badge">5</span>
+        </a>
+    </div>
+</div>
+
+
+            <div class="nav-group">
+                <div class="nav-group-title">Rapports</div>
+                <div class="nav-item">
+                    <a href="{{ url_for('routes.analytics') }}" class="nav-link">
+                        <span class="nav-icon"><i class="fas fa-chart-line"></i></span>
+                        <span class="nav-text">Analytics</span>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="{{ url_for('routes.analytics_ia') }}" class="nav-link">
+                        <span class="nav-icon"><i class="fas fa-robot"></i></span>
+                        <span class="nav-text">Analytics IA</span>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="{{ url_for('routes.outils_terrain') }}" class="nav-link">
+                        <span class="nav-icon"><i class="fas fa-tools"></i></span>
+                        <span class="nav-text">Outils</span>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="{{ url_for('routes.rapports') }}" class="nav-link">
+                        <span class="nav-icon"><i class="fas fa-file-pdf"></i></span>
+                        <span class="nav-text">Rapports</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="nav-group">
+                <div class="nav-group-title">Système</div>
+                <div class="nav-item">
+                    <a href="{{ url_for('routes.parametres') }}" class="nav-link">
+                        <span class="nav-icon"><i class="fas fa-cog"></i></span>
+                        <span class="nav-text">Paramètres</span>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="{{ url_for('routes.logout') }}" class="nav-link">
+                        <span class="nav-icon"><i class="fas fa-sign-out-alt"></i></span>
+                        <span class="nav-text">Déconnexion</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content" id="mainContent">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <nav class="breadcrumb" aria-label="Breadcrumb">
+                    <div class="breadcrumb-item">
+                        <a href="{{ url_for('routes.index') }}" class="breadcrumb-link">Accueil</a>
+                    </div>
+                    <span class="breadcrumb-separator">/</span>
+                    <div class="breadcrumb-item">
+                        <span>Dashboard</span>
+                    </div>
+                </nav>
+                <h1 class="page-title">Tableau de bord</h1>
+                <p class="page-subtitle">Vue d'ensemble de la Région Haute Matsiatra</p>
+            </div>
+
+            <div class="header-right">
+                <div class="search-box">
+                    <span class="search-icon"><i class="fas fa-search"></i></span>
+                    <input type="text" class="search-input" placeholder="Rechercher des projets..." aria-label="Rechercher">
+                </div>
+
+                <div class="header-actions">
+                    <button class="theme-toggle" aria-label="Toggle theme">
+                        <i class="fas fa-moon"></i>
+                    </button>
+
+                    <div class="notification-container">
+                        <button class="action-btn notification-btn" aria-label="Notifications">
+                            <i class="fas fa-bell"></i>
+                            <span class="notification-badge">3</span>
+                        </button>
+                        <div class="notification-dropdown">
+                            <div class="notification-header">
+                                <h3 class="notification-title">Notifications</h3>
+                                <a href="#" class="mark-all-read">Tout marquer comme lu</a>
+                            </div>
+                            <div class="notification-list">
+                                <div class="notification-item unread">
+                                    <div class="notification-icon success">
+                                        <i class="fas fa-check"></i>
+                                    </div>
+                                    <div class="notification-content">
+                                        <div class="notification-text">
+                                            Le projet "Construction École Primaire" a été approuvé
+                                        </div>
+                                        <div class="notification-time">Il y a 2 heures</div>
+                                    </div>
+                                </div>
+                                <div class="notification-item unread">
+                                    <div class="notification-icon warning">
+                                        <i class="fas fa-exclamation"></i>
+                                    </div>
+                                    <div class="notification-content">
+                                        <div class="notification-text">
+                                            Retard signalé sur le projet "Route Rurale Ambositra"
+                                        </div>
+                                        <div class="notification-time">Il y a 5 heures</div>
+                                    </div>
+                                </div>
+                                <div class="notification-item">
+                                    <div class="notification-icon">
+                                        <i class="fas fa-file-upload"></i>
+                                    </div>
+                                    <div class="notification-content">
+                                        <div class="notification-text">
+                                            Nouveau document ajouté au projet "Marché Ambositra"
+                                        </div>
+                                        <div class="notification-time">Hier</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="notification-footer">
+                                <a href="#" class="view-all-notifications">Voir toutes les notifications</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="user-menu">
+                        <button class="user-avatar" aria-label="Menu utilisateur" id="userMenuButton">
+                            {{ (current_user.username[0]|upper) if current_user.is_authenticated else 'U' }}
+                        </button>
+                        <div class="user-dropdown" id="userDropdown">
+                            <div class="user-dropdown-header">
+                                <div class="user-dropdown-avatar">
+                                    {{ (current_user.username[0]|upper) if current_user.is_authenticated else 'U' }}
+                                </div>
+                                <div class="user-dropdown-info">
+                                    <div class="user-dropdown-name">
+                                        {{ current_user.username if current_user.is_authenticated else 'Utilisateur' }}
+                                    </div>
+                                    <div class="user-dropdown-email">
+                                        {{ current_user.email if current_user.is_authenticated else 'user@example.com' }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="user-dropdown-menu">
+                                <a href="#" class="user-dropdown-item">
+                                    <i class="fas fa-user user-dropdown-icon"></i>
+                                    Mon profil
+                                </a>
+                                <a href="#" class="user-dropdown-item">
+                                    <i class="fas fa-cog user-dropdown-icon"></i>
+                                    Paramètres
+                                </a>
+                                <a href="#" class="user-dropdown-item">
+                                    <i class="fas fa-bell user-dropdown-icon"></i>
+                                    Notifications
+                                </a>
+                            </div>
+                            <div class="user-dropdown-footer">
+                                <a href="{{ url_for('routes.logout') }}" class="logout-btn">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                    Déconnexion
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Dashboard Content -->
+        <div class="dashboard-content">
+            <!-- Welcome Section -->
+            <section class="welcome-section">
+                <div class="welcome-content">
+                    <h2 class="welcome-title">
+                        Bienvenue, {{ current_user.username if current_user.is_authenticated else 'Utilisateur' }} ! 👋
+                    </h2>
+                    <p class="welcome-subtitle">
+                        Voici un aperçu de l'activité de la Région Haute Matsiatra aujourd'hui
+                    </p>
+
+                    <div class="welcome-actions">
+                        <button class="welcome-btn primary">
+                            <i class="fas fa-plus"></i> Nouveau projet
+                        </button>
+                        <button class="welcome-btn secondary">
+                            <i class="fas fa-file-import"></i> Importer des données
+                        </button>
+                    </div>
+
+                    <div class="welcome-stats">
+                        <div class="welcome-stat">
+                            <span class="welcome-stat-number">{{ stats.active_projects or 12 }}</span>
+                            <span class="welcome-stat-label">Projets actifs</span>
+                        </div>
+                        <div class="welcome-stat">
+                            <span class="welcome-stat-number">{{ stats.budget_executed or '85' }}%</span>
+                            <span class="welcome-stat-label">Budget exécuté</span>
+                        </div>
+                        <div class="welcome-stat">
+                            <span class="welcome-stat-number">{{ stats.districts_covered or 22 }}</span>
+                            <span class="welcome-stat-label">Communes couvertes</span>
+                        </div>
+                        <div class="welcome-stat">
+                            <span class="welcome-stat-number">{{ stats.beneficiaries or '124K' }}</span>
+                            <span class="welcome-stat-label">Bénéficiaires</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Quick Actions - Nouvelle section -->
+            <section class="quick-actions">
+                <div class="action-card">
+                    <div class="action-icon">
+                        <i class="fas fa-plus"></i>
+                    </div>
+                    <h3 class="action-title">Ajouter un projet</h3>
+                </div>
+                <div class="action-card">
+                    <div class="action-icon">
+                        <i class="fas fa-file-export"></i>
+                    </div>
+                    <h3 class="action-title">Générer un rapport</h3>
+                </div>
+                <div class="action-card">
+                    <div class="action-icon">
+                        <i class="fas fa-map-marked-alt"></i>
+                    </div>
+                    <h3 class="action-title">Voir la carte</h3>
+                </div>
+                <div class="action-card">
+                    <div class="action-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <h3 class="action-title">Calendrier</h3>
+                </div>
+            </section>
+
+            <!-- Statistics Grid -->
+            <section class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <h3 class="stat-title">Total Projets</h3>
+                        <div class="stat-icon">
+                            <i class="fas fa-project-diagram"></i>
+                        </div>
+                    </div>
+                    <div class="stat-number">{{ stats.total_projects or 47 }}</div>
+                    <div class="stat-trend trend-up">
+                        <i class="fas fa-arrow-up"></i> +12% ce mois
+                    </div>
+                    <div class="stat-tooltip">
+                        <i class="fas fa-info"></i>
+                        <span class="stat-tooltip-text">Nombre total de projets actifs et archivés dans la région</span>
+                    </div>
+                </div>
+
+                <div class="stat-card success">
+                    <div class="stat-header">
+                        <h3 class="stat-title">Budget Total</h3>
+                        <div class="stat-icon">
+                            <i class="fas fa-money-bill-wave"></i>
+                        </div>
+                    </div>
+                    <div class="stat-number">{{ stats.total_budget or '2.4B' }} Ar</div>
+                    <div class="stat-trend trend-up">
+                        <i class="fas fa-arrow-up"></i> +8% ce trimestre
+                    </div>
+                    <div class="stat-tooltip">
+                        <i class="fas fa-info"></i>
+                        <span class="stat-tooltip-text">Budget total alloué à tous les projets en cours</span>
+                    </div>
+                </div>
+
+                <div class="stat-card warning">
+                    <div class="stat-header">
+                        <h3 class="stat-title">En Retard</h3>
+                        <div class="stat-icon">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                    </div>
+                    <div class="stat-number">{{ stats.delayed_projects or 3 }}</div>
+                    <div class="stat-trend trend-down">
+                        <i class="fas fa-arrow-down"></i> -2 projets
+                    </div>
+                    <div class="stat-tooltip">
+                        <i class="fas fa-info"></i>
+                        <span class="stat-tooltip-text">Projets avec des délais non respectés nécessitant une attention</span>
+                    </div>
+                </div>
+
+                <div class="stat-card info">
+                    <div class="stat-header">
+                        <h3 class="stat-title">Terminés</h3>
+                        <div class="stat-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                    </div>
+                    <div class="stat-number">{{ stats.completed_projects or 18 }}</div>
+                    <div class="stat-trend trend-up">
+                        <i class="fas fa-arrow-up"></i> +5 ce mois
+                    </div>
+                    <div class="stat-tooltip">
+                        <i class="fas fa-info"></i>
+                        <span class="stat-tooltip-text">Projets achevés avec succès ce mois-ci</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Charts Section -->
+            <section class="charts-section">
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3 class="chart-title">Évolution des Projets</h3>
+                        <div class="chart-tabs">
+                            <button class="tab-btn active">6M</button>
+                            <button class="tab-btn">1A</button>
+                            <button class="tab-btn">2A</button>
+                            <button class="tab-btn">Tout</button>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <div class="chart-placeholder">
+                            <i class="fas fa-chart-line" style="font-size: 2rem; margin-bottom: 1rem;"></i>
+                            <p>Graphique d'évolution des projets (Chart.js à intégrer)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3 class="chart-title">Répartition par Secteur</h3>
+                        <div class="chart-tabs">
+                            <button class="tab-btn active">Budget</button>
+                            <button class="tab-btn">Projets</button>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <div class="chart-placeholder">
+                            <i class="fas fa-chart-pie" style="font-size: 2rem; margin-bottom: 1rem;"></i>
+                            <p>Graphique en secteurs (Chart.js à intégrer)</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Recent Activity -->
+            <section class="activity-section">
+                <div class="activity-header">
+                    <h3 class="activity-title">Activité Récente</h3>
+                    <div class="activity-filters">
+                        <button class="activity-filter active">Tout</button>
+                        <button class="activity-filter">Projets</button>
+                        <button class="activity-filter">Budget</button>
+                        <button class="activity-filter">Documents</button>
+                    </div>
+                    <a href="#" class="view-all-btn">
+                        Voir tout <i class="fas fa-chevron-right"></i>
+                    </a>
+                </div>
+
+                <div class="activity-list">
+                    <div class="activity-item">
+                        <div class="activity-avatar">JR</div>
+                        <div class="activity-content">
+                            <div class="activity-text">
+                                <strong>Jean Rakoto</strong> a créé le projet "Construction École Primaire Ambalavao"
+                            </div>
+                            <div class="activity-time">Il y a 2 heures</div>
+                        </div>
+                        <div class="activity-status status-success">Nouveau</div>
+                    </div>
+
+                    <div class="activity-item">
+                        <div class="activity-avatar">MH</div>
+                        <div class="activity-content">
+                            <div class="activity-text">
+                                <strong>Marie Hery</strong> a approuvé le budget pour "Route Rurale Ambositra"
+                            </div>
+                            <div class="activity-time">Il y a 4 heures</div>
+                        </div>
+                        <div class="activity-status status-success">Approuvé</div>
+                    </div>
+
+                    <div class="activity-item">
+                        <div class="activity-avatar">PR</div>
+                        <div class="activity-content">
+                            <div class="activity-text">
+                                <strong>Paul Rabe</strong> a signalé un retard sur "Centre de Santé Fianarantsoa"
+                            </div>
+                            <div class="activity-time">Il y a 6 heures</div>
+                        </div>
+                        <div class="activity-status status-warning">Retard</div>
+                    </div>
+
+                    <div class="activity-item">
+                        <div class="activity-avatar">LT</div>
+                        <div class="activity-content">
+                            <div class="activity-text">
+                                <strong>Lova Tsara</strong> a terminé le projet "Adduction d'eau Ikalamavony"
+                            </div>
+                            <div class="activity-time">Hier</div>
+                        </div>
+                        <div class="activity-status status-success">Terminé</div>
+                    </div>
+
+                    <div class="activity-item">
+                        <div class="activity-avatar">RN</div>
+                        <div class="activity-content">
+                            <div class="activity-text">
+                                <strong>Rija Nirina</strong> a ajouté un nouveau document au projet "Marché Ambositra"
+                            </div>
+                            <div class="activity-time">Hier</div>
+                        </div>
+                        <div class="activity-status status-success">Document</div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        // Sidebar toggle functionality
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const mainContent = document.getElementById('mainContent');
+            const toggleIcon = document.getElementById('toggleIcon');
+
+            sidebar.classList.toggle('collapsed');
+            mainContent.classList.toggle('expanded');
+
+            if (sidebar.classList.contains('collapsed')) {
+                toggleIcon.innerHTML = '&rsaquo;';
+            } else {
+                toggleIcon.innerHTML = '&lsaquo;';
+            }
+
+            // Save state to localStorage
+            localStorage.setItem('sidebarCollapsed', sidebar.classList.contains('collapsed'));
+        }
+
+        // Mobile sidebar toggle
+        function toggleMobileSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('open');
+        }
+
+        // User dropdown toggle
+        const userMenuButton = document.getElementById('userMenuButton');
+        const userDropdown = document.getElementById('userDropdown');
+
+        userMenuButton.addEventListener('click', function(e) {
+            e.stopPropagation();
+            userDropdown.classList.toggle('active');
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function() {
+            userDropdown.classList.remove('active');
+        });
+
+        // Notification dropdown toggle
+        const notificationBtn = document.querySelector('.notification-btn');
+        const notificationDropdown = document.querySelector('.notification-dropdown');
+
+        notificationBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            notificationDropdown.classList.toggle('active');
+        });
+
+        // Close notification dropdown when clicking outside
+        document.addEventListener('click', function() {
+            notificationDropdown.classList.remove('active');
+        });
+
+        // Search functionality
+        document.querySelector('.search-input').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            // TODO: Implement search functionality
+            console.log('Recherche:', searchTerm);
+        });
+
+        // Chart filter buttons
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Remove active class from all buttons in same container
+                this.parentElement.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                // Add active class to clicked button
+                this.classList.add('active');
+                // TODO: Update chart data
+                console.log('Filtre sélectionné:', this.textContent);
+            });
+        });
+
+        // Activity filter buttons
+        document.querySelectorAll('.activity-filter').forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Remove active class from all buttons
+                document.querySelectorAll('.activity-filter').forEach(b => b.classList.remove('active'));
+                // Add active class to clicked button
+                this.classList.add('active');
+                // TODO: Filter activities
+                console.log('Filtre activité:', this.textContent);
+            });
+        });
+
+        // Theme toggle
+        const themeToggle = document.querySelector('.theme-toggle');
+        themeToggle.addEventListener('click', function() {
+            document.body.classList.toggle('dark-mode');
+            const icon = this.querySelector('i');
+            if (document.body.classList.contains('dark-mode')) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+                localStorage.setItem('theme', 'light');
+            }
+        });
+
+        // Check for saved theme preference
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-mode');
+            themeToggle.querySelector('i').classList.remove('fa-moon');
+            themeToggle.querySelector('i').classList.add('fa-sun');
+        }
+
+        // Check for saved sidebar state
+        if (localStorage.getItem('sidebarCollapsed') === 'true') {
+            document.getElementById('sidebar').classList.add('collapsed');
+            document.getElementById('mainContent').classList.add('expanded');
+            document.getElementById('toggleIcon').innerHTML = '&rsaquo;';
+        }
+
+        // Auto-refresh stats every 30 seconds
+        setInterval(function() {
+            // TODO: Fetch updated statistics via AJAX
+            console.log('Mise à jour des statistiques...');
+        }, 30000);
+
+        // Responsive handling
+        function handleResize() {
+            const width = window.innerWidth;
+            const sidebar = document.getElementById('sidebar');
+            const mainContent = document.getElementById('mainContent');
+
+            if (width <= 768) {
+                sidebar.classList.add('collapsed');
+                mainContent.classList.add('expanded');
+            } else if (width > 768 && !sidebar.classList.contains('collapsed')) {
+                mainContent.classList.remove('expanded');
+            }
+        }
+
+        window.addEventListener('resize', handleResize);
+        handleResize(); // Call on page load
+
+        // Initialize tooltips
+        document.querySelectorAll('.stat-tooltip').forEach(tooltip => {
+            tooltip.addEventListener('mouseenter', function() {
+                this.querySelector('.stat-tooltip-text').style.opacity = '1';
+                this.querySelector('.stat-tooltip-text').style.visibility = 'visible';
+                this.querySelector('.stat-tooltip-text').style.transform = 'translateY(0)';
+            });
+
+            tooltip.addEventListener('mouseleave', function() {
+                this.querySelector('.stat-tooltip-text').style.opacity = '0';
+                this.querySelector('.stat-tooltip-text').style.visibility = 'hidden';
+                this.querySelector('.stat-tooltip-text').style.transform = 'translateY(10px)';
+            });
+        });
+
+        // Initialize animations
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add loading animation to stat cards
+            const statCards = document.querySelectorAll('.stat-card');
+            statCards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(20px)';
+                    setTimeout(() => {
+                        card.style.transition = 'all 0.5s ease';
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    }, 100);
+                }, index * 100);
+            });
+
+            // Simulate real-time updates
+            setInterval(() => {
+                const badges = document.querySelectorAll('.nav-badge');
+                badges.forEach(badge => {
+                    const current = parseInt(badge.textContent) || 0;
+                    // Randomly update some badges
+                    if (Math.random() > 0.95) {
+                        badge.textContent = current + 1;
+                        badge.style.background = 'var(--success-color)';
+                        setTimeout(() => {
+                            badge.style.background = 'var(--warning-color)';
+                        }, 1000);
+                    }
+                });
+
+                // Simulate new notification
+                if (Math.random() > 0.98) {
+                    const notificationCount = document.querySelector('.notification-badge');
+                    const current = parseInt(notificationCount.textContent) || 0;
+                    notificationCount.textContent = current + 1;
+
+                    // Add new notification to dropdown
+                    const notifications = [
+                        {
+                            icon: 'success',
+                            iconClass: 'fa-check',
+                            text: 'Nouveau projet approuvé par la direction',
+                            time: 'À l\'instant'
+                        },
+                        {
+                            icon: 'warning',
+                            iconClass: 'fa-exclamation',
+                            text: 'Budget dépassé sur le projet "Route Rurale"',
+                            time: 'À l\'instant'
+                        }
+                    ];
+
+                    const randomNotif = notifications[Math.floor(Math.random() * notifications.length)];
+                    const notificationList = document.querySelector('.notification-list');
+
+                    const newNotif = document.createElement('div');
+                    newNotif.className = 'notification-item unread';
+                    newNotif.innerHTML = `
+                        <div class="notification-icon ${randomNotif.icon}">
+                            <i class="fas ${randomNotif.iconClass}"></i>
+                        </div>
+                        <div class="notification-content">
+                            <div class="notification-text">${randomNotif.text}</div>
+                            <div class="notification-time">${randomNotif.time}</div>
+                        </div>
+                    `;
+
+                    notificationList.insertBefore(newNotif, notificationList.firstChild);
+                }
+            }, 5000);
+        });
+    </script>
+</body>
+</html>

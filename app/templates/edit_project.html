@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modifier le Projet - Région Haute Matsiatra</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header class="header">
+        <div class="header-container">
+            <div class="logo-section">
+                <img src="{{ url_for('static', filename='img/logo_region.png') }}" alt="Logo Région Haute Matsiatra" class="logo">
+                <div class="titles">
+                    <h1 class="main-title">Système de Suivi des Projets et Budgets</h1>
+                    <h2 class="subtitle">Région Haute Matsiatra - Madagascar</h2>
+                </div>
+            </div>
+
+            <div class="user-section">
+                <div class="user-info">
+                    <span class="user-name">{{ user.nom if user else 'Utilisateur' }}</span>
+                    <span class="user-role">Administrateur</span>
+                </div>
+                <div class="user-avatar">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+                <button class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </div>
+        </div>
+
+        <nav class="nav">
+            <ul class="nav-list">
+                <li class="nav-item">
+                    <a href="{{ url_for('routes.index') }}" class="nav-link">
+                        <i class="fas fa-tachometer-alt"></i> Tableau de bord
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ url_for('routes.budgets') }}" class="nav-link">
+                        <i class="fas fa-wallet"></i> Budgets
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ url_for('routes.projets') }}" class="nav-link active">
+                        <i class="fas fa-project-diagram"></i> Projets
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-chart-bar"></i> Rapports
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-cog"></i> Administration
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <div class="page-header">
+                <h2 class="page-title">
+                    <i class="fas fa-edit"></i> Modifier le Projet
+                </h2>
+                <a href="{{ url_for('routes.projets') }}" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i> Retour aux projets
+                </a>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3>Modification du projet: {{ projet.nom }}</h3>
+                </div>
+                <div class="card-body">
+                    <form action="{{ url_for('routes.edit_project', project_id=projet.id) }}" method="POST">
+                        <div class="form-group">
+                            <label for="project-name">Nom du projet *</label>
+                            <input type="text" id="project-name" name="nom" value="{{ projet.nom }}" required>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="project-start">Date de début *</label>
+                                <input type="date" id="project-start" name="date_debut" value="{{ projet.date_debut }}" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="project-end">Date de fin prévue</label>
+                                <input type="date" id="project-end" name="date_fin" value="{{ projet.date_fin or '' }}">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="project-status">Statut *</label>
+                                <select id="project-status" name="statut" required>
+                                    <option value="Planifié" {% if projet.statut == 'Planifié' %}selected{% endif %}>Planifié</option>
+                                    <option value="En cours" {% if projet.statut == 'En cours' %}selected{% endif %}>En cours</option>
+                                    <option value="Terminé" {% if projet.statut == 'Terminé' %}selected{% endif %}>Terminé</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="project-budget">Budget alloué (€)</label>
+                                <input type="text" id="project-budget" name="budget" value="{{ projet.budget or '' }}" placeholder="Ex: 150 000€">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="project-progress">Progression (%)</label>
+                            <input type="range" id="project-progress" name="progression" min="0" max="100" step="5" value="{{ projet.progression or 0 }}">
+                            <div class="range-value">
+                                <span id="progress-value">{{ projet.progression or 0 }}%</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="project-description">Description</label>
+                            <textarea id="project-description" name="description" rows="4">{{ projet.description or '' }}</textarea>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> Enregistrer les modifications
+                            </button>
+                            <a href="{{ url_for('routes.projets') }}" class="btn btn-secondary">Annuler</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Système de Suivi des Projets et Budgets</h4>
+                    <p>Région Haute Matsiatra - Madagascar</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p>Direction Générale du Développement Régional</p>
+                    <p>contact@hautematsiatra.mg</p>
+                    <p>+261 34 00 000 00</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Liens utiles</h4>
+                    <ul>
+                        <li><a href="#">Portail national</a></li>
+                        <li><a href="#">Documents officiels</a></li>
+                        <li><a href="#">Appels d'offres</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Région Haute Matsiatra - Tous droits réservés</p>
+                <p>Version 1.0.0</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mise à jour de la valeur de progression
+        const progressSlider = document.getElementById('project-progress');
+        const progressValue = document.getElementById('progress-value');
+
+        if (progressSlider && progressValue) {
+            progressSlider.addEventListener('input', function() {
+                progressValue.textContent = this.value + '%';
+            });
+        }
+    </script>
+</body>
+</html>

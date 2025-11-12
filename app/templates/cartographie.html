@@ -1,0 +1,1643 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cartographie des Projets - Région Haute Matsiatra</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <!-- Leaflet MarkerCluster CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.Default.css" />
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --primary-light: #3b82f6;
+            --primary-dark: #1e40af;
+            --secondary-color: #10b981;
+            --accent-color: #f59e0b;
+            --danger-color: #ef4444;
+            --success-color: #22c55e;
+            --warning-color: #f59e0b;
+            --info-color: #06b6d4;
+            --dark-color: #1f2937;
+            --light-color: #f8fafc;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-400: #9ca3af;
+            --gray-500: #6b7280;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+            --text-primary: #0f172a;
+            --text-secondary: #64748b;
+            --text-muted: #94a3b8;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -6px rgba(0, 0, 0, 0.1);
+            --border-radius: 12px;
+            --border-radius-sm: 8px;
+            --border-radius-lg: 16px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            min-height: 100vh;
+            box-shadow: var(--shadow-xl);
+        }
+
+        /* Header moderne */
+        header {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.95) 0%, rgba(99, 102, 241, 0.95) 100%);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            padding: 1.5rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%23ffffff' fill-opacity='0.05' d='M0,128L48,117.3C96,107,192,85,288,112C384,139,480,213,576,224C672,235,768,181,864,160C960,139,1056,149,1152,165.3C1248,181,1344,203,1392,213.3L1440,224L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E") no-repeat;
+            background-size: cover;
+            background-position: bottom;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: var(--border-radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .logo h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .region-name {
+            font-size: 0.875rem;
+            opacity: 0.9;
+            font-weight: 400;
+        }
+
+        .nav-main {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-main a {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.75rem 1.25rem;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-main a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: var(--transition);
+        }
+
+        .nav-main a:hover::before {
+            left: 100%;
+        }
+
+        .nav-main a:hover, .nav-main a.active {
+            background-color: rgba(255, 255, 255, 0.15);
+            color: white;
+        }
+
+        .nav-main a.active {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .user-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .user-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Layout principal avec sidebar */
+        .main-layout {
+            display: flex;
+            min-height: calc(100vh - 120px);
+        }
+
+        .sidebar {
+            width: 350px;
+            background: var(--gray-50);
+            padding: 2rem;
+            border-right: 1px solid var(--gray-200);
+            overflow-y: auto;
+            height: calc(100vh - 120px);
+            position: sticky;
+            top: 120px;
+        }
+
+        .content-area {
+            flex: 1;
+            position: relative;
+        }
+
+        /* Panel de contrôles */
+        .controls-panel {
+            background: white;
+            padding: 1.5rem;
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-md);
+            margin-bottom: 1.5rem;
+        }
+
+        .panel-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid var(--gray-100);
+        }
+
+        .panel-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .panel-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+            border-radius: var(--border-radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.9rem;
+        }
+
+        /* Filtres et recherche */
+        .search-box {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.875rem 1rem 0.875rem 2.75rem;
+            border: 2px solid var(--gray-200);
+            border-radius: var(--border-radius);
+            font-size: 0.95rem;
+            transition: var(--transition);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray-400);
+        }
+
+        .filter-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .filter-label {
+            display: block;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.75rem;
+            font-size: 0.9rem;
+        }
+
+        .filter-select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--gray-200);
+            border-radius: var(--border-radius);
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .filter-select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        /* Légende */
+        .legend {
+            background: white;
+            padding: 1.5rem;
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-md);
+            margin-bottom: 1.5rem;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+            padding: 0.5rem;
+            border-radius: var(--border-radius-sm);
+            transition: var(--transition);
+        }
+
+        .legend-item:hover {
+            background: var(--gray-50);
+        }
+
+        .legend-marker {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .legend-marker.education { background: #22c55e; }
+        .legend-marker.infrastructure { background: #3b82f6; }
+        .legend-marker.sante { background: #ef4444; }
+        .legend-marker.eau { background: #06b6d4; }
+        .legend-marker.agriculture { background: #84cc16; }
+
+        .legend-text {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .legend-count {
+            background: var(--gray-200);
+            padding: 0.25rem 0.5rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--gray-600);
+            margin-left: auto;
+        }
+
+        /* Statistiques */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-sm);
+            text-align: center;
+            border-left: 4px solid var(--primary-color);
+            transition: var(--transition);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        /* Liste des projets */
+        .projects-list {
+            background: white;
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+        }
+
+        .project-item {
+            padding: 1rem;
+            border-bottom: 1px solid var(--gray-200);
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .project-item:last-child {
+            border-bottom: none;
+        }
+
+        .project-item:hover {
+            background: var(--gray-50);
+        }
+
+        .project-item.selected {
+            background: rgba(37, 99, 235, 0.05);
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .project-name {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+            font-size: 0.9rem;
+        }
+
+        .project-type {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .project-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.75rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-weight: 600;
+        }
+
+        .status-en-cours {
+            background: rgba(251, 191, 36, 0.1);
+            color: #d97706;
+        }
+
+        .status-termine {
+            background: rgba(34, 197, 94, 0.1);
+            color: #16a34a;
+        }
+
+        .status-planifie {
+            background: rgba(59, 130, 246, 0.1);
+            color: #2563eb;
+        }
+
+        /* Carte */
+        #map {
+            height: calc(100vh - 120px);
+            width: 100%;
+            border-radius: 0;
+            z-index: 1;
+        }
+
+        /* Popup personnalisé */
+        .custom-popup {
+            min-width: 280px;
+        }
+
+        .popup-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+            color: white;
+            padding: 1rem;
+            border-radius: var(--border-radius-sm) var(--border-radius-sm) 0 0;
+            margin: -10px -10px 0 -10px;
+        }
+
+        .popup-title {
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .popup-subtitle {
+            opacity: 0.9;
+            font-size: 0.85rem;
+        }
+
+        .popup-content {
+            padding: 1rem 0 0.5rem 0;
+        }
+
+        .popup-info {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .popup-icon {
+            width: 24px;
+            height: 24px;
+            background: var(--gray-100);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            color: var(--gray-600);
+        }
+
+        .popup-text {
+            font-size: 0.85rem;
+            color: var(--text-primary);
+        }
+
+        .popup-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: var(--border-radius-sm);
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 0.8rem;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-secondary {
+            background: var(--gray-200);
+            color: var(--text-primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--gray-300);
+        }
+
+        /* Contrôles de la carte */
+        .map-controls {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .map-control-btn {
+            width: 44px;
+            height: 44px;
+            background: white;
+            border: 2px solid var(--gray-300);
+            border-radius: var(--border-radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: var(--shadow-md);
+        }
+
+        .map-control-btn:hover {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .map-control-btn.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        /* Loading state */
+        .loading-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+
+        .loading-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .spinner {
+            width: 48px;
+            height: 48px;
+            border: 4px solid var(--gray-200);
+            border-radius: 50%;
+            border-top-color: var(--primary-color);
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Responsive design */
+        @media (max-width: 1024px) {
+            .main-layout {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                top: 0;
+                border-right: none;
+                border-bottom: 1px solid var(--gray-200);
+            }
+
+            #map {
+                height: 70vh;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .nav-main {
+                width: 100%;
+                justify-content: flex-start;
+            }
+
+            .sidebar {
+                padding: 1rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .map-controls {
+                top: 0.5rem;
+                right: 0.5rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .controls-panel, .legend, .projects-list {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        /* Leaflet customizations */
+        .leaflet-popup-content-wrapper {
+            border-radius: var(--border-radius) !important;
+            box-shadow: var(--shadow-xl) !important;
+        }
+
+        .leaflet-popup-tip {
+            background: white !important;
+        }
+
+        .leaflet-control-zoom a {
+            border-radius: var(--border-radius-sm) !important;
+        }
+
+        .leaflet-bar {
+            border-radius: var(--border-radius) !important;
+            box-shadow: var(--shadow-md) !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-map-marked-alt"></i>
+                    </div>
+                    <div>
+                        <h1>Cartographie des Projets</h1>
+                        <div class="region-name">Région Haute Matsiatra</div>
+                    </div>
+                </div>
+                <nav class="nav-main">
+                    <a href="#"><i class="fas fa-chart-line"></i> Tableau de bord</a>
+                    <a href="#"><i class="fas fa-project-diagram"></i> Projets</a>
+                    <a href="#"><i class="fas fa-money-bill-wave"></i> Budgets</a>
+                    <a href="#" class="active"><i class="fas fa-map-marked-alt"></i> Cartographie</a>
+                    <a href="#"><i class="fas fa-brain"></i> IA & Prédiction</a>
+                    <a href="#"><i class="fas fa-analytics"></i> Analytics</a>
+                </nav>
+                <div class="user-menu">
+                    <div class="user-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="user-info">
+                        <div style="font-weight: 600; font-size: 0.95rem;">Dr. Andry Rakoto</div>
+                        <div style="font-size: 0.8rem; opacity: 0.8;">Directeur Régional</div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="main-layout">
+            <!-- Sidebar avec contrôles -->
+            <div class="sidebar">
+                <!-- Panneau de recherche et filtres -->
+                <div class="controls-panel">
+                    <div class="panel-header">
+                        <div class="panel-icon">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <h3 class="panel-title">Recherche et Filtres</h3>
+                    </div>
+
+                    <div class="search-box">
+                        <input type="text" class="search-input" placeholder="Rechercher un projet..." id="search-input">
+                        <i class="fas fa-search search-icon"></i>
+                    </div>
+
+                    <div class="filter-group">
+                        <label class="filter-label">Catégorie de projet</label>
+                        <select class="filter-select" id="category-filter">
+                            <option value="">Toutes les catégories</option>
+                            <option value="education">Éducation</option>
+                            <option value="infrastructure">Infrastructure</option>
+                            <option value="sante">Santé</option>
+                            <option value="eau">Eau et Assainissement</option>
+                            <option value="agriculture">Agriculture</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label class="filter-label">Statut du projet</label>
+                        <select class="filter-select" id="status-filter">
+                            <option value="">Tous les statuts</option>
+                            <option value="planifie">Planifié</option>
+                            <option value="en-cours">En cours</option>
+                            <option value="termine">Terminé</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label class="filter-label">Budget (Ar)</label>
+                        <select class="filter-select" id="budget-filter">
+                            <option value="">Tous les budgets</option>
+                            <option value="0-100M">0 - 100 millions</option>
+                            <option value="100M-500M">100M - 500 millions</option>
+                            <option value="500M+">Plus de 500 millions</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Légende -->
+                <div class="legend">
+                    <div class="panel-header">
+                        <div class="panel-icon">
+                            <i class="fas fa-palette"></i>
+                        </div>
+                        <h3 class="panel-title">Légende</h3>
+                    </div>
+
+                    <div class="legend-item" data-category="education">
+                        <div class="legend-marker education"></div>
+                        <span class="legend-text">Éducation</span>
+                        <span class="legend-count">3</span>
+                    </div>
+                    <div class="legend-item" data-category="infrastructure">
+                        <div class="legend-marker infrastructure"></div>
+                        <span class="legend-text">Infrastructure</span>
+                        <span class="legend-count">2</span>
+                    </div>
+                    <div class="legend-item" data-category="sante">
+                        <div class="legend-marker sante"></div>
+                        <span class="legend-text">Santé</span>
+                        <span class="legend-count">1</span>
+                    </div>
+                    <div class="legend-item" data-category="eau">
+                        <div class="legend-marker eau"></div>
+                        <span class="legend-text">Eau et Assainissement</span>
+                        <span class="legend-count">4</span>
+                    </div>
+                    <div class="legend-item" data-category="agriculture">
+                        <div class="legend-marker agriculture"></div>
+                        <span class="legend-text">Agriculture</span>
+                        <span class="legend-count">2</span>
+                    </div>
+                </div>
+
+                <!-- Statistiques -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">12</div>
+                        <div class="stat-label">Projets Actifs</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">8</div>
+                        <div class="stat-label">Terminés</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">2.4B</div>
+                        <div class="stat-label">Budget Total</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">85%</div>
+                        <div class="stat-label">Avancement</div>
+                    </div>
+                </div>
+
+                <!-- Liste des projets -->
+                <div class="projects-list">
+                    <div class="panel-header" style="padding: 1rem; margin-bottom: 0;">
+                        <div class="panel-icon">
+                            <i class="fas fa-list"></i>
+                        </div>
+                        <h3 class="panel-title">Projets sur la carte</h3>
+                    </div>
+
+                    <div class="project-item" data-id="1" data-category="education">
+                        <div class="project-name">École Primaire Publique d'Ambatomena</div>
+                        <div class="project-type">Construction d'établissement scolaire</div>
+                        <div class="project-status status-en-cours">
+                            <i class="fas fa-clock"></i> En cours
+                        </div>
+                    </div>
+
+                    <div class="project-item" data-id="2" data-category="infrastructure">
+                        <div class="project-name">Réhabilitation Route Nationale 7</div>
+                        <div class="project-type">Infrastructure routière</div>
+                        <div class="project-status status-planifie">
+                            <i class="fas fa-calendar"></i> Planifié
+                        </div>
+                    </div>
+
+                    <div class="project-item" data-id="3" data-category="eau">
+                        <div class="project-name">Installation Pompe Solaire</div>
+                        <div class="project-type">Eau potable et assainissement</div>
+                        <div class="project-status status-termine">
+                            <i class="fas fa-check"></i> Terminé
+                        </div>
+                    </div>
+
+                    <div class="project-item" data-id="4" data-category="sante">
+                        <div class="project-name">Centre de Santé de Base</div>
+                        <div class="project-type">Infrastructure sanitaire</div>
+                        <div class="project-status status-en-cours">
+                            <i class="fas fa-clock"></i> En cours
+                        </div>
+                    </div>
+
+                    <div class="project-item" data-id="5" data-category="agriculture">
+                        <div class="project-name">Canal d'Irrigation Sud</div>
+                        <div class="project-type">Infrastructure agricole</div>
+                        <div class="project-status status-termine">
+                            <i class="fas fa-check"></i> Terminé
+                        </div>
+                    </div>
+
+                    <div class="project-item" data-id="6" data-category="education">
+                        <div class="project-name">Lycée Technique Ambalandapa</div>
+                        <div class="project-type">Enseignement technique</div>
+                        <div class="project-status status-planifie">
+                            <i class="fas fa-calendar"></i> Planifié
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Zone de contenu avec la carte -->
+            <div class="content-area">
+                <!-- Contrôles de la carte -->
+                <div class="map-controls">
+                    <div class="map-control-btn" id="fullscreen-btn" title="Plein écran">
+                        <i class="fas fa-expand"></i>
+                    </div>
+                    <div class="map-control-btn" id="cluster-toggle" title="Groupement des marqueurs" class="active">
+                        <i class="fas fa-layer-group"></i>
+                    </div>
+                    <div class="map-control-btn" id="satellite-toggle" title="Vue satellite">
+                        <i class="fas fa-satellite"></i>
+                    </div>
+                    <div class="map-control-btn" id="locate-btn" title="Me localiser">
+                        <i class="fas fa-location-arrow"></i>
+                    </div>
+                </div>
+
+                <!-- Loading overlay -->
+                <div class="loading-overlay" id="loading-overlay">
+                    <div class="spinner"></div>
+                </div>
+
+                <!-- Carte principale -->
+                <div id="map"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <!-- Leaflet MarkerCluster JS -->
+    <script src="https://unpkg.com/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
+    <!-- Leaflet Fullscreen JS -->
+    <script src="https://unpkg.com/leaflet.fullscreen/Control.FullScreen.js"></script>
+
+    <script>
+        // Données des projets (remplace les données Flask/Jinja)
+        const projectsData = [
+            {
+                id: 1,
+                nom: 'École Primaire Publique d\'Antsirabe',
+                latitude: -21.45,
+                longitude: 47.08,
+                projet: 'Construction école',
+                category: 'education',
+                status: 'en-cours',
+                budget: 150000000,
+                description: 'Construction d\'une nouvelle école primaire avec 12 classes',
+                responsable: 'Ministère de l\'Éducation',
+                debut: '2024-01-15',
+                fin_prevue: '2025-06-30',
+                avancement: 65
+            },
+            {
+                id: 2,
+                nom: 'Réhabilitation Route Nationale 7',
+                latitude: -21.47,
+                longitude: 47.05,
+                projet: 'Réhabilitation route',
+                category: 'infrastructure',
+                status: 'planifie',
+                budget: 800000000,
+                description: 'Réhabilitation de 15 km de route nationale',
+                responsable: 'Ministère des Travaux Publics',
+                debut: '2025-03-01',
+                fin_prevue: '2026-12-31',
+                avancement: 0
+            },
+            {
+                id: 3,
+                nom: 'Installation Pompe Solaire',
+                latitude: -21.49,
+                longitude: 47.10,
+                projet: 'Installation eau potable',
+                category: 'eau',
+                status: 'termine',
+                budget: 75000000,
+                description: 'Installation de pompes solaires pour l\'approvisionnement en eau',
+                responsable: 'JIRAMA',
+                debut: '2023-06-01',
+                fin_prevue: '2024-01-31',
+                avancement: 100
+            },
+            {
+                id: 4,
+                nom: 'Centre de Santé de Base',
+                latitude: -21.44,
+                longitude: 47.06,
+                projet: 'Construction centre santé',
+                category: 'sante',
+                status: 'en-cours',
+                budget: 200000000,
+                description: 'Construction d\'un centre de santé avec maternité',
+                responsable: 'Ministère de la Santé',
+                debut: '2024-02-01',
+                fin_prevue: '2025-08-31',
+                avancement: 45
+            },
+            {
+                id: 5,
+                nom: 'Canal d\'Irrigation Sud',
+                latitude: -21.51,
+                longitude: 47.12,
+                projet: 'Infrastructure agricole',
+                category: 'agriculture',
+                status: 'termine',
+                budget: 120000000,
+                description: 'Construction de canal d\'irrigation pour 500 hectares',
+                responsable: 'Ministère de l\'Agriculture',
+                debut: '2023-01-15',
+                fin_prevue: '2024-05-30',
+                avancement: 100
+            },
+            {
+                id: 6,
+                nom: 'Lycée Technique Antsirabe',
+                latitude: -21.46,
+                longitude: 47.07,
+                projet: 'Enseignement technique',
+                category: 'education',
+                status: 'planifie',
+                budget: 350000000,
+                description: 'Construction d\'un lycée technique avec ateliers',
+                responsable: 'Ministère de l\'Éducation',
+                debut: '2025-09-01',
+                fin_prevue: '2027-06-30',
+                avancement: 0
+            }
+        ];
+
+        // Variables globales
+        let map;
+        let markersGroup;
+        let markerClusterGroup;
+        let currentLayer = 'osm';
+        let isClusterEnabled = true;
+        let allMarkers = [];
+        let filteredProjects = [...projectsData];
+
+        // Couleurs par catégorie
+        const categoryColors = {
+            education: '#22c55e',
+            infrastructure: '#3b82f6',
+            sante: '#ef4444',
+            eau: '#06b6d4',
+            agriculture: '#84cc16'
+        };
+
+        // Initialisation de la carte
+        function initializeMap() {
+            // Créer la carte centrée sur la région Haute Matsiatra
+            map = L.map('map', {
+                center: [-21.46, 47.07],
+                zoom: 12,
+                zoomControl: false
+            });
+
+            // Ajouter les contrôles de zoom personnalisés
+            L.control.zoom({
+                position: 'bottomleft'
+            }).addTo(map);
+
+            // Couches de base
+            const osmLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors'
+            });
+
+            const satelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+                attribution: '© Esri'
+            });
+
+            // Ajouter la couche par défaut
+            osmLayer.addTo(map);
+
+            // Initialiser les groupes de marqueurs
+            markersGroup = L.layerGroup().addTo(map);
+            markerClusterGroup = L.markerClusterGroup({
+                chunkedLoading: true,
+                spiderfyOnMaxZoom: false,
+                showCoverageOnHover: false,
+                zoomToBoundsOnClick: false,
+                iconCreateFunction: function(cluster) {
+                    const childCount = cluster.getChildCount();
+                    let className = 'marker-cluster-';
+
+                    if (childCount < 3) {
+                        className += 'small';
+                    } else if (childCount < 6) {
+                        className += 'medium';
+                    } else {
+                        className += 'large';
+                    }
+
+                    return new L.DivIcon({
+                        html: '<div><span>' + childCount + '</span></div>',
+                        className: 'marker-cluster ' + className,
+                        iconSize: new L.Point(40, 40)
+                    });
+                }
+            }).addTo(map);
+
+            // Gestionnaire pour basculer entre les couches
+            document.getElementById('satellite-toggle').addEventListener('click', function() {
+                if (currentLayer === 'osm') {
+                    map.removeLayer(osmLayer);
+                    satelliteLayer.addTo(map);
+                    currentLayer = 'satellite';
+                    this.classList.add('active');
+                    this.querySelector('i').className = 'fas fa-map';
+                    this.title = 'Vue carte';
+                } else {
+                    map.removeLayer(satelliteLayer);
+                    osmLayer.addTo(map);
+                    currentLayer = 'osm';
+                    this.classList.remove('active');
+                    this.querySelector('i').className = 'fas fa-satellite';
+                    this.title = 'Vue satellite';
+                }
+            });
+
+            // Gestionnaire pour le groupement des marqueurs
+            document.getElementById('cluster-toggle').addEventListener('click', function() {
+                toggleClusterMode();
+            });
+
+            // Gestionnaire pour la localisation
+            document.getElementById('locate-btn').addEventListener('click', function() {
+                locateUser();
+            });
+
+            // Gestionnaire pour le plein écran
+            document.getElementById('fullscreen-btn').addEventListener('click', function() {
+                toggleFullscreen();
+            });
+
+            // Charger les marqueurs
+            loadMarkers();
+
+            // Afficher le message de bienvenue
+            setTimeout(() => {
+                showWelcomeMessage();
+            }, 1000);
+        }
+
+        // Créer un marqueur personnalisé
+        function createCustomMarker(project) {
+            const color = categoryColors[project.category] || '#6b7280';
+
+            // Icône selon la catégorie
+            const icons = {
+                education: 'fa-graduation-cap',
+                infrastructure: 'fa-road',
+                sante: 'fa-hospital',
+                eau: 'fa-tint',
+                agriculture: 'fa-seedling'
+            };
+
+            const icon = L.divIcon({
+                className: 'custom-marker',
+                html: `
+                    <div class="marker-pin" style="background-color: ${color};">
+                        <i class="fas ${icons[project.category] || 'fa-map-pin'}" style="color: white; font-size: 14px;"></i>
+                    </div>
+                `,
+                iconSize: [30, 40],
+                iconAnchor: [15, 40],
+                popupAnchor: [0, -40]
+            });
+
+            const marker = L.marker([project.latitude, project.longitude], { icon });
+
+            // Contenu du popup personnalisé
+            const popupContent = `
+                <div class="custom-popup">
+                    <div class="popup-header">
+                        <div class="popup-title">${project.nom}</div>
+                        <div class="popup-subtitle">${project.projet}</div>
+                    </div>
+                    <div class="popup-content">
+                        <div class="popup-info">
+                            <div class="popup-icon"><i class="fas fa-info-circle"></i></div>
+                            <div class="popup-text">${project.description}</div>
+                        </div>
+                        <div class="popup-info">
+                            <div class="popup-icon"><i class="fas fa-user-tie"></i></div>
+                            <div class="popup-text">${project.responsable}</div>
+                        </div>
+                        <div class="popup-info">
+                            <div class="popup-icon"><i class="fas fa-money-bill-wave"></i></div>
+                            <div class="popup-text">${formatCurrency(project.budget)} Ar</div>
+                        </div>
+                        <div class="popup-info">
+                            <div class="popup-icon"><i class="fas fa-chart-line"></i></div>
+                            <div class="popup-text">Avancement: ${project.avancement}%</div>
+                        </div>
+                        <div class="popup-info">
+                            <div class="popup-icon"><i class="fas ${getStatusIcon(project.status)}"></i></div>
+                            <div class="popup-text">${getStatusText(project.status)}</div>
+                        </div>
+                        <div class="popup-actions">
+                            <a href="#" class="btn btn-primary" onclick="viewProjectDetails(${project.id})">
+                                <i class="fas fa-eye"></i> Détails
+                            </a>
+                            <a href="#" class="btn btn-secondary" onclick="editProject(${project.id})">
+                                <i class="fas fa-edit"></i> Modifier
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            marker.bindPopup(popupContent, {
+                maxWidth: 320,
+                className: 'custom-popup-wrapper'
+            });
+
+            // Événements du marqueur
+            marker.on('click', function() {
+                highlightProjectInList(project.id);
+            });
+
+            return marker;
+        }
+
+        // Charger tous les marqueurs
+        function loadMarkers() {
+            showLoading(true);
+
+            // Simuler un délai de chargement pour l'effet
+            setTimeout(() => {
+                allMarkers = [];
+                markersGroup.clearLayers();
+                markerClusterGroup.clearLayers();
+
+                filteredProjects.forEach(project => {
+                    const marker = createCustomMarker(project);
+                    allMarkers.push({ marker, project });
+
+                    if (isClusterEnabled) {
+                        markerClusterGroup.addLayer(marker);
+                    } else {
+                        markersGroup.addLayer(marker);
+                    }
+                });
+
+                showLoading(false);
+                updateStats();
+            }, 500);
+        }
+
+        // Basculer le mode clustering
+        function toggleClusterMode() {
+            const button = document.getElementById('cluster-toggle');
+
+            if (isClusterEnabled) {
+                // Désactiver le clustering
+                map.removeLayer(markerClusterGroup);
+                markersGroup.clearLayers();
+
+                allMarkers.forEach(({ marker }) => {
+                    markersGroup.addLayer(marker);
+                });
+
+                isClusterEnabled = false;
+                button.classList.remove('active');
+                button.title = 'Activer le groupement';
+                showNotification('Groupement des marqueurs désactivé', 'info');
+            } else {
+                // Activer le clustering
+                map.removeLayer(markersGroup);
+                markerClusterGroup.clearLayers();
+
+                allMarkers.forEach(({ marker }) => {
+                    markerClusterGroup.addLayer(marker);
+                });
+
+                isClusterEnabled = true;
+                button.classList.add('active');
+                button.title = 'Désactiver le groupement';
+                showNotification('Groupement des marqueurs activé', 'info');
+            }
+        }
+
+        // Localiser l'utilisateur
+        function locateUser() {
+            const button = document.getElementById('locate-btn');
+            const icon = button.querySelector('i');
+
+            button.classList.add('active');
+            icon.className = 'fas fa-spinner fa-spin';
+
+            map.locate({
+                setView: true,
+                maxZoom: 16,
+                timeout: 10000
+            });
+
+            map.on('locationfound', function(e) {
+                L.circle(e.latlng, {
+                    color: '#3b82f6',
+                    fillColor: '#3b82f6',
+                    fillOpacity: 0.2,
+                    radius: e.accuracy / 2
+                }).addTo(map);
+
+                L.marker(e.latlng, {
+                    icon: L.divIcon({
+                        className: 'user-location-marker',
+                        html: '<div style="background: #3b82f6; width: 12px; height: 12px; border-radius: 50%; border: 3px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.3);"></div>',
+                        iconSize: [18, 18],
+                        iconAnchor: [9, 9]
+                    })
+                }).addTo(map).bindPopup('Vous êtes ici').openPopup();
+
+                button.classList.remove('active');
+                icon.className = 'fas fa-location-arrow';
+                showNotification('Position trouvée!', 'success');
+            });
+
+            map.on('locationerror', function(e) {
+                button.classList.remove('active');
+                icon.className = 'fas fa-location-arrow';
+                showNotification('Impossible de vous localiser', 'error');
+            });
+        }
+
+        // Plein écran
+        function toggleFullscreen() {
+            const mapContainer = document.getElementById('map');
+
+            if (!document.fullscreenElement) {
+                mapContainer.requestFullscreen().then(() => {
+                    mapContainer.style.height = '100vh';
+                    map.invalidateSize();
+                    document.getElementById('fullscreen-btn').querySelector('i').className = 'fas fa-compress';
+                });
+            } else {
+                document.exitFullscreen().then(() => {
+                    mapContainer.style.height = 'calc(100vh - 120px)';
+                    map.invalidateSize();
+                    document.getElementById('fullscreen-btn').querySelector('i').className = 'fas fa-expand';
+                });
+            }
+        }
+
+        // Filtrage des projets
+        function filterProjects() {
+            const searchTerm = document.getElementById('search-input').value.toLowerCase();
+            const categoryFilter = document.getElementById('category-filter').value;
+            const statusFilter = document.getElementById('status-filter').value;
+            const budgetFilter = document.getElementById('budget-filter').value;
+
+            filteredProjects = projectsData.filter(project => {
+                const matchesSearch = project.nom.toLowerCase().includes(searchTerm) ||
+                                    project.description.toLowerCase().includes(searchTerm);
+                const matchesCategory = !categoryFilter || project.category === categoryFilter;
+                const matchesStatus = !statusFilter || project.status === statusFilter;
+
+                let matchesBudget = true;
+                if (budgetFilter) {
+                    const budget = project.budget;
+                    switch (budgetFilter) {
+                        case '0-100M':
+                            matchesBudget = budget <= 100000000;
+                            break;
+                        case '100M-500M':
+                            matchesBudget = budget > 100000000 && budget <= 500000000;
+                            break;
+                        case '500M+':
+                            matchesBudget = budget > 500000000;
+                            break;
+                    }
+                }
+
+                return matchesSearch && matchesCategory && matchesStatus && matchesBudget;
+            });
+
+            loadMarkers();
+            updateProjectsList();
+        }
+
+        // Mettre à jour la liste des projets
+        function updateProjectsList() {
+            const projectsList = document.querySelector('.projects-list');
+            const existingItems = projectsList.querySelectorAll('.project-item');
+
+            existingItems.forEach(item => {
+                const projectId = parseInt(item.dataset.id);
+                const isVisible = filteredProjects.some(p => p.id === projectId);
+                item.style.display = isVisible ? 'block' : 'none';
+            });
+        }
+
+        // Mettre à jour les statistiques
+        function updateStats() {
+            const activeProjects = filteredProjects.filter(p => p.status === 'en-cours').length;
+            const completedProjects = filteredProjects.filter(p => p.status === 'termine').length;
+            const totalBudget = filteredProjects.reduce((sum, p) => sum + p.budget, 0);
+            const avgProgress = Math.round(
+                filteredProjects.reduce((sum, p) => sum + p.avancement, 0) / filteredProjects.length
+            );
+
+            document.querySelectorAll('.stat-card .stat-number')[0].textContent = activeProjects;
+            document.querySelectorAll('.stat-card .stat-number')[1].textContent = completedProjects;
+            document.querySelectorAll('.stat-card .stat-number')[2].textContent = formatBudget(totalBudget);
+            document.querySelectorAll('.stat-card .stat-number')[3].textContent = avgProgress + '%';
+        }
+
+        // Fonctions utilitaires
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('fr-FR').format(amount);
+        }
+
+        function formatBudget(amount) {
+            if (amount >= 1000000000) {
+                return (amount / 1000000000).toFixed(1) + 'B';
+            } else if (amount >= 1000000) {
+                return (amount / 1000000).toFixed(0) + 'M';
+            } else {
+                return (amount / 1000).toFixed(0) + 'K';
+            }
+        }
+
+        function getStatusIcon(status) {
+            const icons = {
+                'planifie': 'fa-calendar',
+                'en-cours': 'fa-clock',
+                'termine': 'fa-check-circle'
+            };
+            return icons[status] || 'fa-question';
+        }
+
+        function getStatusText(status) {
+            const texts = {
+                'planifie': 'Planifié',
+                'en-cours': 'En cours',
+                'termine': 'Terminé'
+            };
+            return texts[status] || 'Inconnu';
+        }
+
+        function showLoading(show) {
+            const overlay = document.getElementById('loading-overlay');
+            if (show) {
+                overlay.classList.add('active');
+            } else {
+                overlay.classList.remove('active');
+            }
+        }
+
+        function showNotification(message, type = 'info') {
+            // Créer une notification toast simple
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.innerHTML = `
+                <i class="fas ${type === 'success' ? 'fa-check-circle' : type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle'}"></i>
+                ${message}
+            `;
+
+            // Styles pour la notification
+            Object.assign(notification.style, {
+                position: 'fixed',
+                top: '2rem',
+                right: '2rem',
+                background: type === 'success' ? '#22c55e' : type === 'error' ? '#ef4444' : '#3b82f6',
+                color: 'white',
+                padding: '1rem',
+                borderRadius: '8px',
+                boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+                zIndex: '10000',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.5rem',
+                fontSize: '0.9rem',
+                fontWeight: '500',
+                transform: 'translateX(100%)',
+                transition: 'transform 0.3s ease'
+            });
+
+            document.body.appendChild(notification);
+
+            // Animation d'entrée
+            setTimeout(() => {
+                notification.style.transform = 'translateX(0)';
+            }, 100);
+
+            // Suppression automatique
+            setTimeout(() => {
+                notification.style.transform = 'translateX(100%)';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+
+        function showWelcomeMessage() {
+            const popup = L.popup()
+                .setLatLng([-21.46, 47.07])
+                .setContent(`
+                    <div style="text-align: center; padding: 1rem;">
+                        <h3 style="color: var(--primary-color); margin-bottom: 0.5rem;">
+                            <i class="fas fa-map-marked-alt"></i> Bienvenue!
+                        </h3>
+                        <p style="margin-bottom: 1rem; color: var(--text-secondary);">
+                            Explorez les ${projectsData.length} projets de développement de la région Haute Matsiatra
+                        </p>
+                        <button onclick="map.closePopup()" class="btn btn-primary">
+                            <i class="fas fa-search"></i> Explorer
+                        </button>
+                    </div>
+                `)
+                .openOn(map);
+        }
+
+        function highlightProjectInList(projectId) {
+            document.querySelectorAll('.project-item').forEach(item => {
+                item.classList.remove('selected');
+            });
+
+            const projectElement = document.querySelector(`[data-id="${projectId}"]`);
+            if (projectElement) {
+                projectElement.classList.add('selected');
+                projectElement.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+        }
+
+        function viewProjectDetails(projectId) {
+            showNotification(`Affichage des détails du projet #${projectId}`, 'info');
+        }
+
+        function editProject(projectId) {
+            showNotification(`Édition du projet #${projectId}`, 'info');
+        }
+
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialiser la carte
+            initializeMap();
+
+            // Filtres
+            document.getElementById('search-input').addEventListener('input', filterProjects);
+            document.getElementById('category-filter').addEventListener('change', filterProjects);
+            document.getElementById('status-filter').addEventListener('change', filterProjects);
+            document.getElementById('budget-filter').addEventListener('change', filterProjects);
+
+            // Clic sur les projets de la liste
+            document.querySelectorAll('.project-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    const projectId = parseInt(this.dataset.id);
+                    const project = projectsData.find(p => p.id === projectId);
+                    if (project) {
+                        map.setView([project.latitude, project.longitude], 15);
+                        highlightProjectInList(projectId);
+                    }
+                });
+            });
+
+            // Clic sur les éléments de la légende
+            document.querySelectorAll('.legend-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    const category = this.dataset.category;
+                    if (category) {
+                        document.getElementById('category-filter').value = category;
+                        filterProjects();
+                    }
+                });
+            });
+        });
+
+        // Styles CSS additionnels pour les marqueurs et notifications
+        const additionalStyles = `
+            <style>
+            .custom-marker {
+                background: transparent !important;
+                border: none !important;
+                box-shadow: none !important;
+            }
+
+            .marker-pin {
+                width: 30px;
+                height: 30px;
+                border-radius: 50% 50% 50% 0;
+                position: relative;
+                transform: rotate(-45deg);
+                border: 3px solid white;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .marker-pin i {
+                transform: rotate(45deg);
+            }
+
+            .custom-popup-wrapper .leaflet-popup-content-wrapper {
+                padding: 0 !important;
+                border-radius: 12px !important;
+            }
+
+            .custom-popup-wrapper .leaflet-popup-content {
+                margin: 0 !important;
+            }
+
+            .marker-cluster {
+                background-color: rgba(37, 99, 235, 0.1) !important;
+                border: 3px solid var(--primary-color) !important;
+            }
+
+            .marker-cluster div {
+                background-color: var(--primary-color) !important;
+                color: white !important;
+                font-weight: 700 !important;
+            }
+            </style>
+        `;
+
+        document.head.insertAdjacentHTML('beforeend', additionalStyles);
+    </script>
+</body>
+</html>
