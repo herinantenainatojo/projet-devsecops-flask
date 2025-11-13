@@ -9,6 +9,15 @@ on:
     # Scan quotidien à 2h du matin
     - cron: '0 2 * * *'
 
+# 🛡️ Permissions nécessaires pour CodeQL, Trivy et rapports de sécurité
+permissions:
+  contents: read              # lecture du dépôt
+  security-events: write      # autorise l’écriture des résultats d’analyse de sécurité
+  actions: read               # permet d’utiliser les actions GitHub
+  packages: read              # autorise la lecture d’images/dépendances GitHub Packages (utile pour Trivy)
+  checks: write               # (optionnel) autorise la publication de rapports dans les checks GitHub
+
+
 jobs:
   # =====================================================
   # JOB 1 : Tests Unitaires
