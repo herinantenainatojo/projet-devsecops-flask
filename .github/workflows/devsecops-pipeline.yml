@@ -301,8 +301,8 @@ jobs:
         sonar-scanner \
           -Dsonar.projectKey=devsecops-flask \
           -Dsonar.sources=. \
-          -Dsonar.host.url=$SONAR_HOST_URL \
-          -Dsonar.login=$SONAR_TOKEN \
+          -Dsonar.host.url=//localhost:9000
+          -Dsonar.login=sqp_98a778b1c925922b9890e964509a00d4d41985ba
           -Dsonar.python.coverage.reportPaths=coverage.xml \
           -Dsonar.coverage.exclusions=**/tests/**,**/venv/** \
           -Dsonar.cpd.exclusions=**/tests/**,**/venv/**
