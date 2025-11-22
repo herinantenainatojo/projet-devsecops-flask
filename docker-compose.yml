@@ -1,0 +1,16 @@
+services:
+  flask-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      network: host           # ← IMPORTANT : Pour la phase de build
+    network_mode: "host"      # ← Pour l'exécution
+    environment:
+      - FLASK_ENV=production
+      - ADMIN_PASSWORD=VotreMotDePasseSecurise123!
+      - PORT=5000
+    restart: always
+    volumes:
+      - .:/app
+    working_dir: /app
+    command: python run.py
