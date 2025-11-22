@@ -266,40 +266,38 @@ jobs:
         name: security-summary
         path: security-summary.md
 
+  # =====================================================
+  # JOB 8 : Analyse SonarQube
+  # =====================================================
+  sonarqube-scan:
+    name: Analyse SonarQube
+    runs-on: ubuntu-latest
+    needs: tests
+    env:
+      SONAR_HOST_URL: http://localhost:9000
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
+    steps:
+    - name: Checkout du code
+      uses: actions/checkout@v4
 
- # =====================================================
-# JOB 8 : Analyse SonarQube
-# =====================================================
-sonarqube-scan:
-  name: Analyse SonarQube
-  runs-on: ubuntu-latest
-  needs: tests
-  env:
-    SONAR_HOST_URL: http://localhost:9000
-    SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+    - name: Installer Java
+      uses: actions/setup-java@v3
+      with:
+        distribution: 'temurin'
+        java-version: '17'
 
-  steps:
-  - name: Checkout du code
-    uses: actions/checkout@v4
+    - name: Installer SonarScanner
+      run: |
+        wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-7.3.0.5189-linux.zip -O sonar-scanner.zip
+        unzip sonar-scanner.zip
+        export PATH=$PATH:$(pwd)/sonar-scanner-7.3.0.5189-linux-x64/bin
 
-  - name: Installer Java
-    uses: actions/setup-java@v3
-    with:
-      distribution: 'temurin'
-      java-version: '17'
-
-  - name: Installer SonarScanner
-    run: |
-      wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-7.3.0.5189-linux.zip -O sonar-scanner.zip
-      unzip sonar-scanner.zip
-      export PATH=$PATH:$(pwd)/sonar-scanner-7.3.0.5189-linux-x64/bin
-
-  - name: Lancer SonarScanner
-    run: |
-      sonar-scanner \
-        -Dsonar.projectKey=devsecops-flask \
-        -Dsonar.sources=. \
-        -Dsonar.host.url=${SONAR_HOST_URL} \
-        -Dsonar.login=${SONAR_TOKEN} \
-        -Dsonar.python.coverage.reportPaths=htmlcov/coverage.xml
+    - name: Lancer SonarScanner
+      run: |
+        sonar-scanner \
+          -Dsonar.projectKey=devsecops-flask \
+          -Dsonar.sources=. \
+          -Dsonar.host.url=${SONAR_HOST_URL} \
+          -Dsonar.login=${SONAR_TOKEN} \
+          -Dsonar.python.coverage.reportPaths=htmlcov/coverage.xml
