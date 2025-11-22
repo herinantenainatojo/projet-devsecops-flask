@@ -267,42 +267,43 @@ jobs:
         path: security-summary.md
 
   # =====================================================
-  # JOB 8 : Analyse SonarQube
+  # JOB 8 : Analyse SonarCloud
   # =====================================================
-  sonarqube-scan:
-    name: Analyse SonarQube
+  sonarcloud-scan:
+    name: Analyse SonarCloud
     runs-on: ubuntu-latest
     needs: tests
-    env:
-      SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
     steps:
     - name: Checkout du code
       uses: actions/checkout@v4
       with:
-        fetch-depth: 0  # Nécessaire pour SonarQube
+        fetch-depth: 0
 
-    - name: Installer Java
+    - name: Setup Java
       uses: actions/setup-java@v3
       with:
         distribution: 'temurin'
         java-version: '17'
 
-    - name: Installer SonarScanner
+    - name: Cache SonarCloud packages
+      uses: actions/cache@v3
+      with:
+        path: ~/.sonar/cache
+        key: ${{ runner.os }}-sonar
+        restore-keys: ${{ runner.os }}-sonar
+
+    - name: Analyse SonarCloud
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       run: |
-        # Télécharger une version récente de SonarScanner
+        # Installation de SonarScanner
         wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-linux.zip -O sonar-scanner.zip
         unzip -q sonar-scanner.zip
-        echo "$(pwd)/sonar-scanner-5.0.1.3006-linux/bin" >> $GITHUB_PATH
-
-    - name: Lancer SonarScanner
-      run: |
-        sonar-scanner \
-          -Dsonar.projectKey=devsecops-flask \
+        ./sonar-scanner-5.0.1.3006-linux/bin/sonar-scanner \
+          -Dsonar.projectKey=herinantenainatojo_projet-devsecops-flask \
+          -Dsonar.organization=herinantenainatojo \
+          -Dsonar.host.url=https://sonarcloud.io \
           -Dsonar.sources=. \
-          -Dsonar.host.url=//localhost:9000
-          -Dsonar.login=sqp_98a778b1c925922b9890e964509a00d4d41985ba
-          -Dsonar.python.coverage.reportPaths=coverage.xml \
-          -Dsonar.coverage.exclusions=**/tests/**,**/venv/** \
-          -Dsonar.cpd.exclusions=**/tests/**,**/venv/**
+          -Dsonar.python.coverage.reportPaths=htmlcov/coverage.xml
