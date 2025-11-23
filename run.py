@@ -15,7 +15,6 @@ def init_db():
             
             # Vérifier si l'admin existe déjà
             if not User.query.filter_by(username="admin").first():
-                # Mot de passe admin depuis variable d'environnement ou valeur par défaut
                 admin_password = os.getenv("ADMIN_PASSWORD", "admin123")
                 
                 admin = User(
@@ -26,21 +25,18 @@ def init_db():
                 db.session.add(admin)
                 db.session.commit()
                 print("✔️ Admin créé avec succès (username: admin)")
+                
                 if admin_password == "admin123":
-                    print("⚠️  ATTENTION: Utilisez un mot de passe sécurisé en production!")
+                    print("⚠️ ATTENTION : change ADMIN_PASSWORD sur Railway !")
             else:
-                print("ℹ️  Admin existe déjà")
+                print("ℹ️ Admin existe déjà")
                 
         except Exception as e:
             print(f"❌ Erreur lors de l'initialisation de la base de données: {e}")
 
-# Initialiser la base de données au chargement
+# Lancer l'initialisation
 init_db()
 
-# Gunicorn utilisera 'run:app' directement
+# Railway / Gunicorn utilise "run:app"
 if __name__ == "__main__":
-    # UNIQUEMENT pour développement local
-    import os
-    port = int(os.getenv("PORT", 5001))
-    print(f"🔧 Mode développement local - Port {port}")
-    app.run(host="0.0.0.0", port=port, debug=True)
+    port = int(os.getenv("PORT",
