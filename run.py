@@ -38,9 +38,16 @@ if __name__ == "__main__":
     # Initialiser la base de données
     init_db()
     
-    # Démarrer l'application
-    port = int(os.getenv("PORT", 5000))
-    debug = os.getenv("FLASK_ENV") == "development"
+    # Démarrer Flask en production
+    port = int(os.getenv("PORT", 8080))
     
-    print(f"🚀 Démarrage de l'application sur le port {port} (debug: {debug})")
-    app.run(host="0.0.0.0", port=port, debug=debug)
+    print(f"🚀 Démarrage de Flask en production sur le port {port}")
+    print("📝 Note: Pour les déploiements critiques, utilisez Gunicorn")
+    
+    # Flask en mode production (debug=False)
+    app.run(
+        host="0.0.0.0", 
+        port=port, 
+        debug=False,  # IMPORTANT: debug=False en production
+        threaded=True
+    )
