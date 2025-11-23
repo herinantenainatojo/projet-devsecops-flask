@@ -9,4 +9,4 @@ ENV FLASK_ENV=production
 ENV PYTHONUNBUFFERED=1
 RUN useradd -m -u 1000 flaskuser && chown -R flaskuser:flaskuser /app
 USER flaskuser
-CMD gunicorn --bind 0.0.0.0:$PORT --workers 2 --access-logfile - run:app
+CMD gunicorn --bind 0.0.0.0:8080 --workers 2 --access-logfile - run:app
