@@ -31,8 +31,8 @@ We highly encourage switching to the new `scan` command which is easier to use, 
         "account": "",
         "local_database_path": null,
         "safety_version": "3.7.0",
-        "timestamp": "2025-11-21 21:32:05",
-        "packages_found": 56,
+        "timestamp": "2025-11-25 20:43:03",
+        "packages_found": 27,
         "vulnerabilities_found": 0,
         "vulnerabilities_ignored": 0,
         "remediations_recommended": 0,
@@ -48,15 +48,15 @@ We highly encourage switching to the new `scan` command which is easier to use, 
             "safety_version": "3.7.0",
             "safety_source": "cli",
             "os_type": "Linux",
-            "os_release": "6.5.0-kali3-amd64",
-            "os_description": "Linux-6.5.0-kali3-amd64-x86_64-with-glibc2.41",
+            "os_release": "6.16.8+kali-amd64",
+            "os_description": "Linux-6.16.8+kali-amd64-x86_64-with-glibc2.41",
             "python_version": "3.13.9",
             "safety_command": "check"
         },
         "git": {
             "branch": "main",
             "tag": "",
-            "commit": "8d3e5b3ae262eaa80ae97985149ef50e9e30b049",
+            "commit": "aa33da9b46615b51f0f8ff840996166b74f885fd",
             "dirty": "True",
             "origin": "https://github.com/herinantenainatojo/projet-devsecops-flask.git"
         },
@@ -69,59 +69,29 @@ We highly encourage switching to the new `scan` command which is easier to use, 
     "scanned_packages": {
         "alembic": {
             "name": "alembic",
-            "version": "1.16.4",
+            "version": "1.17.2",
             "requirements": [
                 {
-                    "raw": "alembic==1.16.4",
+                    "raw": "alembic==1.17.2",
                     "extras": [],
                     "marker": null,
                     "name": "alembic",
-                    "specifier": "==1.16.4",
+                    "specifier": "==1.17.2",
                     "url": null,
                     "found": "/home/tojo/projet-devsecops-flask/requirements.txt"
                 }
             ]
         },
-        "autopep8": {
-            "name": "autopep8",
-            "version": "2.3.2",
+        "bcrypt": {
+            "name": "bcrypt",
+            "version": "5.0.0",
             "requirements": [
                 {
-                    "raw": "autopep8==2.3.2",
+                    "raw": "bcrypt==5.0.0",
                     "extras": [],
                     "marker": null,
-                    "name": "autopep8",
-                    "specifier": "==2.3.2",
-                    "url": null,
-                    "found": "/home/tojo/projet-devsecops-flask/requirements.txt"
-                }
-            ]
-        },
-        "bandit": {
-            "name": "bandit",
-            "version": "1.8.6",
-            "requirements": [
-                {
-                    "raw": "bandit==1.8.6",
-                    "extras": [],
-                    "marker": null,
-                    "name": "bandit",
-                    "specifier": "==1.8.6",
-                    "url": null,
-                    "found": "/home/tojo/projet-devsecops-flask/requirements.txt"
-                }
-            ]
-        },
-        "black": {
-            "name": "black",
-            "version": "25.11.0",
-            "requirements": [
-                {
-                    "raw": "black==25.11.0",
-                    "extras": [],
-                    "marker": null,
-                    "name": "black",
-                    "specifier": "==25.11.0",
+                    "name": "bcrypt",
+                    "specifier": "==5.0.0",
                     "url": null,
                     "found": "/home/tojo/projet-devsecops-flask/requirements.txt"
                 }
@@ -142,151 +112,16 @@ We highly encourage switching to the new `scan` command which is easier to use, 
                 }
             ]
         },
-        "certifi": {
-            "name": "certifi",
-            "version": "2025.10.5",
-            "requirements": [
-                {
-                    "raw": "certifi==2025.10.5",
-                    "extras": [],
-                    "marker": null,
-                    "name": "certifi",
-                    "specifier": "==2025.10.5",
-                    "url": null,
-                    "found": "/home/tojo/projet-devsecops-flask/requirements.txt"
-                }
-            ]
-        },
-        "cfgv": {
-            "name": "cfgv",
-            "version": "3.4.0",
-            "requirements": [
-                {
-                    "raw": "cfgv==3.4.0",
-                    "extras": [],
-                    "marker": null,
-                    "name": "cfgv",
-                    "specifier": "==3.4.0",
-                    "url": null,
-                    "found": "/home/tojo/projet-devsecops-flask/requirements.txt"
-                }
-            ]
-        },
-        "charset-normalizer": {
-            "name": "charset-normalizer",
-            "version": "3.4.4",
-            "requirements": [
-                {
-                    "raw": "charset-normalizer==3.4.4",
-                    "extras": [],
-                    "marker": null,
-                    "name": "charset-normalizer",
-                    "specifier": "==3.4.4",
-                    "url": null,
-                    "found": "/home/tojo/projet-devsecops-flask/requirements.txt"
-                }
-            ]
-        },
         "click": {
             "name": "click",
-            "version": "8.2.1",
+            "version": "8.3.1",
             "requirements": [
                 {
-                    "raw": "click==8.2.1",
+                    "raw": "click==8.3.1",
                     "extras": [],
                     "marker": null,
                     "name": "click",
-                    "specifier": "==8.2.1",
-                    "url": null,
-                    "found": "/home/tojo/projet-devsecops-flask/requirements.txt"
-                }
-            ]
-        },
-        "detect-secrets": {
-            "name": "detect-secrets",
-            "version": "1.5.0",
-            "requirements": [
-                {
-                    "raw": "detect-secrets==1.5.0",
-                    "extras": [],
-                    "marker": null,
-                    "name": "detect-secrets",
-                    "specifier": "==1.5.0",
-                    "url": null,
-                    "found": "/home/tojo/projet-devsecops-flask/requirements.txt"
-                }
-            ]
-        },
-        "distlib": {
-            "name": "distlib",
-            "version": "0.4.0",
-            "requirements": [
-                {
-                    "raw": "distlib==0.4.0",
-                    "extras": [],
-                    "marker": null,
-                    "name": "distlib",
-                    "specifier": "==0.4.0",
-                    "url": null,
-                    "found": "/home/tojo/projet-devsecops-flask/requirements.txt"
-                }
-            ]
-        },
-        "dnspython": {
-            "name": "dnspython",
-            "version": "2.7.0",
-            "requirements": [
-                {
-                    "raw": "dnspython==2.7.0",
-                    "extras": [],
-                    "marker": null,
-                    "name": "dnspython",
-                    "specifier": "==2.7.0",
-                    "url": null,
-                    "found": "/home/tojo/projet-devsecops-flask/requirements.txt"
-                }
-            ]
-        },
-        "email-validator": {
-            "name": "email-validator",
-            "version": "2.2.0",
-            "requirements": [
-                {
-                    "raw": "email_validator==2.2.0",
-                    "extras": [],
-                    "marker": null,
-                    "name": "email_validator",
-                    "specifier": "==2.2.0",
-                    "url": null,
-                    "found": "/home/tojo/projet-devsecops-flask/requirements.txt"
-                }
-            ]
-        },
-        "filelock": {
-            "name": "filelock",
-            "version": "3.20.0",
-            "requirements": [
-                {
-                    "raw": "filelock==3.20.0",
-                    "extras": [],
-                    "marker": null,
-                    "name": "filelock",
-                    "specifier": "==3.20.0",
-                    "url": null,
-                    "found": "/home/tojo/projet-devsecops-flask/requirements.txt"
-                }
-            ]
-        },
-        "flake8": {
-            "name": "flake8",
-            "version": "7.3.0",
-            "requirements": [
-                {
-                    "raw": "flake8==7.3.0",
-                    "extras": [],
-                    "marker": null,
-                    "name": "flake8",
-                    "specifier": "==7.3.0",
+                    "specifier": "==8.3.1",
                     "url": null,
                     "found": "/home/tojo/projet-devsecops-flask/requirements.txt"
                 }
@@ -294,14 +129,44 @@ We highly encourage switching to the new `scan` command which is easier to use, 
         },
         "flask": {
             "name": "flask",
-            "version": "3.1.1",
+            "version": "3.1.2",
             "requirements": [
                 {
-                    "raw": "Flask==3.1.1",
+                    "raw": "Flask==3.1.2",
                     "extras": [],
                     "marker": null,
                     "name": "Flask",
-                    "specifier": "==3.1.1",
+                    "specifier": "==3.1.2",
+                    "url": null,
+                    "found": "/home/tojo/projet-devsecops-flask/requirements.txt"
+                }
+            ]
+        },
+        "flask-bcrypt": {
+            "name": "flask-bcrypt",
+            "version": "1.0.1",
+            "requirements": [
+                {
+                    "raw": "Flask-Bcrypt==1.0.1",
+                    "extras": [],
+                    "marker": null,
+                    "name": "Flask-Bcrypt",
+                    "specifier": "==1.0.1",
+                    "url": null,
+                    "found": "/home/tojo/projet-devsecops-flask/requirements.txt"
+                }
+            ]
+        },
+        "flask-cors": {
+            "name": "flask-cors",
+            "version": "6.0.1",
+            "requirements": [
+                {
+                    "raw": "flask-cors==6.0.1",
+                    "extras": [],
+                    "marker": null,
+                    "name": "flask-cors",
+                    "specifier": "==6.0.1",
                     "url": null,
                     "found": "/home/tojo/projet-devsecops-flask/requirements.txt"
                 }
@@ -369,44 +234,14 @@ We highly encourage switching to the new `scan` command which is easier to use, 
         },
         "greenlet": {
             "name": "greenlet",
-            "version": "3.2.3",
+            "version": "3.2.4",
             "requirements": [
                 {
-                    "raw": "greenlet==3.2.3",
+                    "raw": "greenlet==3.2.4",
                     "extras": [],
                     "marker": null,
                     "name": "greenlet",
-                    "specifier": "==3.2.3",
-                    "url": null,
-                    "found": "/home/tojo/projet-devsecops-flask/requirements.txt"
-                }
-            ]
-        },
-        "identify": {
-            "name": "identify",
-            "version": "2.6.15",
-            "requirements": [
-                {
-                    "raw": "identify==2.6.15",
-                    "extras": [],
-                    "marker": null,
-                    "name": "identify",
-                    "specifier": "==2.6.15",
-                    "url": null,
-                    "found": "/home/tojo/projet-devsecops-flask/requirements.txt"
-                }
-            ]
-        },
-        "idna": {
-            "name": "idna",
-            "version": "3.10",
-            "requirements": [
-                {
-                    "raw": "idna==3.10",
-                    "extras": [],
-                    "marker": null,
-                    "name": "idna",
-                    "specifier": "==3.10",
+                    "specifier": "==3.2.4",
                     "url": null,
                     "found": "/home/tojo/projet-devsecops-flask/requirements.txt"
                 }
@@ -457,91 +292,16 @@ We highly encourage switching to the new `scan` command which is easier to use, 
                 }
             ]
         },
-        "markdown-it-py": {
-            "name": "markdown-it-py",
-            "version": "4.0.0",
-            "requirements": [
-                {
-                    "raw": "markdown-it-py==4.0.0",
-                    "extras": [],
-                    "marker": null,
-                    "name": "markdown-it-py",
-                    "specifier": "==4.0.0",
-                    "url": null,
-                    "found": "/home/tojo/projet-devsecops-flask/requirements.txt"
-                }
-            ]
-        },
         "markupsafe": {
             "name": "markupsafe",
-            "version": "3.0.2",
+            "version": "3.0.3",
             "requirements": [
                 {
-                    "raw": "MarkupSafe==3.0.2",
+                    "raw": "MarkupSafe==3.0.3",
                     "extras": [],
                     "marker": null,
                     "name": "MarkupSafe",
-                    "specifier": "==3.0.2",
-                    "url": null,
-                    "found": "/home/tojo/projet-devsecops-flask/requirements.txt"
-                }
-            ]
-        },
-        "mccabe": {
-            "name": "mccabe",
-            "version": "0.7.0",
-            "requirements": [
-                {
-                    "raw": "mccabe==0.7.0",
-                    "extras": [],
-                    "marker": null,
-                    "name": "mccabe",
-                    "specifier": "==0.7.0",
-                    "url": null,
-                    "found": "/home/tojo/projet-devsecops-flask/requirements.txt"
-                }
-            ]
-        },
-        "mdurl": {
-            "name": "mdurl",
-            "version": "0.1.2",
-            "requirements": [
-                {
-                    "raw": "mdurl==0.1.2",
-                    "extras": [],
-                    "marker": null,
-                    "name": "mdurl",
-                    "specifier": "==0.1.2",
-                    "url": null,
-                    "found": "/home/tojo/projet-devsecops-flask/requirements.txt"
-                }
-            ]
-        },
-        "mypy-extensions": {
-            "name": "mypy-extensions",
-            "version": "1.1.0",
-            "requirements": [
-                {
-                    "raw": "mypy_extensions==1.1.0",
-                    "extras": [],
-                    "marker": null,
-                    "name": "mypy_extensions",
-                    "specifier": "==1.1.0",
-                    "url": null,
-                    "found": "/home/tojo/projet-devsecops-flask/requirements.txt"
-                }
-            ]
-        },
-        "nodeenv": {
-            "name": "nodeenv",
-            "version": "1.9.1",
-            "requirements": [
-                {
-                    "raw": "nodeenv==1.9.1",
-                    "extras": [],
-                    "marker": null,
-                    "name": "nodeenv",
-                    "specifier": "==1.9.1",
+                    "specifier": "==3.0.3",
                     "url": null,
                     "found": "/home/tojo/projet-devsecops-flask/requirements.txt"
                 }
@@ -549,29 +309,14 @@ We highly encourage switching to the new `scan` command which is easier to use, 
         },
         "numpy": {
             "name": "numpy",
-            "version": "2.3.2",
+            "version": "2.3.5",
             "requirements": [
                 {
-                    "raw": "numpy==2.3.2",
+                    "raw": "numpy==2.3.5",
                     "extras": [],
                     "marker": null,
                     "name": "numpy",
-                    "specifier": "==2.3.2",
-                    "url": null,
-                    "found": "/home/tojo/projet-devsecops-flask/requirements.txt"
-                }
-            ]
-        },
-        "packaging": {
-            "name": "packaging",
-            "version": "25.0",
-            "requirements": [
-                {
-                    "raw": "packaging==25.0",
-                    "extras": [],
-                    "marker": null,
-                    "name": "packaging",
-                    "specifier": "==25.0",
+                    "specifier": "==2.3.5",
                     "url": null,
                     "found": "/home/tojo/projet-devsecops-flask/requirements.txt"
                 }
@@ -579,104 +324,14 @@ We highly encourage switching to the new `scan` command which is easier to use, 
         },
         "pandas": {
             "name": "pandas",
-            "version": "2.3.2",
+            "version": "2.3.3",
             "requirements": [
                 {
-                    "raw": "pandas==2.3.2",
+                    "raw": "pandas==2.3.3",
                     "extras": [],
                     "marker": null,
                     "name": "pandas",
-                    "specifier": "==2.3.2",
-                    "url": null,
-                    "found": "/home/tojo/projet-devsecops-flask/requirements.txt"
-                }
-            ]
-        },
-        "pathspec": {
-            "name": "pathspec",
-            "version": "0.12.1",
-            "requirements": [
-                {
-                    "raw": "pathspec==0.12.1",
-                    "extras": [],
-                    "marker": null,
-                    "name": "pathspec",
-                    "specifier": "==0.12.1",
-                    "url": null,
-                    "found": "/home/tojo/projet-devsecops-flask/requirements.txt"
-                }
-            ]
-        },
-        "platformdirs": {
-            "name": "platformdirs",
-            "version": "4.5.0",
-            "requirements": [
-                {
-                    "raw": "platformdirs==4.5.0",
-                    "extras": [],
-                    "marker": null,
-                    "name": "platformdirs",
-                    "specifier": "==4.5.0",
-                    "url": null,
-                    "found": "/home/tojo/projet-devsecops-flask/requirements.txt"
-                }
-            ]
-        },
-        "pre-commit": {
-            "name": "pre-commit",
-            "version": "4.4.0",
-            "requirements": [
-                {
-                    "raw": "pre_commit==4.4.0",
-                    "extras": [],
-                    "marker": null,
-                    "name": "pre_commit",
-                    "specifier": "==4.4.0",
-                    "url": null,
-                    "found": "/home/tojo/projet-devsecops-flask/requirements.txt"
-                }
-            ]
-        },
-        "pycodestyle": {
-            "name": "pycodestyle",
-            "version": "2.14.0",
-            "requirements": [
-                {
-                    "raw": "pycodestyle==2.14.0",
-                    "extras": [],
-                    "marker": null,
-                    "name": "pycodestyle",
-                    "specifier": "==2.14.0",
-                    "url": null,
-                    "found": "/home/tojo/projet-devsecops-flask/requirements.txt"
-                }
-            ]
-        },
-        "pyflakes": {
-            "name": "pyflakes",
-            "version": "3.4.0",
-            "requirements": [
-                {
-                    "raw": "pyflakes==3.4.0",
-                    "extras": [],
-                    "marker": null,
-                    "name": "pyflakes",
-                    "specifier": "==3.4.0",
-                    "url": null,
-                    "found": "/home/tojo/projet-devsecops-flask/requirements.txt"
-                }
-            ]
-        },
-        "pygments": {
-            "name": "pygments",
-            "version": "2.19.2",
-            "requirements": [
-                {
-                    "raw": "Pygments==2.19.2",
-                    "extras": [],
-                    "marker": null,
-                    "name": "Pygments",
-                    "specifier": "==2.19.2",
+                    "specifier": "==2.3.3",
                     "url": null,
                     "found": "/home/tojo/projet-devsecops-flask/requirements.txt"
                 }
@@ -697,16 +352,16 @@ We highly encourage switching to the new `scan` command which is easier to use, 
                 }
             ]
         },
-        "pytokens": {
-            "name": "pytokens",
-            "version": "0.3.0",
+        "python-dotenv": {
+            "name": "python-dotenv",
+            "version": "1.2.1",
             "requirements": [
                 {
-                    "raw": "pytokens==0.3.0",
+                    "raw": "python-dotenv==1.2.1",
                     "extras": [],
                     "marker": null,
-                    "name": "pytokens",
-                    "specifier": "==0.3.0",
+                    "name": "python-dotenv",
+                    "specifier": "==1.2.1",
                     "url": null,
                     "found": "/home/tojo/projet-devsecops-flask/requirements.txt"
                 }
@@ -722,51 +377,6 @@ We highly encourage switching to the new `scan` command which is easier to use, 
                     "marker": null,
                     "name": "pytz",
                     "specifier": "==2025.2",
-                    "url": null,
-                    "found": "/home/tojo/projet-devsecops-flask/requirements.txt"
-                }
-            ]
-        },
-        "pyyaml": {
-            "name": "pyyaml",
-            "version": "6.0.3",
-            "requirements": [
-                {
-                    "raw": "PyYAML==6.0.3",
-                    "extras": [],
-                    "marker": null,
-                    "name": "PyYAML",
-                    "specifier": "==6.0.3",
-                    "url": null,
-                    "found": "/home/tojo/projet-devsecops-flask/requirements.txt"
-                }
-            ]
-        },
-        "requests": {
-            "name": "requests",
-            "version": "2.32.5",
-            "requirements": [
-                {
-                    "raw": "requests==2.32.5",
-                    "extras": [],
-                    "marker": null,
-                    "name": "requests",
-                    "specifier": "==2.32.5",
-                    "url": null,
-                    "found": "/home/tojo/projet-devsecops-flask/requirements.txt"
-                }
-            ]
-        },
-        "rich": {
-            "name": "rich",
-            "version": "14.2.0",
-            "requirements": [
-                {
-                    "raw": "rich==14.2.0",
-                    "extras": [],
-                    "marker": null,
-                    "name": "rich",
-                    "specifier": "==14.2.0",
                     "url": null,
                     "found": "/home/tojo/projet-devsecops-flask/requirements.txt"
                 }
@@ -789,29 +399,14 @@ We highly encourage switching to the new `scan` command which is easier to use, 
         },
         "sqlalchemy": {
             "name": "sqlalchemy",
-            "version": "2.0.41",
+            "version": "2.0.44",
             "requirements": [
                 {
-                    "raw": "SQLAlchemy==2.0.41",
+                    "raw": "SQLAlchemy==2.0.44",
                     "extras": [],
                     "marker": null,
                     "name": "SQLAlchemy",
-                    "specifier": "==2.0.41",
-                    "url": null,
-                    "found": "/home/tojo/projet-devsecops-flask/requirements.txt"
-                }
-            ]
-        },
-        "stevedore": {
-            "name": "stevedore",
-            "version": "5.5.0",
-            "requirements": [
-                {
-                    "raw": "stevedore==5.5.0",
-                    "extras": [],
-                    "marker": null,
-                    "name": "stevedore",
-                    "specifier": "==5.5.0",
+                    "specifier": "==2.0.44",
                     "url": null,
                     "found": "/home/tojo/projet-devsecops-flask/requirements.txt"
                 }
@@ -819,14 +414,14 @@ We highly encourage switching to the new `scan` command which is easier to use, 
         },
         "typing-extensions": {
             "name": "typing-extensions",
-            "version": "4.14.1",
+            "version": "4.15.0",
             "requirements": [
                 {
-                    "raw": "typing_extensions==4.14.1",
+                    "raw": "typing_extensions==4.15.0",
                     "extras": [],
                     "marker": null,
                     "name": "typing_extensions",
-                    "specifier": "==4.14.1",
+                    "specifier": "==4.15.0",
                     "url": null,
                     "found": "/home/tojo/projet-devsecops-flask/requirements.txt"
                 }
@@ -842,36 +437,6 @@ We highly encourage switching to the new `scan` command which is easier to use, 
                     "marker": null,
                     "name": "tzdata",
                     "specifier": "==2025.2",
-                    "url": null,
-                    "found": "/home/tojo/projet-devsecops-flask/requirements.txt"
-                }
-            ]
-        },
-        "urllib3": {
-            "name": "urllib3",
-            "version": "2.5.0",
-            "requirements": [
-                {
-                    "raw": "urllib3==2.5.0",
-                    "extras": [],
-                    "marker": null,
-                    "name": "urllib3",
-                    "specifier": "==2.5.0",
-                    "url": null,
-                    "found": "/home/tojo/projet-devsecops-flask/requirements.txt"
-                }
-            ]
-        },
-        "virtualenv": {
-            "name": "virtualenv",
-            "version": "20.35.4",
-            "requirements": [
-                {
-                    "raw": "virtualenv==20.35.4",
-                    "extras": [],
-                    "marker": null,
-                    "name": "virtualenv",
-                    "specifier": "==20.35.4",
                     "url": null,
                     "found": "/home/tojo/projet-devsecops-flask/requirements.txt"
                 }

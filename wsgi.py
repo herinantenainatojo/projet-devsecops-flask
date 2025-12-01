@@ -1,12 +1,11 @@
-# wsgi.py - Point d'entrée pour Railway/Gunicorn
-
+# wsgi.py
 from run import app
 
-# Cette variable 'application' est nécessaire pour certains serveurs WSGI
-application = app
-
 if __name__ == "__main__":
-    # Pour le développement local
+    # Pour le développement local seulement
     import os
     port = int(os.environ.get("PORT", 8080))
     app.run(host='0.0.0.0', port=port)
+else:
+    # Pour gunicorn
+    application = app

@@ -34,4 +34,4 @@ USER flaskuser
 EXPOSE 8080
 
 # Commande de démarrage avec wsgi.py
-CMD ["gunicorn", "--bind", "0.0.0.0:8080", "--workers", "2", "--access-logfile", "-", "wsgi:app"]
+CMD ["gunicorn", "--bind", "0.0.0.0:${PORT:-8080}", "--workers", "2", "--access-logfile", "-", "wsgi:app"]
