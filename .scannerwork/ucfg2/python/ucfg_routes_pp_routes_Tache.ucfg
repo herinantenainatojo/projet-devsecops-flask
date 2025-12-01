@@ -1,0 +1,119 @@
+
+app.routes.Tache;
+//home/tojo/projet-devsecops-flask/app/routes.py¡ ¡("2*–
+2
+¬ ¬(T
+R
+
+¬ ¬(
+app.routes.Tache"
+id"__id*"
+
+__unknown_file (
+
+idZ
+X
+
+­ ­(
+app.routes.Tache"
+titre"__id*%
+
+__unknown_file (	
+
+titref
+d
+
+® ®(&#
+app.routes.Tache"
+date_limite"__id*+
+
+__unknown_file (
+
+date_limite\
+Z
+
+¯ ¯(
+app.routes.Tache"
+statut"__id*&
+
+__unknown_file (
+
+
+statut`
+^
+
+° °(  
+app.routes.Tache"
+
+priorite"__id*(
+
+__unknown_file (
+
+
+prioritef
+d
+
+± ±(&#
+app.routes.Tache"
+description"__id*+
+
+__unknown_file (
+
+description\
+Z
+
+² ²(
+app.routes.Tache"
+projet"__id*&
+
+__unknown_file (
+
+
+projet`
+^
+
+³ ³(  
+app.routes.Tache"
+
+assignee"__id*(
+
+__unknown_file (
+
+
+assignee*
+3*J
+3
+	routes.py$"
+µ µ(
+%1"app.routes.Tache"
+µ µ(
+
+%1:
+
+£ £(
+
+id:
+
+¤ ¤(
+titre:
+
+¥ ¥(
+date_limite:
+
+¦ ¦(
+statut:
+
+§ §(
+
+priorite:
+
+¨ ¨(
+description:
+
+© ©(
+projet:
+
+ª ª(
+
+assigneeB
+app.routes.TacheH

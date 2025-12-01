@@ -1,0 +1,324 @@
+
+1.0PythonFrontend"1764597795072*py2.BË
+
+imports1
+
+extends2
+
+returns3
+
+	has param4
+
+module5
+
+
+class6
+
+function7
+
+app/routes.py9
+
+
+app.routes11
+
+datetime12
+
+flask14
+
+flask_login.login_user16
+
+flask_login.logout_user18
+
+flask_login.current_user20
+ 
+flask_login.login_required22
+
+flask_login24
+
+werkzeug.security26
+	
+app28
+
+	app.forms30
+
+
+app.models32
+
+app.routes.api_taches34
+
+app.routes.documents36
+%
+app.routes.gestion_utilisateurs38
+
+app.routes.analytics40
+
+app.routes.Projet42
+ 
+app.routes.Projet.__init__44
+
+app.routes.Projet.to_dict46
+
+app.routes.logout48
+
+app.routes.profile50
+
+app.routes.index52
+
+app.routes.analytics_ia54
+
+app.routes.add_task56
+
+app.routes.budgets58
+
+app.routes.projets60
+
+app.routes.taches62
+
+app.routes.api_projet64
+
+app.routes.delete_task66
+
+app.routes.Tache68
+
+app.routes.Tache.to_dict70
+
+app.routes.Tache.__init__72
+ 
+app.routes.delete_document74
+
+app.routes.add_project76
+
+app.routes.edit_project78
+
+app.routes.login80
+
+app.routes.api_budgets82
+
+app.routes.export_budgets84
+
+app.routes.complete_task86
+
+app.routes.outils_terrain88
+
+app.routes.cartographie90
+
+app.routes.Budget92
+ 
+app.routes.Budget.__init__94
+
+app.routes.Budget.to_dict96
+
+app.routes.edit_task98
+
+app.routes.edit_document100
+
+app.routes.api_budget102
+ 
+app.routes.delete_project104
+
+app.routes.rapports106
+
+app.routes.add_document108
+%
+app.routes.mot_de_passe_oublie110
+
+app.routes.parametres112
+
+app.routes.api_projets114J
+
+8
+89jŒ
+
+ 
+10
+10115 *
+8 (
+
+13
+13125
+
+15
+15145
+
+17
+17165
+
+19
+19185
+
+21
+21205
+
+23
+23225
+
+25
+25245
+
+27
+27265
+
+29
+29285
+
+31
+31305
+
+33
+33325
+
+35
+35347 210
+
+37
+37367 210
+
+39
+39387 210
+
+41
+41407 210
+
+43
+43426 210
+
+45
+45447 243
+
+47
+47467 243
+
+49
+49487 210
+
+51
+51507 210
+
+53
+53527 210
+
+55
+55547 210
+
+57
+57567 210
+
+59
+59587 210
+
+61
+61607 210
+
+63
+63627 210
+
+65
+65647 210
+
+67
+67667 210
+
+69
+69686 210
+
+71
+71707 269
+
+73
+73727 269
+
+75
+75747 210
+
+77
+77767 210
+
+79
+79787 210
+
+81
+81807 210
+
+83
+83827 210
+
+85
+85847 210
+
+87
+87867 210
+
+89
+89887 210
+
+91
+91907 210
+
+93
+93926 210
+
+95
+95947 293
+
+97
+97967 293
+
+99
+99987 210
+
+101
+1011007 210
+
+103
+1031027 210
+
+105
+1051047 210
+
+107
+1071067 210
+
+109
+1091087 210
+
+111
+1111107 210
+
+113
+1131127 210
+
+115
+1151147 210rž
+
+10131*
+8 (
+
+10151*
+8 (Y
+
+10171*
+8 (#
+
+10191*
+8% (0
+
+10211*
+82 (>
+
+10231*
+8@ (N
+
+10251*
+8 (N
+
+10271*
+8 (J
+
+10291*
+8 (
+
+10311*
+8 (3
+
+10331*
+8	 	(

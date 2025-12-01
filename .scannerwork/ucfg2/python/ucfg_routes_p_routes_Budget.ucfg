@@ -1,0 +1,100 @@
+
+app.routes.Budget;
+//home/tojo/projet-devsecops-flask/app/routes.py¤ ¤("2*Í
+2
+® ®(U
+S
+
+® ®(
+app.routes.Budget"
+id"__id*"
+
+__unknown_file (
+
+idW
+U
+
+¯ ¯(
+app.routes.Budget"
+nom"__id*#
+
+__unknown_file (
+
+nom_
+]
+
+° °( 
+app.routes.Budget"	
+montant"__id*'
+
+__unknown_file (
+	
+montant]
+[
+
+± ±(
+app.routes.Budget"
+statut"__id*&
+
+__unknown_file (
+
+
+statuto
+m
+
+² ²(.(
+app.routes.Budget"
+date_allocation"__id*/
+
+__unknown_file (
+
+date_allocationm
+k
+
+³ ³(,'
+app.routes.Budget"
+projet_associe"__id*.
+
+__unknown_file (
+
+projet_associeg
+e
+
+´ ´(&$
+app.routes.Budget"
+description"__id*+
+
+__unknown_file (
+
+description*
+3*K
+3
+	routes.py%#
+¶ ¶(
+%1"app.routes.Budget"
+¶ ¶(
+
+%1:
+
+¦ ¦(
+
+id:
+
+§ §(
+nom:
+
+¨ ¨(	
+montant:
+
+© ©(
+statut:
+
+ª ª(
+date_allocation:
+
+« «(
+projet_associe:
+
+¬ ¬(
+descriptionB
+app.routes.BudgetH

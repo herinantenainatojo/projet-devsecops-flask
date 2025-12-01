@@ -1,0 +1,1 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="0" skipped="0" tests="1" time="1.446" timestamp="2025-12-01T16:50:17.780649+03:00" hostname="ratojo"><testcase classname="tests.test_routes" name="test_home" time="0.792" /></testsuite></testsuites>

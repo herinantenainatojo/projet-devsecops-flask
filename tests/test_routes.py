@@ -8,5 +8,6 @@ def client():
     return app.test_client()
 
 def test_home(client):
-    response = client.get('/')
+    # Suivre la redirection pour obtenir le code final
+    response = client.get('/', follow_redirects=True)
     assert response.status_code == 200

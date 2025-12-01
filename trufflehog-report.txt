@@ -1,0 +1,449 @@
+Found unverified result 🐷🔑❓
+Verification issue: lookup host on 8.8.8.8:53: no such host
+Detector Type: Postgres
+Decoder Type: PLAIN
+Raw result: postgresql://user:pass@host:5432
+Sslmode: <unset>
+File: venv/lib/python3.13/site-packages/alembic/context.pyi
+Line: 1
+
+Found unverified result 🐷🔑❓
+Verification issue: lookup host on 8.8.8.8:53: no such host
+(Verification info cached)
+Detector Type: Postgres
+Decoder Type: PLAIN
+Raw result: postgresql://user:pass@host:5432
+Sslmode: <unset>
+File: venv/lib/python3.13/site-packages/alembic/runtime/environment.py
+Line: 1
+
+Found unverified result 🐷🔑❓
+Verification issue: lookup host on 8.8.8.8:53: no such host
+(Verification info cached)
+Detector Type: Postgres
+Decoder Type: PLAIN
+Raw result: postgresql://user:pass@host:5432
+Sslmode: <unset>
+File: venv/lib/python3.13/site-packages/alembic/runtime/__pycache__/environment.cpython-313.pyc
+Line: 1
+
+Found unverified result 🐷🔑❓
+Verification issue: lookup host on 8.8.8.8:53: no such host
+(Verification info cached)
+Detector Type: Postgres
+Decoder Type: PLAIN
+Raw result: postgresql://user:pass@host:5432
+Sslmode: <unset>
+File: venv/lib/python3.13/site-packages/alembic/runtime/__pycache__/environment.cpython-313.pyc
+Line: 1
+
+Found unverified result 🐷🔑❓
+Verification issue: lookup host on 8.8.8.8:53: no such host
+(Verification info cached)
+Detector Type: Postgres
+Decoder Type: PLAIN
+Raw result: postgresql://user:pass@host:5432
+Sslmode: <unset>
+File: venv/lib/python3.13/site-packages/alembic/runtime/environment.py
+Line: 1
+
+Found unverified result 🐷🔑❓
+Verification issue: lookup ftp.example.org on 8.8.8.8:53: no such host
+Detector Type: FTP
+Decoder Type: PLAIN
+Raw result: ftp://foo:bar@ftp.example.org
+File: venv/lib/python3.13/site-packages/marshmallow/validate.py
+Line: 132
+
+Found unverified result 🐷🔑❓
+Detector Type: URI
+Decoder Type: PLAIN
+Raw result: https://jo%40email.com:a%20secret@www.example.com
+File: venv/lib/python3.13/site-packages/httpx/__pycache__/_urls.cpython-313.pyc
+Line: 1
+
+Found unverified result 🐷🔑❓
+Detector Type: URI
+Decoder Type: PLAIN
+Raw result: https://jo%40email.com:a%20secret@www.example.com
+File: venv/lib/python3.13/site-packages/httpx/_urls.py
+Line: 338
+
+Found unverified result 🐷🔑❓
+Detector Type: URI
+Decoder Type: PLAIN
+Raw result: https://jo%40email.com:a%20secret@www.example.com
+File: venv/lib/python3.13/site-packages/httpx/_urls.py
+Line: 36
+
+Found unverified result 🐷🔑❓
+Detector Type: URI
+Decoder Type: PLAIN
+Raw result: https://jo%40email.com:a%20secret@www.example.com
+File: venv/lib/python3.13/site-packages/httpx/__pycache__/_urls.cpython-313.pyc
+Line: 1
+
+Found unverified result 🐷🔑❓
+Detector Type: URI
+Decoder Type: PLAIN
+Raw result: https://username:password@www.example.com
+File: venv/lib/python3.13/site-packages/opentelemetry/semconv/_incubating/attributes/url_attributes.py
+Line: 43
+
+Found unverified result 🐷🔑❓
+Detector Type: URI
+Decoder Type: PLAIN
+Raw result: https://REDACTED:REDACTED@www.example.com
+File: venv/lib/python3.13/site-packages/opentelemetry/semconv/attributes/url_attributes.py
+Line: 29
+
+Found unverified result 🐷🔑❓
+Detector Type: URI
+Decoder Type: PLAIN
+Raw result: https://username:password@www.example.com
+File: venv/lib/python3.13/site-packages/opentelemetry/semconv/attributes/url_attributes.py
+Line: 28
+
+Found unverified result 🐷🔑❓
+Detector Type: URI
+Decoder Type: PLAIN
+Raw result: https://REDACTED:REDACTED@www.example.com
+File: venv/lib/python3.13/site-packages/opentelemetry/semconv/trace/__init__.py
+Line: 222
+
+Found unverified result 🐷🔑❓
+Detector Type: URI
+Decoder Type: PLAIN
+Raw result: https://username:password@www.example.com
+File: venv/lib/python3.13/site-packages/opentelemetry/semconv/trace/__init__.py
+Line: 222
+
+Found unverified result 🐷🔑❓
+Detector Type: URI
+Decoder Type: PLAIN
+Raw result: http://user:pass@web.com
+File: venv/lib/python3.13/site-packages/pandas/tests/io/formats/style/__pycache__/test_html.cpython-313.pyc
+Line: 1
+
+Found unverified result 🐷🔑❓
+Verification issue: lookup web.comTz on 8.8.8.8:53: no such host
+Detector Type: URI
+Decoder Type: PLAIN
+Raw result: http://user:pass@web.comTz
+File: venv/lib/python3.13/site-packages/pandas/tests/io/formats/style/__pycache__/test_html.cpython-313.pyc
+Line: 1
+
+Found unverified result 🐷🔑❓
+Detector Type: URI
+Decoder Type: PLAIN
+Raw result: http://user:pass@web.com
+File: venv/lib/python3.13/site-packages/pandas/tests/io/formats/style/test_html.py
+Line: 137
+
+Found unverified result 🐷🔑❓
+Detector Type: URI
+Decoder Type: PLAIN
+Raw result: http://user:pass@web.com
+File: venv/lib/python3.13/site-packages/pandas/tests/io/formats/style/__pycache__/test_html.cpython-313.pyc
+Line: 1
+
+Found unverified result 🐷🔑❓
+Verification issue: lookup web.comTz on 8.8.8.8:53: no such host
+Detector Type: URI
+Decoder Type: PLAIN
+Raw result: http://user:pass@web.comTz
+File: venv/lib/python3.13/site-packages/pandas/tests/io/formats/style/__pycache__/test_html.cpython-313.pyc
+Line: 1
+
+Found unverified result 🐷🔑❓
+Verification issue: lookup host on 8.8.8.8:53: no such host
+Detector Type: URI
+Decoder Type: PLAIN
+Raw result: https://user:pass@host
+File: venv/lib/python3.13/site-packages/pydantic/__pycache__/networks.cpython-313.pyc
+Line: 1
+
+Found unverified result 🐷🔑❓
+Verification issue: lookup host on 8.8.8.8:53: no such host
+(Verification info cached)
+Detector Type: URI
+Decoder Type: PLAIN
+Raw result: https://user:pass@host
+File: venv/lib/python3.13/site-packages/pydantic/networks.py
+Line: 137
+
+Found unverified result 🐷🔑❓
+Detector Type: URI
+Decoder Type: PLAIN
+Raw result: http://username:password@host.com:80
+File: venv/lib/python3.13/site-packages/pip/_vendor/urllib3/util/__pycache__/url.cpython-313.pyc
+Line: 1
+
+Found unverified result 🐷🔑❓
+Detector Type: URI
+Decoder Type: PLAIN
+Raw result: http://username:password@host.com:80
+File: venv/lib/python3.13/site-packages/pip/_vendor/urllib3/util/url.py
+Line: 148
+
+Found unverified result 🐷🔑❓
+Verification issue: i/o timeout
+Detector Type: URI
+Decoder Type: PLAIN
+Raw result: http://samuel:pass@example.com:8000
+File: venv/lib/python3.13/site-packages/pydantic/__pycache__/networks.cpython-313.pyc
+Line: 1
+
+Found unverified result 🐷🔑❓
+Detector Type: Pastebin
+Decoder Type: PLAIN
+Raw result: xDEFzqQ3zemYggXRaDnxD6X4IyitevbA
+File: venv/lib/python3.13/site-packages/pytest-9.0.1.dist-info/RECORD
+Line: 118
+
+Found unverified result 🐷🔑❓
+Detector Type: TravisCI
+Decoder Type: PLAIN
+Raw result: CONTINUOUS_INTEGRATION
+File: venv/lib/python3.13/site-packages/pytest_metadata/plugin.py
+Line: 25
+
+Found unverified result 🐷🔑❓
+Detector Type: Gitlab
+Decoder Type: PLAIN
+Raw result: outputs_gitlab_secrets
+Rotation_guide: https://howtorotate.com/docs/tutorials/gitlab/
+Version: 1
+File: venv/lib/python3.13/site-packages/semgrep/commands/__pycache__/ci.cpython-313.pyc
+Line: 1
+
+Found unverified result 🐷🔑❓
+(Verification info cached)
+Detector Type: Gitlab
+Decoder Type: PLAIN
+Raw result: outputs_gitlab_secrets
+Rotation_guide: https://howtorotate.com/docs/tutorials/gitlab/
+Version: 1
+File: venv/lib/python3.13/site-packages/semgrep/commands/scan.py
+Line: 20
+
+Found unverified result 🐷🔑❓
+Detector Type: Gitlab
+Decoder Type: PLAIN
+Raw result: outputs_gitlab_secrets
+Rotation_guide: https://howtorotate.com/docs/tutorials/gitlab/
+Version: 1
+File: venv/lib/python3.13/site-packages/semgrep/commands/scan.py
+Line: 20
+
+Found unverified result 🐷🔑❓
+(Verification info cached)
+Detector Type: Gitlab
+Decoder Type: PLAIN
+Raw result: outputs_gitlab_secrets
+Rotation_guide: https://howtorotate.com/docs/tutorials/gitlab/
+Version: 1
+File: venv/lib/python3.13/site-packages/semgrep/commands/scan.py
+Line: 20
+
+Found unverified result 🐷🔑❓
+(Verification info cached)
+Detector Type: Gitlab
+Decoder Type: PLAIN
+Raw result: outputs_gitlab_secrets
+Rotation_guide: https://howtorotate.com/docs/tutorials/gitlab/
+Version: 1
+File: venv/lib/python3.13/site-packages/semgrep/commands/scan.py
+Line: 20
+
+Found unverified result 🐷🔑❓
+Detector Type: Gitlab
+Decoder Type: PLAIN
+Raw result: outputs_gitlab_secrets
+Rotation_guide: https://howtorotate.com/docs/tutorials/gitlab/
+Version: 1
+File: venv/lib/python3.13/site-packages/semgrep/commands/ci.py
+Line: 255
+
+Found unverified result 🐷🔑❓
+Detector Type: Gitlab
+Decoder Type: PLAIN
+Raw result: outputs_gitlab_secrets
+Rotation_guide: https://howtorotate.com/docs/tutorials/gitlab/
+Version: 1
+File: venv/lib/python3.13/site-packages/semgrep/commands/ci.py
+Line: 77
+
+Found unverified result 🐷🔑❓
+Detector Type: Gitlab
+Decoder Type: PLAIN
+Raw result: outputs_gitlab_secrets
+Rotation_guide: https://howtorotate.com/docs/tutorials/gitlab/
+Version: 1
+File: venv/lib/python3.13/site-packages/semgrep/commands/scan.py
+Line: 385
+
+Found unverified result 🐷🔑❓
+Detector Type: Gitlab
+Decoder Type: PLAIN
+Raw result: outputs_gitlab_secrets
+Rotation_guide: https://howtorotate.com/docs/tutorials/gitlab/
+Version: 1
+File: venv/lib/python3.13/site-packages/semgrep/commands/scan.py
+Line: 140
+
+Found unverified result 🐷🔑❓
+Detector Type: Gitlab
+Decoder Type: PLAIN
+Raw result: uakEZ9IXy4S8s0hPXM9-
+Version: 1
+Rotation_guide: https://howtorotate.com/docs/tutorials/gitlab/
+File: venv/lib/python3.13/site-packages/semgrep-1.144.0.dist-info/RECORD
+Line: 64
+
+Found unverified result 🐷🔑❓
+Verification issue: net/http: TLS handshake timeout
+Detector Type: URI
+Decoder Type: PLAIN
+Raw result: https://foo.com:123,foo%3Abar@bar.com
+File: venv/lib/python3.13/site-packages/pydantic/__pycache__/networks.cpython-313.pyc
+Line: 1
+
+Found unverified result 🐷🔑❓
+Verification issue: i/o timeout
+(Verification info cached)
+Detector Type: URI
+Decoder Type: PLAIN
+Raw result: http://samuel:pass@example.com:8000
+File: venv/lib/python3.13/site-packages/pydantic/networks.py
+Line: 233
+
+Found unverified result 🐷🔑❓
+Verification issue: net/http: TLS handshake timeout
+Detector Type: URI
+Decoder Type: PLAIN
+Raw result: https://foo.com:123,foo%3Abar@bar.com
+File: venv/lib/python3.13/site-packages/pydantic/networks.py
+Line: 1
+
+Found unverified result 🐷🔑❓
+Detector Type: DatadogToken
+Decoder Type: PLAIN
+Raw result: tracing-b0e1eaa1531e408cbb074663d1f840a6
+Type: Application+APIKey
+File: venv/lib/python3.13/site-packages/semgrep/tracing.py
+Line: 19
+
+Found unverified result 🐷🔑❓
+Verification issue: lookup host on 8.8.8.8:53: no such host
+Detector Type: Postgres
+Decoder Type: PLAIN
+Raw result: postgresql://scott:tiger@host:5432
+Sslmode: <unset>
+File: venv/lib/python3.13/site-packages/sqlalchemy/sql/__pycache__/events.cpython-313.pyc
+Line: 1
+
+Found unverified result 🐷🔑❓
+Verification issue: lookup host on 8.8.8.8:53: no such host
+(Verification info cached)
+Detector Type: Postgres
+Decoder Type: PLAIN
+Raw result: postgresql://scott:tiger@host:5432
+Sslmode: <unset>
+File: venv/lib/python3.13/site-packages/sqlalchemy/sql/events.py
+Line: 1
+
+Found unverified result 🐷🔑❓
+Detector Type: Alchemy
+Decoder Type: PLAIN
+Raw result: lookup_fully_qualified_or_nonerH
+File: venv/lib/python3.13/site-packages/sqlalchemy/ext/mypy/__pycache__/plugin.cpython-313.pyc
+Line: 1
+
+Found unverified result 🐷🔑❓
+Detector Type: Alchemy
+Decoder Type: PLAIN
+Raw result: lookup_fully_qualified_or_nonerH
+File: venv/lib/python3.13/site-packages/sqlalchemy/ext/mypy/__pycache__/plugin.cpython-313.pyc
+Line: 1
+
+Found unverified result 🐷🔑❓
+Detector Type: Alchemy
+Decoder Type: PLAIN
+Raw result: Rnwe7eK60FdBC5R9kY5pczCGrVw2BwGs
+File: venv/lib/python3.13/site-packages/sqlalchemy-2.0.44.dist-info/RECORD
+Line: 7
+
+Found unverified result 🐷🔑❓
+Detector Type: Alchemy
+Decoder Type: PLAIN
+Raw result: Rnwe7eK60FdBC5R9kY5pczCGrVw2BwGs
+File: venv/lib/python3.13/site-packages/sqlalchemy-2.0.44.dist-info/RECORD
+Line: 153
+
+Found unverified result 🐷🔑❓
+Detector Type: Alchemy
+Decoder Type: PLAIN
+Raw result: vouIehpQAuwT0HXyWyynTL3m_gcBuLcB
+File: venv/lib/python3.13/site-packages/sqlalchemy-2.0.44.dist-info/RECORD
+Line: 124
+
+Found unverified result 🐷🔑❓
+Detector Type: Alchemy
+Decoder Type: PLAIN
+Raw result: QAo0GssILBua9wRNT3gajwZMEct3KCCu
+File: venv/lib/python3.13/site-packages/sqlalchemy-2.0.44.dist-info/RECORD
+Line: 102
+
+Found unverified result 🐷🔑❓
+Detector Type: Alchemy
+Decoder Type: PLAIN
+Raw result: SuVflXOGDxx2sB2QSTqNEvqS0fyhOkh3
+File: venv/lib/python3.13/site-packages/sqlalchemy-2.0.44.dist-info/RECORD
+Line: 120
+
+Found unverified result 🐷🔑❓
+Verification issue: http: server gave HTTP response to HTTPS client
+Detector Type: URI
+Decoder Type: PLAIN
+Raw result: https://username:password@host.com:80
+File: venv/lib/python3.13/site-packages/urllib3/util/__pycache__/url.cpython-313.pyc
+Line: 1
+
+Found unverified result 🐷🔑❓
+Verification issue: http: server gave HTTP response to HTTPS client
+Detector Type: URI
+Decoder Type: PLAIN
+Raw result: https://username:password@host.com:80
+File: venv/lib/python3.13/site-packages/urllib3/util/url.py
+Line: 186
+
+Found unverified result 🐷🔑❓
+Detector Type: Gitlab
+Decoder Type: PLAIN
+Raw result: to_gitlab_severity_327
+Rotation_guide: https://howtorotate.com/docs/tutorials/gitlab/
+Version: 1
+File: venv/lib/python3.13/site-packages/semgrep/bin/semgrep-core
+Line: 1
+
+Found unverified result 🐷🔑❓
+(Verification info cached)
+Detector Type: Gitlab
+Decoder Type: PLAIN
+Raw result: to_gitlab_severity_327
+Rotation_guide: https://howtorotate.com/docs/tutorials/gitlab/
+Version: 1
+File: venv/lib/python3.13/site-packages/semgrep/bin/semgrep-core
+Line: 1
+
+Found unverified result 🐷🔑❓
+(Verification info cached)
+Detector Type: Gitlab
+Decoder Type: PLAIN
+Raw result: to_gitlab_severity_327
+Rotation_guide: https://howtorotate.com/docs/tutorials/gitlab/
+Version: 1
+File: venv/lib/python3.13/site-packages/semgrep/bin/semgrep-core
+Line: 1
+

@@ -1,0 +1,7 @@
+organization=herinantenainatojo
+projectKey=devsecops-flask
+serverUrl=https://sonarcloud.io
+serverVersion=8.0.0.76948
+dashboardUrl=https://sonarcloud.io/dashboard?id=devsecops-flask
+ceTaskId=AZraOj9yvi_fXO77y8mt
+ceTaskUrl=https://sonarcloud.io/api/ce/task?id=AZraOj9yvi_fXO77y8mt
