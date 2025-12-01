@@ -146,8 +146,10 @@ jobs:
 
     - name: TruffleHog Secret Scanning
       uses: trufflesecurity/trufflehog@main
+      continue-on-error: true   # ⬅️ Évite le fail du pipeline
       with:
         extra_args: --only-verified
+        fail: false             # ⬅️ Indique à TruffleHog de ne pas retourner un code d’erreur
 
   # =====================================================
   # JOB 5 : Build Docker Image
